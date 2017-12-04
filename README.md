@@ -4,6 +4,7 @@
 
 ```bash
 cd /yourproject/bin
+```
 
 สร้าง Controller
 
