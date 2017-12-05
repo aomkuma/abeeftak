@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-abeef navbar-fixed-top font-th-prompt400">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -11,10 +11,12 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Help</a></li>
+                <li><?=$this->Html->link('Dashboard',['controller'=>'home'])?></li>
+                <li><?=$this->Html->link('ผู้เลี้ยงโค',['controller'=>'herdsmans'])?></li>
+                <li><?=$this->Html->link('ฟาร์ม',['controller'=>'farms'])?></li>
+                <li><?=$this->Html->link('โค',['controller'=>'Cows'])?></li>
+                <li><?=$this->Html->link('รายงาน',['controller'=>'Reports'])?></li>
+                <li><?=$this->Html->link('ผู้ใช้งานระบบ',['controller'=>'Users'])?></li>
             </ul>
             <form class="navbar-form navbar-right">
                 <input type="text" class="form-control" placeholder="Search...">
