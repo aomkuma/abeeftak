@@ -1,3 +1,39 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="font-th-prompt400">เพิ่มฟาร์มใหม่</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <?= $this->Html->link(BT_BACK, ['action' => 'add'], ['escape' => false]) ?>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <?= $this->Form->create($farm) ?>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <?=$this->Form->control('name',['class'=>'form-control','label'=>'ชื่อฟาร์ม'])?>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <?=$this->Form->control('level',['class'=>'form-control','label'=>'ระดับ'])?>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <?=$this->Form->control('type',['class'=>'form-control','label'=>'ประเภท'])?>
+                </div>
+            </div>
+        </div>
+        <?= $this->Form->end() ?>
+    </div>
+</div>
+
+
 <?php
 /**
  * @var \App\View\AppView $this
@@ -17,25 +53,25 @@
     <fieldset>
         <legend><?= __('Add Farm') ?></legend>
         <?php
-            echo $this->Form->control('name');
-            echo $this->Form->control('level');
-            echo $this->Form->control('type');
-            echo $this->Form->control('address_id', ['options' => $addresses, 'empty' => true]);
-            echo $this->Form->control('description');
-            echo $this->Form->control('location_image');
-            echo $this->Form->control('latitude');
-            echo $this->Form->control('longitude');
-            echo $this->Form->control('hasstable');
-            echo $this->Form->control('total_stable');
-            echo $this->Form->control('total_cow_capacity');
-            echo $this->Form->control('hasmeadow');
-            echo $this->Form->control('total_meadow');
-            echo $this->Form->control('total_space');
-            echo $this->Form->control('grass_species');
-            echo $this->Form->control('water_body');
-            echo $this->Form->control('dung_destroy');
-            echo $this->Form->control('createdby');
-            echo $this->Form->control('updatedby');
+        echo $this->Form->control('name');
+        echo $this->Form->control('level');
+        echo $this->Form->control('type');
+        echo $this->Form->control('address_id', ['options' => $addresses, 'empty' => true]);
+        echo $this->Form->control('description');
+        echo $this->Form->control('location_image');
+        echo $this->Form->control('latitude');
+        echo $this->Form->control('longitude');
+        echo $this->Form->control('hasstable');
+        echo $this->Form->control('total_stable');
+        echo $this->Form->control('total_cow_capacity');
+        echo $this->Form->control('hasmeadow');
+        echo $this->Form->control('total_meadow');
+        echo $this->Form->control('total_space');
+        echo $this->Form->control('grass_species');
+        echo $this->Form->control('water_body');
+        echo $this->Form->control('dung_destroy');
+        echo $this->Form->control('createdby');
+        echo $this->Form->control('updatedby');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

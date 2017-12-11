@@ -1,5 +1,15 @@
 <div class="row">
-    <h1 class="font-th-prompt400">ฟาร์ม</h1>
+    <div class="col-md-12">
+        <h1 class="font-th-prompt400">ฟาร์ม</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <?=$this->Html->link(BT_ADD,['action'=>'add'],['escape'=>false])?>
+    </div>
+    
+</div>
+<div class="row">
     <div class="col-md-12">
         <table cellpadding="0" cellspacing="0" class="table table-hover">
             <thead>
@@ -40,24 +50,7 @@
     </div>
 </div>
 
-
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Farm[]|\Cake\Collection\CollectionInterface $farms
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Farm'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Addresses'), ['controller' => 'Addresses', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Address'), ['controller' => 'Addresses', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
 <div class="farms index large-9 medium-8 columns content">
-    <h3><?= __('Farms') ?></h3>
-
     <div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . __('first')) ?>
