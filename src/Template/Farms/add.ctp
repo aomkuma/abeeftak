@@ -4,8 +4,8 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
-        <?= $this->Html->link(BT_BACK, ['action' => 'add'], ['escape' => false]) ?>
+    <div class="col-md-12 margin-bottom-20">
+        <?= $this->Html->link(BT_BACK, ['action' => 'index'], ['escape' => false]) ?>
     </div>
 </div>
 
@@ -15,18 +15,38 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <?=$this->Form->control('name',['class'=>'form-control','label'=>'ชื่อฟาร์ม'])?>
+                    <?= $this->Form->control('name', ['class' => 'form-control', 'label' => 'ชื่อฟาร์ม']) ?>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <?=$this->Form->control('level',['class'=>'form-control','label'=>'ระดับ'])?>
+                    <?= $this->Form->control('level', ['class' => 'form-control', 'label' => 'ระดับ']) ?>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <?=$this->Form->control('type',['class'=>'form-control','label'=>'ประเภท'])?>
+                    <?= $this->Form->control('type', ['class' => 'form-control', 'label' => 'ประเภท']) ?>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="checkbox">
+                    <label>
+                        <?=$this->Form->checkbox('hasstable')?> มีโรงเรือนเลี้ยงโค
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="checkbox">
+                    <label>
+                        <?=$this->Form->checkbox('hasmeadow')?> มีแปลงหญ้า
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="exampleInputFile">พันธุ์หญ้าหลักที่ปลูก</label>
+                <?=$this->Form->select('grass_species',[],['class'=>'form-control'])?>
             </div>
         </div>
         <?= $this->Form->end() ?>
