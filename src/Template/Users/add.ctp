@@ -1,33 +1,65 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\User $user
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Roles'), ['controller' => 'Roles', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Role'), ['controller' => 'Roles', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="users form large-9 medium-8 columns content">
-    <?= $this->Form->create($user) ?>
-    <fieldset>
-        <legend><?= __('Add User') ?></legend>
-        <?php
-            echo $this->Form->control('title');
-            echo $this->Form->control('firstname');
-            echo $this->Form->control('lastname');
-            echo $this->Form->control('email');
-            echo $this->Form->control('password');
-            echo $this->Form->control('role_id', ['options' => $roles, 'empty' => true]);
-            echo $this->Form->control('position');
-            echo $this->Form->control('createdby');
-            echo $this->Form->control('updatedby');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+
+
+<div class="row" >
+    <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4" >
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="font-th-prompt400">เพิ่มสมาชิกใหม่</h1>
+            </div>
+        </div>
+        <?= $this->Form->create($user) ?>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <?= $this->Form->control('title', ['class' => 'form-control', 'label' => 'คำนำหน้า', 'options' => $title]) ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <?= $this->Form->control('firstname', ['class' => 'form-control', 'label' => 'ชื่อ']) ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <?= $this->Form->control('lastname', ['class' => 'form-control', 'label' => 'นามสกุล']) ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <?= $this->Form->control('email', ['class' => 'form-control', 'label' => 'E-mail']) ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <?= $this->Form->control('password', ['class' => 'form-control', 'label' => 'Password']) ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <?= $this->Form->control('role_id', ['class' => 'form-control', 'label' => 'ประเภทสมาชิก', 'options' => $roles]) ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <?= $this->Form->control('position', ['class' => 'form-control', 'label' => 'ตำแหน่ง']) ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <?= $this->Form->control('createdby', ['class' => 'form-control', 'label' => 'createdby']) ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <?= $this->Form->control('updatedby', ['class' => 'form-control', 'label' => 'updatedby']) ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+        </div>
+        <?= $this->Form->end() ?>
+    </div>
 </div>

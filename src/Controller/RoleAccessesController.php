@@ -1,7 +1,10 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * RoleAccesses Controller
@@ -10,16 +13,21 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\RoleAccess[] paginate($object = null, array $settings = [])
  */
-class RoleAccessesController extends AppController
-{
+class RoleAccessesController extends AppController {
+
+    public $Controllers = null;
+
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+        $this->Controllers = TableRegistry::get('Controllers');
+    }
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
+    public function index() {
         $this->paginate = [
             'contain' => ['Roles', 'Actions']
         ];
@@ -36,8 +44,7 @@ class RoleAccessesController extends AppController
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $roleAccess = $this->RoleAccesses->get($id, [
             'contain' => ['Roles', 'Actions']
         ]);
@@ -51,21 +58,36 @@ class RoleAccessesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $roleAccess = $this->RoleAccesses->newEntity();
         if ($this->request->is('post')) {
-            $roleAccess = $this->RoleAccesses->patchEntity($roleAccess, $this->request->getData());
-            if ($this->RoleAccesses->save($roleAccess)) {
-                $this->Flash->success(__('The role access has been saved.'));
+            $roleid = $this->request->getData('role_id');
+            $act = $this->request->data['action'];
+            $create = $this->request->getData('createdby');
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The role access could not be saved. Please, try again.'));
+            foreach ($act as $controller):
+                if ($controller['action_id'] != 0) {
+                    $roleAccess = $this->RoleAccesses->newEntity();
+                    $roleAccess->role_id = $roleid;
+                    $roleAccess->action_id = $controller['action_id'];
+                    $roleAccess->createdby = $create;
+
+                    if ($this->RoleAccesses->save($roleAccess)) {
+                        pr('1');
+                    }
+                }
+
+
+            endforeach;
+            return $this->redirect(['action' => 'index']);
         }
+
         $roles = $this->RoleAccesses->Roles->find('list', ['limit' => 200]);
-        $actions = $this->RoleAccesses->Actions->find('list', ['limit' => 200]);
-        $this->set(compact('roleAccess', 'roles', 'actions'));
+
+        $query = $this->Controllers->find('all', ['contain' => ['Actions']]);
+        $actions = $query->toArray();
+
+        $this->set(compact('roleAccess', 'roles', 'actions', 'title'));
         $this->set('_serialize', ['roleAccess']);
     }
 
@@ -76,8 +98,7 @@ class RoleAccessesController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $roleAccess = $this->RoleAccesses->get($id, [
             'contain' => []
         ]);
@@ -103,8 +124,7 @@ class RoleAccessesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $roleAccess = $this->RoleAccesses->get($id);
         if ($this->RoleAccesses->delete($roleAccess)) {
@@ -115,4 +135,5 @@ class RoleAccessesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

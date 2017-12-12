@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -10,16 +11,14 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\Controller[] paginate($object = null, array $settings = [])
  */
-class ControllersController extends AppController
-{
+class ControllersController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
+    public function index() {
         $controllers = $this->paginate($this->Controllers);
 
         $this->set(compact('controllers'));
@@ -33,8 +32,7 @@ class ControllersController extends AppController
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $controller = $this->Controllers->get($id, [
             'contain' => ['Actions']
         ]);
@@ -48,11 +46,29 @@ class ControllersController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
+//        $name = ['Actions', 'Addresses', 'BreedingRecords', 'CowBreeds',
+//            'CowImages', 'Cows', 'Farms', 'GivebirthRecords', 'GrowthRecords',
+//            'Herdsmans', 'Home', 'Images', 'MovementRecords', 'Pages',
+//            'RoleAccesses', 'Roles', 'TreatmentRecords', 'users'];
+//        $namecon = ['ActionsController', 'AddressesController', 'BreedingRecordsController', 'CowBreedsController',
+//            'CowImagesController', 'CowsController', 'FarmsController', 'GivebirthRecordsController', 'GrowthRecordsController',
+//            'HerdsmansController', 'HomeController', 'ImagesController', 'MovementRecordsController', 'PagesController',
+//            'RoleAccessesController', 'RolesController', 'TreatmentRecordsController', 'usersController'];
+
         $controller = $this->Controllers->newEntity();
         if ($this->request->is('post')) {
-            $controller = $this->Controllers->patchEntity($controller, $this->request->getData());
+             $controller = $this->Controllers->patchEntity($controller, $this->request->getData());
+
+//            for ($i = 0; $i < sizeof($namecon); $i++) {
+//                $controller = $this->Controllers->newEntity();
+//                $controller->name = $name[$i];
+//                $controller->value = $namecon[$i];
+//                $controller->description = 'note';
+//                $controller->createdby = 'uan';
+//                $controller->updatedby = 'uan';
+//                $this->Controllers->save($controller);
+//            }
             if ($this->Controllers->save($controller)) {
                 $this->Flash->success(__('The controller has been saved.'));
 
@@ -71,8 +87,7 @@ class ControllersController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $controller = $this->Controllers->get($id, [
             'contain' => []
         ]);
@@ -96,8 +111,7 @@ class ControllersController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $controller = $this->Controllers->get($id);
         if ($this->Controllers->delete($controller)) {
@@ -108,4 +122,5 @@ class ControllersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }
