@@ -38,7 +38,7 @@
 
         <?= $this->element('Layout/nav') ?>
 
-        <div class="container-fluid margin-20">
+        <div class="container">
             <?= $this->fetch('content') ?>
         </div>
 
