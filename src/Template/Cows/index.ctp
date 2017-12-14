@@ -149,7 +149,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <button class="btn btn-info btn-sm"><span class="glyphicon glyphicon-edit"></span></button>
+                        <?=$this->Html->link(BT_EDIT,[],['escape'=>false])?>
                     </td>
                     <td>
                         TAK6000001
