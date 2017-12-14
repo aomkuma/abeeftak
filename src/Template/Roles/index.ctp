@@ -1,63 +1,61 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Role[]|\Cake\Collection\CollectionInterface $roles
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Role'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Role Accesses'), ['controller' => 'RoleAccesses', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Role Access'), ['controller' => 'RoleAccesses', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="roles index large-9 medium-8 columns content">
-    <h3><?= __('Roles') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('isactive') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('description') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('createdby') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('updated') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('updatedby') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($roles as $role): ?>
-            <tr>
-                <td><?= h($role->id) ?></td>
-                <td><?= h($role->name) ?></td>
-                <td><?= h($role->isactive) ?></td>
-                <td><?= h($role->description) ?></td>
-                <td><?= h($role->created) ?></td>
-                <td><?= h($role->createdby) ?></td>
-                <td><?= h($role->updated) ?></td>
-                <td><?= h($role->updatedby) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $role->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $role->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $role->id], ['confirm' => __('Are you sure you want to delete # {0}?', $role->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+
+
+
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+        <?= $this->Html->link(BT_ADD, ['action' => 'add'], ['escape' => false]) ?>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-lg-offset-3">
+        <h3><?= __('ประเภทผู้ใช้งาน') ?></h3>
+        <table class="table ">
+            <thead>
+                <tr>
+
+                    <th scope="col"><?= $this->Paginator->sort('ชื่อ') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('isactive') ?></th>
+                   
+
+                    <th scope="col"><?= $this->Paginator->sort('description') ?></th>
+                    
+
+                    <th scope="col" class="actions"><?= __('แก้ไข') ?></th>
+                    <th scope="col" class="actions"><?= __('ลบ') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($roles as $role): ?>
+                    <tr>
+
+                        <td><?= h($role->name) ?></td>
+                        <td><?= h($role->isactive) ?></td>
+                        <td><?= h($role->description) ?></td>
+
+                     
+
+                         <td class="actions">
+                            <?= $this->Html->link('<i class="glyphicon glyphicon-pencil"></i>', ['action' => 'edit', $role->id], ['escape' => false, 'label' => false]) ?></td>
+                        <td class="actions">
+                            <?= $this->Html->link('<i class="glyphicon glyphicon-trash"></i>', ['action' => 'delete', $role->id], ['confirm' => __('ท่านต้องการลบข้อมูลสมาชืก ใช่ หรือ ไม่ '), 'escape' => false, 'label' => false]) ?>
+
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <div class="paginator">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< ' . __('first')) ?>
+                <?= $this->Paginator->prev('< ' . __('previous')) ?>
+                <?= $this->Paginator->numbers() ?>
+                <?= $this->Paginator->next(__('next') . ' >') ?>
+                <?= $this->Paginator->last(__('last') . ' >>') ?>
+            </ul>
+            
+        </div>
     </div>
 </div>
+
+

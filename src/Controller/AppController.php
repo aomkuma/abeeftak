@@ -44,12 +44,21 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
-        /*
-         * Enable the following components for recommended CakePHP security settings.
-         * see https://book.cakephp.org/3.0/en/controllers/components/security.html
-         */
-        //$this->loadComponent('Security');
-        //$this->loadComponent('Csrf');
+//       $this->loadComponent('Auth', [
+//            'loginAction' => [
+//                'controller' => 'users',
+//                'action' => 'login'
+//            ],
+//            'logoutRedirect' => [
+//                'controller' => 'home',
+//                'action' => 'index'
+//            ],
+//            'authenticate' => [
+//                'Form' => [
+//                    'fields' => ['username' => 'email']
+//                ]
+//            ]
+//        ]);
     }
 
     /**
@@ -69,4 +78,36 @@ class AppController extends Controller
             $this->set('_serialize', true);
         }
     }
+//     public function beforeFilter(Event $event) {
+//        parent::beforeFilter($event);
+//       
+//        //$this->Auth->allow();
+//      //  $this->authen();
+//    }
+
+//    private function authen(){
+//        $control = strtolower($this->request->params['controller']);
+//        $action = strtolower($this->request->params['action']);
+//     //  debug($action);
+//        $guestDeny = [
+////            'managehome','manage-home',
+////            'managechannels','manage-channels',
+//            'farms'];
+//
+//       if ((is_null($this->request->session()->read('Auth.User')))) {
+//            debug('111');
+//            if (in_array($control, $guestDeny)) {
+//                debug('22');
+//                $this->Auth->deny();
+//                return $this->redirect(['controller' => 'users', 'action' => 'login']);
+//            } else {
+//                debug('333');
+//                $this->Auth->allow();
+//            }
+//            
+//        }else{
+//            $this->Auth->allow();
+//            debug('44');
+//        }
+//    }
 }

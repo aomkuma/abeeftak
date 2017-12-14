@@ -63,14 +63,14 @@ class RoleAccessesController extends AppController {
         if ($this->request->is('post')) {
             $roleid = $this->request->getData('role_id');
             $act = $this->request->data['action'];
-            $create = $this->request->getData('createdby');
+            
 
             foreach ($act as $controller):
                 if ($controller['action_id'] != 0) {
                     $roleAccess = $this->RoleAccesses->newEntity();
                     $roleAccess->role_id = $roleid;
                     $roleAccess->action_id = $controller['action_id'];
-                    $roleAccess->createdby = $create;
+                    $roleAccess->createdby = 'uan';
 
                     if ($this->RoleAccesses->save($roleAccess)) {
                         pr('1');

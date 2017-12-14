@@ -24,7 +24,7 @@ class UsersController extends AppController
             'contain' => ['Roles']
         ];
         $users = $this->paginate($this->Users);
-
+       
         $this->set(compact('users'));
         $this->set('_serialize', ['users']);
     }
@@ -94,6 +94,8 @@ class UsersController extends AppController
         $roles = $this->Users->Roles->find('list', ['limit' => 200]);
         $this->set(compact('user', 'roles'));
         $this->set('_serialize', ['user']);
+         $title = ['นาย' => 'นาย', 'นาง' => 'นาง', 'นางสาว' => 'นางสาว'];
+          $this->set('title', $title);
     }
 
     /**
@@ -105,7 +107,7 @@ class UsersController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+       // $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
             $this->Flash->success(__('The user has been deleted.'));
@@ -115,4 +117,20 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+    public function login(){
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $user = $this->Users->get($user['id']);
+                $this->Auth->setUser($user);
+                return $this->redirect(['controller' => 'users', 'action' => 'index']);
+            }
+            $this->Flash->error(__('Invalid username or password, try again'));
+        }
+    }
+    public function logout() {
+        $this->request->session()->destroy();
+        return $this->redirect($this->Auth->logout());
+    }
+    
 }

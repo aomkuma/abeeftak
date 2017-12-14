@@ -14,44 +14,46 @@
         <li><?= $this->Html->link(__('New Action'), ['controller' => 'Actions', 'action' => 'add']) ?></li>
     </ul>
 </nav>
-<div class="roleAccesses index large-9 medium-8 columns content">
-    <h3><?= __('Role Accesses') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('role_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('action_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('createdby') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($roleAccesses as $roleAccess): ?>
-            <tr>
-                <td><?= h($roleAccess->id) ?></td>
-                <td><?= $roleAccess->has('role') ? $this->Html->link($roleAccess->role->name, ['controller' => 'Roles', 'action' => 'view', $roleAccess->role->id]) : '' ?></td>
-                <td><?= $roleAccess->has('action') ? $this->Html->link($roleAccess->action->name, ['controller' => 'Actions', 'action' => 'view', $roleAccess->action->id]) : '' ?></td>
-                <td><?= h($roleAccess->created) ?></td>
-                <td><?= h($roleAccess->createdby) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $roleAccess->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $roleAccess->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $roleAccess->id], ['confirm' => __('Are you sure you want to delete # {0}?', $roleAccess->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+<div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2">
+        <h3><?= __('Role Accesses') ?></h3>
+        <table class="table ">
+            <thead>
+                <tr>
+                    <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('role_id') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('action_id') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('created') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('createdby') ?></th>
+                    <th scope="col" class="actions"><?= __('Actions') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($roleAccesses as $roleAccess): ?>
+                    <tr>
+                        <td><?= h($roleAccess->id) ?></td>
+                        <td><?= $roleAccess->has('role') ? $this->Html->link($roleAccess->role->name, ['controller' => 'Roles', 'action' => 'view', $roleAccess->role->id]) : '' ?></td>
+                        <td><?= $roleAccess->has('action') ? $this->Html->link($roleAccess->action->name, ['controller' => 'Actions', 'action' => 'view', $roleAccess->action->id]) : '' ?></td>
+                        <td><?= h($roleAccess->created) ?></td>
+                        <td><?= h($roleAccess->createdby) ?></td>
+                        <td class="actions">
+                            <?= $this->Html->link(__('View'), ['action' => 'view', $roleAccess->id]) ?>
+                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $roleAccess->id]) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $roleAccess->id], ['confirm' => __('Are you sure you want to delete # {0}?', $roleAccess->id)]) ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <div class="paginator">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< ' . __('first')) ?>
+                <?= $this->Paginator->prev('< ' . __('previous')) ?>
+                <?= $this->Paginator->numbers() ?>
+                <?= $this->Paginator->next(__('next') . ' >') ?>
+                <?= $this->Paginator->last(__('last') . ' >>') ?>
+            </ul>
+            <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+        </div>
     </div>
 </div>
