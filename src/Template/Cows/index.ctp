@@ -98,7 +98,7 @@
 <div ng-app="abeef">
     <div class="ng-view container">
         <div class="page-header">
-    <h3>ข้อมูลโค</h3>
+    <h3>ข้อมูลโค </h3>
 </div>
 
 <form class="form-horizontal" role="form">
