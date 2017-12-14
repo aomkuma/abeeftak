@@ -11,80 +11,67 @@
         <li><?= $this->Form->postLink(__('Delete Herdsman'), ['action' => 'delete', $herdsman->id], ['confirm' => __('Are you sure you want to delete # {0}?', $herdsman->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Herdsmans'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Herdsman'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Addresses'), ['controller' => 'Addresses', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Address'), ['controller' => 'Addresses', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
-<div class="herdsmans view large-9 medium-8 columns content">
-    <h3><?= h($herdsman->title) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= h($herdsman->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Code') ?></th>
-            <td><?= h($herdsman->code) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Title') ?></th>
-            <td><?= h($herdsman->title) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Firstname') ?></th>
-            <td><?= h($herdsman->firstname) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Lastname') ?></th>
-            <td><?= h($herdsman->lastname) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Idcard') ?></th>
-            <td><?= h($herdsman->idcard) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Isactive') ?></th>
-            <td><?= h($herdsman->isactive) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Address') ?></th>
-            <td><?= $herdsman->has('address') ? $this->Html->link($herdsman->address->id, ['controller' => 'Addresses', 'action' => 'view', $herdsman->address->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Mobile') ?></th>
-            <td><?= h($herdsman->mobile) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Email') ?></th>
-            <td><?= h($herdsman->email) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Description') ?></th>
-            <td><?= h($herdsman->description) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Createdby') ?></th>
-            <td><?= h($herdsman->createdby) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Updatedby') ?></th>
-            <td><?= h($herdsman->updatedby) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Birthday') ?></th>
-            <td><?= h($herdsman->birthday) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Registerdate') ?></th>
-            <td><?= h($herdsman->registerdate) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($herdsman->created) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Updated') ?></th>
-            <td><?= h($herdsman->updated) ?></td>
-        </tr>
-    </table>
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+       
+        <table class="table-condensed" style="width: 100%">
+            <tr>
+                <td class="text-center" colspan="4">รูป <?= $herdsman->has('image') ? $herdsman->image->path : '' ?> </td>
+            </tr>
+            <tr>
+                <td class="text-right"><b>รหัส : </b></td>
+                <td><?= h($herdsman->code) ?></td> 
+                <td class="text-right"><b>ชื่อ-นามสกุล : </b></td>
+                <td><?= h($herdsman->title) ?> &nbsp; <?= h($herdsman->firstname) ?>&nbsp;&nbsp;<?= h($herdsman->lastname) ?></td>
+            </tr>
+
+            <tr>
+                <td class="text-right"><b>รหัสประจำตัวประชาชน :</b> </td>
+                <td><?= h($herdsman->idcard) ?>  </td>
+                <td class="text-right">  </td>
+                <td></td>
+            </tr>    
+            <tr>
+                <td class="text-right">   <b>เบอร์โทรศัพท์: </b> </td>
+                <td><?= h($herdsman->mobile) ?></td>
+                <td class="text-right"> <b>อีเมลล์: </b> </td>
+                <td><?= h($herdsman->email) ?></td>
+            </tr>
+            <tr>
+                <td class="text-right"><b>วันเดือนปีเกิด/วันที่จดทะเบียน : </b></td>
+                <td><?= h($herdsman->birthday) ?></td>
+                <td class="text-right"><b>วันที่ขึ้นทะเบียน : </b> </td>
+                <td><?= h($herdsman->registerdate) ?> </td>
+            </tr>
+            
+            <tr>
+                <td class="text-right"><b>บ้านเลขที่ : </b></td>
+                <td><?= $herdsman->has('address') ? $herdsman->address->houseno : '' ?></td>
+                <td class="text-right"><b>หมู่ที่ : </b></td>
+                <td><?= $herdsman->has('address') ? $herdsman->address->villageno : '' ?></td>
+            </tr>
+
+            <tr>
+                <td class="text-right"><b>ชื่อหมู่บ้าน : </b></td>
+                <td><?= $herdsman->has('address') ? $herdsman->address->villagename : '' ?></td>
+                <td class="text-right"><b>ตำบล : </b></td>
+                <td><?= $herdsman->has('address') ? $herdsman->address->subdistrict : '' ?></td>
+            </tr>
+            <tr>
+                <td class="text-right"><b>อำเภอ : </b></td>
+                <td><?= $herdsman->has('address') ? $herdsman->address->district : '' ?></td>
+                <td class="text-right"><b>จังหวัด : </b></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="text-right"><b>รหัสไปรษณีย์ : </b></td>
+                <td><?= $herdsman->has('address') ? $herdsman->address->postalcode : '' ?></td>
+            </tr>
+        </table>
+        <div><?= $this->Html->link(__('<< ย้อนกลับ'),  ['controller' => 'Herdsmans', 'action' => 'index', 'escape' => false]); ?></div>
+        <?= $this->Form->end() ?>
+    </div>
 </div>

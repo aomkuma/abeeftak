@@ -1,7 +1,15 @@
 <?php
+
 namespace App\Controller;
 
+use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 use App\Controller\AppController;
+use Cake\I18n\Date;
+use Cake\Log\Log;
+use Cake\Routing\Router;
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
 
 /**
  * Herdsmans Controller
@@ -10,16 +18,23 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\Herdsman[] paginate($object = null, array $settings = [])
  */
-class HerdsmansController extends AppController
-{
+class HerdsmansController extends AppController {
+
+    public $Addresses = null;
+    public $Images = null;
+
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+        $this->Addresses = TableRegistry::get('Addresses');
+        $this->Images = TableRegistry::get('Images');
+    }
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
+    public function index() {
         $this->paginate = [
             'contain' => ['Addresses']
         ];
@@ -36,14 +51,17 @@ class HerdsmansController extends AppController
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $herdsman = $this->Herdsmans->get($id, [
-            'contain' => ['Addresses']
+            'contain' => ['Addresses','Images']
+            
         ]);
 
-        $this->set('herdsman', $herdsman);
-        $this->set('_serialize', ['herdsman']);
+        $image = $this->Images->get($herdsman->image_id);
+        $imgpath = $image->path;
+        
+        $this->set('herdsman', $herdsman, 'address', $imgpath);
+        $this->set('_serialize', ['herdsman','address']);
     }
 
     /**
@@ -51,20 +69,70 @@ class HerdsmansController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
+
         $herdsman = $this->Herdsmans->newEntity();
         if ($this->request->is('post')) {
-            $herdsman = $this->Herdsmans->patchEntity($herdsman, $this->request->getData());
-            if ($this->Herdsmans->save($herdsman)) {
-                $this->Flash->success(__('The herdsman has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+            $address = $this->Addresses->newEntity();
+
+            $address->houseno = $this->request->getData('houseno');
+            $address->villageno = $this->request->getData('villageno');
+            $address->villagename = $this->request->getData('villagename');
+            $address->subdistrict = $this->request->getData('subdistrict');
+            $address->district = $this->request->getData('district');
+            $address->province_id = '785bf32b-2ad6-4ede-98ac-4eac989b1430';
+            $address->postalcode = $this->request->getData('postalcode');
+            $address->address_line = 'yy';
+            $address->description = 'uu';
+            $address->createdby = 'ii';
+            $address->updatedby = 'oo';
+
+            if ($this->Addresses->save($address)) {
+
+                $filenameimg = $this->request->data['image']['name'];
+                $extimg = substr(strtolower(strrchr($filenameimg, '.')), 1);
+
+                $uploadpath = 'upload/img/';
+
+                $image = $this->Images->newEntity();
+                $image->name = $this->request->getData('firstname') . '-' . $this->request->getData('lastname') . '.' . $extimg;
+                $image->path = $uploadpath . $this->request->getData('firstname') . '-' . $this->request->getData('lastname') . '.' . $extimg;
+
+                $uploadfileimg = $uploadpath . $this->request->getData('firstname') . '-' . $this->request->getData('lastname') . '.' . $extimg;
+
+                if ($this->Images->save($image)) {
+
+                    move_uploaded_file($this->request->data['image']['tmp_name'], $uploadfileimg);
+
+                    $herdsman = $this->Herdsmans->patchEntity($herdsman, $this->request->getData());
+                    $herdsman->code = '55555';
+                    $herdsman->address_id = $address->id;
+                    $herdsman->image_id = $image->id;
+                    $herdsman->description = 'uio';
+                    $herdsman->createdby = 'ii';
+                    $herdsman->updatedby = 'uu';
+                    $herdsman->isactive = 'Y';
+                    pr($herdsman);
+
+                    if ($this->Herdsmans->save($herdsman)) {
+                        $this->Flash->success(__('The herdsman has been saved.'));
+
+                        return $this->redirect(['action' => 'index']);
+                    }
+                    $this->Images->delete($image);
+                    $this->Addresses->delete($address);
+                    $this->Flash->error(__('The herdsman could not be saved. Please, try again.'));
+                }
+                $this->Addresses->delete($address);
+                $this->Flash->error(__('The herdsman could not be saved. Please, try again.'));
             }
             $this->Flash->error(__('The herdsman could not be saved. Please, try again.'));
         }
         $addresses = $this->Herdsmans->Addresses->find('list', ['limit' => 200]);
-        $this->set(compact('herdsman', 'addresses'));
+        $grade = ['1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5'];
+        $title = ['mr' => 'นาย', 'mrs' => 'นาง', 'ms' => 'นางสาว', 'other' => 'อื่นๆ'];
+        $this->set(compact('herdsman', 'addresses', 'grade', 'title'));
         $this->set('_serialize', ['herdsman']);
     }
 
@@ -75,13 +143,59 @@ class HerdsmansController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $herdsman = $this->Herdsmans->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+
+            ///// address /////
+
+            $address = $this->Addresses->get($herdsman->address_id);
+
+            $address->houseno = $this->request->getData('houseno');
+            $address->villageno = $this->request->getData('villageno');
+            $address->villagename = $this->request->getData('villagename');
+            $address->subdistrict = $this->request->getData('subdistrict');
+            $address->district = $this->request->getData('district');
+            $address->province_id = '785bf32b-2ad6-4ede-98ac-4eac989b1430';
+            $address->postalcode = $this->request->getData('postalcode');
+            $address->address_line = 'yy';
+            $address->description = 'uu';
+            $address->createdby = 'ii';
+            $address->updatedby = 'oo';
+
+            $this->Addresses->save($address);
+
+            ///// image /////
+
+            $image = $this->Images->get($herdsman->image_id);
+
+            $filenameimg = $this->request->data['image']['name'];
+            if ($filenameimg != '') {
+
+                $delfile = $image->path;
+                $file = new File(WWW_ROOT . $delfile, false, 0777);
+                $file->delete();
+
+                $extimg = substr(strtolower(strrchr($filenameimg, '.')), 1);
+
+                $uploadpath = 'upload/img/';
+
+                $image->name = $this->request->getData('firstname') . '-' . $this->request->getData('lastname') . '.' . $extimg;
+                $image->path = $uploadpath . $this->request->getData('firstname') . '-' . $this->request->getData('lastname') . '.' . $extimg;
+
+                $uploadfileimg = $uploadpath . $this->request->getData('firstname') . '-' . $this->request->getData('lastname') . '.' . $extimg;
+
+                $this->Images->save($image);
+                move_uploaded_file($this->request->data['image']['tmp_name'], $uploadfileimg);
+            }
+
+            ///// herdsmans /////
+
             $herdsman = $this->Herdsmans->patchEntity($herdsman, $this->request->getData());
+            $herdsman->updatedby = 'uu';
+            pr($herdsman);
             if ($this->Herdsmans->save($herdsman)) {
                 $this->Flash->success(__('The herdsman has been saved.'));
 
@@ -89,8 +203,12 @@ class HerdsmansController extends AppController
             }
             $this->Flash->error(__('The herdsman could not be saved. Please, try again.'));
         }
-        $addresses = $this->Herdsmans->Addresses->find('list', ['limit' => 200]);
-        $this->set(compact('herdsman', 'addresses'));
+        $address = $this->Addresses->get($herdsman->address_id);
+        $image = $this->Images->get($herdsman->image_id);
+        $imgpath = $image->path;
+        $grade = ['1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5'];
+        $title = ['mr' => 'นาย', 'mrs' => 'นาง', 'ms' => 'นางสาว', 'other' => 'อื่นๆ'];
+        $this->set(compact('herdsman', 'address', 'grade', 'title', 'imgpath'));
         $this->set('_serialize', ['herdsman']);
     }
 
@@ -101,10 +219,18 @@ class HerdsmansController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $herdsman = $this->Herdsmans->get($id);
+        $address = $this->Addresses->get($herdsman->address_id);
+        $image = $this->Images->get($herdsman->image_id);
+
+        $delfile = $image->path;
+        $file = new File(WWW_ROOT . $delfile, false, 0777);
+        $file->delete();
+
+        $this->Addresses->delete($address);
+        $this->Images->delete($image);
         if ($this->Herdsmans->delete($herdsman)) {
             $this->Flash->success(__('The herdsman has been deleted.'));
         } else {
@@ -113,4 +239,5 @@ class HerdsmansController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }
