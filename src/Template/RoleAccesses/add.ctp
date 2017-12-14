@@ -19,9 +19,25 @@
     <fieldset>
         <legend><?= __('Add Role Access') ?></legend>
         <?php
-            echo $this->Form->control('role_id', ['options' => $roles]);
-            echo $this->Form->control('action_id', ['options' => $actions]);
-            echo $this->Form->control('createdby');
+        echo $this->Form->control('role_id', ['options' => $roles]);
+       
+       
+        foreach ($actions as $controller):
+            $actionObjs = $controller['actions'];
+            echo $controller['name'];
+            foreach ($actionObjs as $action):
+                echo $this->Form->checkbox('action[].action_id', array(
+                    'label' => false,
+                    
+                    'value'=>$action['id']
+                   
+                ));
+            echo $action['name'];
+            endforeach;
+            echo '<br/>';
+        endforeach;
+
+        echo $this->Form->control('createdby');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

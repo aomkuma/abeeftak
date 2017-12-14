@@ -1,7 +1,10 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * Actions Controller
@@ -10,16 +13,42 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\Action[] paginate($object = null, array $settings = [])
  */
-class ActionsController extends AppController
-{
+class ActionsController extends AppController {
+
+    public $controll = null;
+
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+        $this->controll = TableRegistry::get('controllers');
+    }
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
+    public function index() {
+        /////////////////
+//        $controll = $this->controll->find('all');
+//        $con = $controll->toArray();
+//        $action = ['add', 'edit', 'index', 'view'];
+
+//
+//        for ($i = 0; $i < sizeof($con); $i++) {
+//            for ($j = 0; $j < sizeof($action); $j++) {
+//                $ac = $this->Actions->newEntity();
+//                $ac->name = $con[$i]['name'] .'-'. $action[$j];
+//                $ac->value = $action[$j];
+//                $ac->controller_id = $con[$i]['id'];
+//                $ac->description = 'note';
+//                $ac->createdby = 'uan';
+//                $ac->updatedby = 'uan';
+//                 $this->Actions->save($ac);
+//            }
+//        }
+
+        //////////////////////
+
         $this->paginate = [
             'contain' => ['Controllers']
         ];
@@ -36,8 +65,7 @@ class ActionsController extends AppController
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $action = $this->Actions->get($id, [
             'contain' => ['Controllers', 'RoleAccesses']
         ]);
@@ -51,8 +79,9 @@ class ActionsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
+        $value = [];
+        $conid = [];
         $action = $this->Actions->newEntity();
         if ($this->request->is('post')) {
             $action = $this->Actions->patchEntity($action, $this->request->getData());
@@ -75,8 +104,7 @@ class ActionsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $action = $this->Actions->get($id, [
             'contain' => []
         ]);
@@ -101,8 +129,7 @@ class ActionsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $action = $this->Actions->get($id);
         if ($this->Actions->delete($action)) {
@@ -113,4 +140,5 @@ class ActionsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }
