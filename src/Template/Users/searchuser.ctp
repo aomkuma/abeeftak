@@ -1,8 +1,8 @@
 
 
 <div class="row">
-    <div class="col-md-12">
-        <?= $this->Html->link(BT_ADD, ['action' => 'add'], ['escape' => false]) ?>
+    <div class="col-lg-8  ">
+        <?= $this->Html->link(BT_BACK, ['action' => 'index'], ['escape' => false]) ?>
     </div>
 
 </div>
@@ -71,4 +71,5 @@
     </div>
     <?= $this->Form->end() ?>
 </div>
+
 

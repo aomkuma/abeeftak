@@ -6,6 +6,7 @@
             <?= $this->Html->link(BT_BACK, ['action' => 'index'], ['escape' => false]) ?>
         </div>
     </div>
+    
 </div>
 <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4" >
     <div class="row">
@@ -14,6 +15,7 @@
         </div>
     </div>
     <?= $this->Form->create($user) ?>
+  
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
