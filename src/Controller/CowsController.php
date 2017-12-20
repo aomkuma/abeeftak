@@ -20,11 +20,31 @@ class CowsController extends AppController
      */
     public function index()
     {
+        //print_r($this->request);
+        $keyword = $this->request->query['keyword'];
+        $gender = $this->request->query['gender'];
+        
+        $arr_con = [];
+        if(!empty($keyword))
+        {
+            $arr_con[] = ['OR' => [['Cows.code LIKE ' => '%'.$keyword.'%'],['CowBreeds.name LIKE ' => '%'.$keyword.'%']]];
+        }
+        if(!empty($gender))
+        {
+            $arr_con[] = ['Cows.gender ' => $gender];
+        }        
+        
+        $data = $this->Cows->find('all'
+                    , ['conditions'=>$arr_con]
+                );
+        
         $this->paginate = [
             'contain' => ['CowBreeds']
         ];
-        $cows = $this->paginate($this->Cows);
+        $cows = $this->paginate($data);
 
+        $this->set(compact('keyword'));
+        $this->set(compact('gender'));
         $this->set(compact('cows'));
         $this->set('_serialize', ['cows']);
     }
