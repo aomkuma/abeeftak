@@ -1,15 +1,14 @@
+<div class="page-header">
+   
+</div>
 
 
-<div class="row" >
-    <div class="row">
-        <div class="col-md-12">
-            <?= $this->Html->link(BT_BACK, ['action' => 'index'], ['escape' => false]) ?>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4" >
+    
+<div class="form-group row">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4" style="box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3)" >
         <div class="row">
             <div class="col-md-12">
-                <h1 class="font-th-prompt400">แก้ไขข้อมูลสมาชิก</h1>
+                <h2 class="font-th-prompt400">แก้ไขข้อมูลสมาชิก</h2>
             </div>
         </div>
         <?= $this->Form->create($user) ?>
@@ -49,23 +48,28 @@
                     <?= $this->Form->control('position', ['class' => 'form-control', 'label' => 'ตำแหน่ง']) ?>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6"style="display: none">
                 <div class="form-group">
                     <?= $this->Form->control('createdby', ['class' => 'form-control', 'label' => 'createdby']) ?>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6"style="display: none">
                 <div class="form-group">
                     <?= $this->Form->control('updatedby', ['class' => 'form-control', 'label' => 'updatedby']) ?>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </div>
+            <div class="col-md-6"style="text-align: right">
+            <div class="form-group">
+                <button type="submit" class="btn btn-default">แก้ไขข้อมูล</button>
             </div>
+        </div>
+         <div class="col-md-6"style="text-align: left">
+            <div class="form-group">
+                 <?= $this->Html->link(BT_BACK, ['action' => 'index'], ['escape' => false]) ?>
+            </div>
+        </div>
         </div>
         <?= $this->Form->end() ?>
     </div>
-</div>
 
+</div>

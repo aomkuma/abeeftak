@@ -88,8 +88,8 @@ class UsersTable extends Table
 
         $validator
             ->scalar('createdby')
-            ->requirePresence('createdby', 'create')
-            ->notEmpty('createdby');
+           // ->requirePresence('createdby', 'create')
+            ->allowEmpty('createdby');
 
         $validator
             ->scalar('updatedby')

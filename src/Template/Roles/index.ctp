@@ -1,46 +1,53 @@
 
-
-
-<div class="row">
-    <div class="col-lg-8 col-lg-offset-2">
-        <?= $this->Html->link(BT_ADD, ['action' => 'add'], ['escape' => false]) ?>
+<div class="page-header col-lg-6 col-md-6 col-sm-6 col-lg-offset-3">
+    <h3>ประเภทผู้ใช้งาน</h3>
+</div>
+<div class="form-group row col-lg-6 col-md-6 col-sm-6 col-lg-offset-3">
+    <div class="col-lg-6 col-md-6 col-sm-6 ">
+        <div class="col-lg-9 col-md-9 col-sm-9 " >
+            <?= $this->Html->link('<button type="button" class="btn btn-info btn-block"><i class="glyphicon glyphicon-plus"></i> เพิ่มประเภทผู้ใช้งาน</button>', ['action' => 'add'], ['escape' => false]) ?>
+        </div>
     </div>
-
+    <div class="col-lg-6 col-md-6 col-sm-6 " >
+        <div class="col-lg-9 col-md-9 col-sm-9 " >
+            <?= $this->Html->link('<button type="button" class="btn btn-info btn-block"><i class="glyphicon glyphicon-plus"></i> ข้อมูลผู้ใช้งาน</button>', ['controller' => 'users', 'action' => 'index'], ['escape' => false]) ?>
+        </div>
+    </div>
 </div>
 <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6 col-lg-offset-3">
-        <h3><?= __('ประเภทผู้ใช้งาน') ?></h3>
-        <table class="table ">
+
+        <table class="table table-bordered table-striped ">
             <thead>
                 <tr>
+                    <th scope="col" class="actions" style="text-align: center"><?= __('แก้ไข') ?></th>
+                    <th scope="col" class="actions"style="text-align: center"><?= __('ลบ') ?></th>
+                    <th scope="col"style="text-align: center"><?= $this->Paginator->sort('ชื่อ') ?></th>
+                    <th scope="col"style="text-align: center"><?= $this->Paginator->sort('สถานะ') ?></th>
 
-                    <th scope="col"><?= $this->Paginator->sort('ชื่อ') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('isactive') ?></th>
-                   
 
-                    <th scope="col"><?= $this->Paginator->sort('description') ?></th>
-                    
+                    <th scope="col"style="text-align: center"><?= $this->Paginator->sort('คำอธิบาย') ?></th>
 
-                    <th scope="col" class="actions"><?= __('แก้ไข') ?></th>
-                    <th scope="col" class="actions"><?= __('ลบ') ?></th>
+
+
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($roles as $role): ?>
                     <tr>
-
-                        <td><?= h($role->name) ?></td>
-                        <td><?= h($role->isactive) ?></td>
-                        <td><?= h($role->description) ?></td>
-
-                     
-
-                         <td class="actions">
-                            <?= $this->Html->link('<i class="glyphicon glyphicon-pencil"></i>', ['action' => 'edit', $role->id], ['escape' => false, 'label' => false]) ?></td>
-                        <td class="actions">
-                            <?= $this->Html->link('<i class="glyphicon glyphicon-trash"></i>', ['action' => 'delete', $role->id], ['confirm' => __('ท่านต้องการลบข้อมูลสมาชืก ใช่ หรือ ไม่ '), 'escape' => false, 'label' => false]) ?>
+                        <td class="actions"style="text-align: center">
+                            <?= $this->Html->link(BT_EDIT, ['action' => 'edit', $role->id], ['escape' => false, 'label' => false]) ?></td>
+                        <td class="actions"style="text-align: center">
+                            <?= $this->Html->link(BT_DELETE, ['action' => 'delete', $role->id], ['confirm' => __('ท่านต้องการลบข้อมูลสมาชืก ใช่ หรือ ไม่ '), 'escape' => false, 'label' => false]) ?>
 
                         </td>
+                        <td style="text-align: center"><?= h($role->name) ?></td>
+                        <td style="text-align: center"><?= h($role->isactive) ?></td>
+                        <td><?= h($role->description) ?></td>
+
+
+
+
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -53,7 +60,7 @@
                 <?= $this->Paginator->next(__('next') . ' >') ?>
                 <?= $this->Paginator->last(__('last') . ' >>') ?>
             </ul>
-            
+
         </div>
     </div>
 </div>

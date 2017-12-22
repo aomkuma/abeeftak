@@ -1,18 +1,17 @@
-
-
-<div class="row">
-    <div class="col-lg-8  ">
-        <?= $this->Html->link(BT_BACK, ['action' => 'index'], ['escape' => false]) ?>
-    </div>
-
+<div class="page-header col-lg-8 col-md-8 col-sm-8 col-lg-offset-2">
+    <h3>ค้นหาผู้ใช้</h3>
 </div>
-<div class="row">
-    <?= $this->Form->create('Post', array('url' => '/users/searchuser')); ?>
+
+<div class="form-group row">
+    <?= $this->Form->create('Post', ['horizontal' => true, 'url' => '/users/searchuser']); ?>
     <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2">
-        <div class="col-lg-6 ">
-            <h3><?= __('ผู้ใช้ระบบ') ?></h3>
+
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <?= $this->Html->link(BT_ADDUSER, ['action' => 'add'], ['escape' => false]) ?>
+            </div>
         </div>
-        <div class="col-lg-6 ">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <div class="input-group">
 
                 <?= $this->Form->control('txtSearch', ['class' => 'form-control', 'label' => false, 'placeholder' => 'กรุณากรอกชื่อ']) ?>
@@ -20,7 +19,15 @@
                     <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                 </div>
             </div>
-        </div>
+        </div> 
+
+
+    </div>
+    <?= $this->Form->end() ?>
+</div>
+<div class="form-group row">
+
+    <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2">
 
         <table class="table table-bordered table-striped ">
             <thead>
@@ -41,9 +48,9 @@
                 <?php foreach ($users as $user): ?>
                     <tr>
                         <td class="actions">
-                            <?= $this->Html->link('<i class="glyphicon glyphicon-edit"></i>', ['action' => 'edit', $user->id], ['escape' => false, 'label' => false]) ?></td>
+                            <?= $this->Html->link(BT_EDIT, ['action' => 'edit', $user->id], ['escape' => false, 'label' => false]) ?></td>
                         <td class="actions">
-                            <?= $this->Html->link('<i class="glyphicon glyphicon-trash"></i>', ['action' => 'delete', $user->id], ['confirm' => __('ท่านต้องการลบข้อมูลสมาชืก ใช่ หรือ ไม่ '), 'escape' => false, 'label' => false]) ?>
+                            <?= $this->Html->link(BT_DELETE, ['action' => 'delete', $user->id], ['confirm' => __('ท่านต้องการลบข้อมูลสมาชืก ใช่ หรือ ไม่ '), 'escape' => false, 'label' => false]) ?>
 
                         </td>
                         <td><?= h($user->firstname) ?></td>
@@ -69,7 +76,6 @@
 
         </div>
     </div>
-    <?= $this->Form->end() ?>
-</div>
 
+</div>
 
