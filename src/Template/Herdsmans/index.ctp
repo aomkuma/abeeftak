@@ -1,25 +1,17 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Herdsman[]|\Cake\Collection\CollectionInterface $herdsmans
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Herdsman'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Addresses'), ['controller' => 'Addresses', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Address'), ['controller' => 'Addresses', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-
-<div class="container">
-    <div class="row">
-        <div class="row">
+<div class="row">
             <div class="col-md-12">
                 <h1 class="font-th-prompt400">รายการผู้เลี้ยงโค</h1>
             </div>
         </div>
+<div class="row">
+    <div class="col-md-12">
+        <?=$this->Html->link(BT_ADD,['action'=>'add'],['escape'=>false])?>
+    </div> 
+</div>
+<br>
+<div class="container">
+    <div class="row">
+        
         <table class="table table-bordered table-striped" style="width: 100%">
             <thead>
                 <tr>
