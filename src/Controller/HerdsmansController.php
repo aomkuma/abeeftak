@@ -37,10 +37,58 @@ class HerdsmansController extends AppController {
     public function index() {
         $this->paginate = [
             'contain' => ['Addresses']
-        ];
-        $herdsmans = $this->paginate($this->Herdsmans);
+        ];        
+              
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $this->request->session()->delete('whereherdsman');
+            pr('2222222222');
+            $searchfrom = $this->request->getData('searchfrom');
+            $search = $this->request->getData('search');
+            
+            $whereherdsman = [];
+            
+            if($searchfrom == 1){
+                
+                array_push($whereherdsman, ['Herdsmans.code' => $search]);
+                
+            } else if($searchfrom == 2){
+                
+                $arrSearch = explode ( " ", $search );
+                
+                array_push($whereherdsman, ['Herdsmans.firstname' => $arrSearch[0], 'Herdsmans.lastname' =>  $arrSearch[1]]);
+                
+            } else if($searchfrom == 3){
+                
+                array_push($whereherdsman, ['Herdsmans.idcard' => $search]);
+                
+            } else {
+                
+                $fromdate = $this->request->getData('fromdate');
+                $todate = $this->request->getData('todate');
+                
+                array_push($whereherdsman, ['Herdsmans.registerdate >=' => $fromdate, 'Herdsmans.registerdate <=' => $todate]);
+                
+            }
+            
+            $this->request->session()->write('whereherdsman', $whereherdsman);
+                      
+            
+        }
         
-        $searchfrom = ['1' => 'รหัสผู้เลี้ยงโค' ,'2' => 'ชื่อ-นามสกุล', '3' => 'รหัสประจำตัวประชาชน'];
+        $herdsmans = $this->paginate($this->Herdsmans->find('all', array('order' => 'Herdsmans.code ASC'))
+                ->where($this->request->session()->read('whereherdsman')), array('limit' => 3));
+        
+//        $chkside = sizeof($herdsmans->toArray());
+//        
+//        if($chkside == 0){
+//            $herdsmans = $this->paginate($this->Herdsmans, array('limit' => 5));
+//        }
+            
+        
+        
+        pr('1111111111111');   
+        
+        $searchfrom = ['1' => 'รหัสผู้เลี้ยงโค' ,'2' => 'ชื่อ-นามสกุล', '3' => 'รหัสประจำตัวประชาชน', '4' => 'วันที่ขึ้นทะเบียน'];
         $this->set(compact('herdsmans','searchfrom'));
         $this->set('_serialize', ['herdsmans']);
     }
@@ -107,7 +155,7 @@ class HerdsmansController extends AppController {
                     move_uploaded_file($this->request->data['image']['tmp_name'], $uploadfileimg);
 
                     $herdsman = $this->Herdsmans->patchEntity($herdsman, $this->request->getData());
-                    $herdsman->code = '55555';
+                    $herdsman->code = '55556';
                     $herdsman->address_id = $address->id;
                     $herdsman->image_id = $image->id;
                     $herdsman->description = 'uio';

@@ -31,6 +31,7 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+                
 
     </head>
 
@@ -53,5 +54,6 @@
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <?= $this->Html->script('bootstrap.min.js') ?>
         <?= $this->Html->script('ie10-viewport-bug-workaround.js') ?>
+        <?= $this->Html->css('bootstrap-datepicker.css') ?>
     </body>
 </html>
