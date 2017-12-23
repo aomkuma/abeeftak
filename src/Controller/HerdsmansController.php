@@ -39,8 +39,9 @@ class HerdsmansController extends AppController {
             'contain' => ['Addresses']
         ];
         $herdsmans = $this->paginate($this->Herdsmans);
-
-        $this->set(compact('herdsmans'));
+        
+        $searchfrom = ['1' => 'รหัสผู้เลี้ยงโค' ,'2' => 'ชื่อ-นามสกุล', '3' => 'รหัสประจำตัวประชาชน'];
+        $this->set(compact('herdsmans','searchfrom'));
         $this->set('_serialize', ['herdsmans']);
     }
 

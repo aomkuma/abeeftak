@@ -1,17 +1,48 @@
-<div class="row">
-            <div class="col-md-12">
-                <h1 class="font-th-prompt400">รายการผู้เลี้ยงโค</h1>
-            </div>
-        </div>
+<script>
+    $(document).ready(function () {
+
+        $('#checkblank').click(function () {
+
+            var searchfrom = $('#searchfrom').val();
+                   
+            if (searchfrom === '') {
+                alert("กรุณาเลือกการค้นหา");
+                $('#searchfrom').focus();
+                return false;
+            }
+            
+        });
+
+    });
+</script>
+
 <div class="row">
     <div class="col-md-12">
-        <?=$this->Html->link(BT_ADD,['action'=>'add'],['escape'=>false])?>
+        <h1 class="font-th-prompt400">รายการผู้เลี้ยงโค</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <?= $this->Html->link(BT_ADD, ['action' => 'add'], ['escape' => false]) ?>
     </div> 
 </div>
 <br>
 <div class="container">
     <div class="row">
-        
+        <table class="table-condensed">
+            <tr>
+                <td><?= $this->Form->select('searchfrom',$searchfrom, ['empty' => 'ค้นหาจาก', 'class' => 'form-control', 'id' => 'searchfrom']); ?></td>  
+                <td><?= $this->Form->input('search', ['class' => 'form-control', 'label' => false, 'id' => 'search']) ?></td>
+            </tr>
+            <tr>
+                <td class="text-right">วันที่ขึ้นทะเบียน : </td>  
+                <td><?= $this->Form->date('fromdate', ['class' => 'form-control', 'label' => false, 'id' => 'fromdate']) ?></td>
+                <td>ถึง</td>
+                <td><?= $this->Form->date('todate', ['class' => 'form-control', 'label' => false, 'id' => 'todate']) ?></td>
+                <td><?= $this->Form->button('ค้นหา', ['class' => 'btn btn-primary', 'id' => 'checkblank']) ?></td>
+            </tr>
+        </table>
+        <br>
         <table class="table table-bordered table-striped" style="width: 100%">
             <thead>
                 <tr>
