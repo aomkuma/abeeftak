@@ -149,6 +149,7 @@ class HerdsmansController extends AppController {
 
                     $herdsman = $this->Herdsmans->patchEntity($herdsman, $this->request->getData());
                     $herdsman->code = '55556';
+                    $herdsman->grade = $this->request->getData('grade');
                     $herdsman->address_id = $address->id;
                     $herdsman->image_id = $image->id;
                     $herdsman->description = 'uio';
