@@ -56,6 +56,15 @@ class CowsTable extends Table
         $this->hasMany('TreatmentRecords', [
             'foreignKey' => 'cow_id'
         ]);
+        $this->hasMany('GrowthRecords', [
+            'foreignKey' => 'cow_id'
+        ]);
+        $this->hasMany('BreedingRecords', [
+            'foreignKey' => 'cow_id'
+        ]);
+        $this->hasMany('GivebirthRecords', [
+            'foreignKey' => 'cow_id'
+        ]);
     }
 
     /**
