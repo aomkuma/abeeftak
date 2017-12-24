@@ -54,6 +54,5 @@
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <?= $this->Html->script('bootstrap.min.js') ?>
         <?= $this->Html->script('ie10-viewport-bug-workaround.js') ?>
-        <?= $this->Html->css('bootstrap-datepicker.css') ?>
     </body>
 </html>

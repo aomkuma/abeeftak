@@ -41,7 +41,6 @@ class HerdsmansController extends AppController {
               
         if ($this->request->is(['patch', 'post', 'put'])) {
             $this->request->session()->delete('whereherdsman');
-            pr('2222222222');
             $searchfrom = $this->request->getData('searchfrom');
             $search = $this->request->getData('search');
             
@@ -76,7 +75,7 @@ class HerdsmansController extends AppController {
         }
         
         $herdsmans = $this->paginate($this->Herdsmans->find('all', array('order' => 'Herdsmans.code ASC'))
-                ->where($this->request->session()->read('whereherdsman')), array('limit' => 3));
+                ->where($this->request->session()->read('whereherdsman')), array('limit' => 15));
         
 //        $chkside = sizeof($herdsmans->toArray());
 //        
@@ -102,14 +101,13 @@ class HerdsmansController extends AppController {
      */
     public function view($id = null) {
         $herdsman = $this->Herdsmans->get($id, [
-            'contain' => ['Addresses','Images']
+            'contain' => ['Addresses']
             
         ]);
 
-        $image = $this->Images->get($herdsman->image_id);
-        $imgpath = $image->path;
         
-        $this->set('herdsman', $herdsman, 'address', $imgpath);
+        
+        $this->set('herdsman', $herdsman, 'address');
         $this->set('_serialize', ['herdsman','address']);
     }
 
