@@ -27,9 +27,7 @@
                 $('#searchfrom').focus();
                 return false;
             }
-
         });
-
     });
 </script>
 
@@ -38,99 +36,99 @@
         <h1 class="font-th-prompt400">รายการผู้เลี้ยงโค</h1>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-2">
-        <?= $this->Html->link(BT_ADD, ['action' => 'add'], ['escape' => false]) ?>
-    </div> 
-</div>
+
 <br>
 <div class="container">
     <div class="row">
-        <?= $this->Form->create('Post', array('url' => '/herdsmans/index')); ?>
-        <table class="table-condensed">
-            <tr>
-                <td><?= $this->Form->select('searchfrom', $searchfrom, ['empty' => 'ค้นหาจาก', 'class' => 'form-control', 'id' => 'searchfrom']); ?></td>  
-                <td><?= $this->Form->input('search', ['class' => 'form-control', 'label' => false, 'id' => 'search']) ?></td>
-            </tr>
-            <tr>
-                <td class="text-right">วันที่ขึ้นทะเบียน : </td>  
-                <td>
-                    <div class='input-group date' id='datetimepicker1'> 
-                        <?= $this->Form->text('fromdate', ['class' => 'form-control', 'id' => 'todate', 'label' => false, 'readonly' => 'readonly']) ?> 
-                        <span class="input-group-addon"> 
-                            <span class="glyphicon glyphicon-th"></span> 
-                        </span> 
-                    </div>
-                    <script type="text/javascript">
-                        $(function () {
-                            $('#datetimepicker1').datepicker({
-
-                                format: 'dd-mm-yyyy',
-                                language: 'th',
-                                thaiyear: true,
-                                ignoreReadonly: true
-                            });
-                        });
-                    </script>
-                </td>
-                <td>ถึง</td>
-                <td>
-                    <div class='input-group date' id='datetimepicker2'> 
-                        <?= $this->Form->text('todate', ['class' => 'form-control', 'id' => 'todate', 'label' => false, 'readonly' => 'readonly']) ?> 
-                        <span class="input-group-addon"> 
-                            <span class="glyphicon glyphicon-th"></span> 
-                        </span> 
-                    </div>
-                    <script type="text/javascript">
-                        $(function () {
-                            $('#datetimepicker2').datepicker({
-
-                                format: 'dd-mm-yyyy',
-                                language: 'th',
-                                thaiyear: true,
-                                ignoreReadonly: true
-                            });
-                        });
-                    </script>
-                </td>
-                <td><?= $this->Form->button('ค้นหา', ['class' => 'btn btn-primary', 'id' => 'checkblank']) ?></td>
-            </tr>
-        </table>
-        <?= $this->Form->end() ?>
-        <br>
-        <table class="table table-bordered table-striped" style="width: 100%">
-            <thead>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2">
+            <?= $this->Form->create('Post', array('url' => '/herdsmans/index')); ?>
+            <table class="table-condensed">
                 <tr>
-                    <th class="text-center"><?= $this->Paginator->sort('แก้ไข') ?></th>
-                    <th class="text-center"><?= $this->Paginator->sort('ลบ') ?></th>
-                    <th class="text-center"><?= $this->Paginator->sort('รหัส') ?></th>
-                    <th class="text-center"><?= $this->Paginator->sort('ชื่อ-นามสกุล') ?></th>
-                    <th class="text-center"><?= $this->Paginator->sort('เลขประจำตัวประชาชน') ?></th>
-                    <th class="text-center"><?= $this->Paginator->sort('วันที่ขึ้นทะเบียน') ?></th>
+                    <td><?= $this->Form->select('searchfrom', $searchfrom, ['empty' => 'ค้นหาจาก', 'class' => 'form-control', 'id' => 'searchfrom']); ?></td>  
+                    <td><?= $this->Form->input('search', ['class' => 'form-control', 'label' => false, 'id' => 'search']) ?></td>
                 </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($herdsmans as $herdsman): ?>
+                <tr>
+                    <td class="text-right">วันที่ขึ้นทะเบียน : </td>  
+                    <td>
+                        <div class='input-group date' id='datetimepicker1'> 
+                            <?= $this->Form->text('fromdate', ['class' => 'form-control', 'id' => 'todate', 'label' => false, 'readonly' => 'readonly']) ?> 
+                            <span class="input-group-addon"> 
+                                <span class="glyphicon glyphicon-th"></span> 
+                            </span> 
+                        </div>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#datetimepicker1').datepicker({
+
+                                    format: 'dd-mm-yyyy',
+                                    language: 'th',
+                                    thaiyear: true,
+                                    ignoreReadonly: true
+                                });
+                            });
+                        </script>
+                    </td>
+                    <td>ถึง</td>
+                    <td>
+                        <div class='input-group date' id='datetimepicker2'> 
+                            <?= $this->Form->text('todate', ['class' => 'form-control', 'id' => 'todate', 'label' => false, 'readonly' => 'readonly']) ?> 
+                            <span class="input-group-addon"> 
+                                <span class="glyphicon glyphicon-th"></span> 
+                            </span> 
+                        </div>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#datetimepicker2').datepicker({
+
+                                    format: 'dd-mm-yyyy',
+                                    language: 'th',
+                                    thaiyear: true,
+                                    ignoreReadonly: true
+                                });
+                            });
+                        </script>
+                    </td>
+                    <td><?= $this->Form->button('ค้นหา', ['class' => 'btn btn-primary', 'id' => 'checkblank']) ?></td>
+                    <td><?= $this->Html->link(BT_ADD, ['action' => 'add'], ['escape' => false]) ?></td>
+                </tr>
+            </table>
+            <?= $this->Form->end() ?>
+            <br>
+
+            <table class="table table-bordered table-striped" style="width: 100%">
+                <thead>
                     <tr>
-                        <td class="text-center"><?= $this->Html->link(__('แก้ไข'), ['action' => 'edit', $herdsman->id]) ?></td>
-                        <td class="text-center"><?= $this->Form->postLink(__('ลบ'), ['action' => 'delete', $herdsman->id], ['confirm' => __('Are you sure you want to delete # {0}?', $herdsman->id)]) ?></td>
-                        <td class="text-center"><?= h($herdsman->code) ?></td>
-                        <td class="text-center"><?= h($herdsman->title) ?> &nbsp;<?= h($herdsman->firstname) ?> &nbsp;&nbsp; <?= h($herdsman->lastname) ?></td>
-                        <td class="text-center"><?= h($herdsman->idcard) ?></td>
-                        <td class="text-center"><?= h($herdsman->registerdate) ?></td>
+                        <th class="text-center"><?= $this->Paginator->sort('แก้ไข') ?></th>
+                        <th class="text-center"><?= $this->Paginator->sort('ลบ') ?></th>
+                        <th class="text-center"><?= $this->Paginator->sort('รหัส') ?></th>
+                        <th class="text-center"><?= $this->Paginator->sort('ชื่อ-นามสกุล') ?></th>
+                        <th class="text-center"><?= $this->Paginator->sort('เลขประจำตัวประชาชน') ?></th>
+                        <th class="text-center"><?= $this->Paginator->sort('วันที่ขึ้นทะเบียน') ?></th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-        <div class="paginator">
-            <ul class="pagination">
-                <?= $this->Paginator->first('<< ' . __('first')) ?>
-                <?= $this->Paginator->prev('< ' . __('previous')) ?>
-                <?= $this->Paginator->numbers() ?>
-                <?= $this->Paginator->next(__('next') . ' >') ?>
-                <?= $this->Paginator->last(__('last') . ' >>') ?>
-            </ul>
-            <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+                </thead>
+                <tbody>
+                    <?php foreach ($herdsmans as $herdsman): ?>
+                        <tr>
+                            <td class="text-center"><?= $this->Html->link(BT_EDIT, ['action' => 'edit', $herdsman->id], ['escape' => false, 'label' => false]) ?></td>
+                            <td class="text-center"><?= $this->Html->link(BT_DELETE, ['action' => 'delete', $herdsman->id], ['confirm' => __('ท่านต้องการลบข้อมูลสมาชืก ใช่ หรือ ไม่ '), 'escape' => false, 'label' => false]) ?></td>
+                            <td class="text-center"><?= h($herdsman->code) ?></td>
+                            <td class="text-center"><?= h($herdsman->title) ?> &nbsp;<?= h($herdsman->firstname) ?> &nbsp;&nbsp; <?= h($herdsman->lastname) ?></td>
+                            <td class="text-center"><?= h($herdsman->idcard) ?></td>
+                            <td class="text-center"><?php echo date("d-m-Y", strtotime($herdsman->registerdate)); ?>&nbsp;</td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <div class="paginator">
+                <ul class="pagination">
+                    <?= $this->Paginator->first('<< ' . __('first')) ?>
+                    <?= $this->Paginator->prev('< ' . __('previous')) ?>
+                    <?= $this->Paginator->numbers() ?>
+                    <?= $this->Paginator->next(__('next') . ' >') ?>
+                    <?= $this->Paginator->last(__('last') . ' >>') ?>
+                </ul>
+                <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+            </div>
         </div>
     </div>
 </div>

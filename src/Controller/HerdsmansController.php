@@ -69,24 +69,19 @@ class HerdsmansController extends AppController {
                 
             }
             
-            $this->request->session()->write('whereherdsman', $whereherdsman);
-                      
+            $this->request->session()->write('whereherdsman', $whereherdsman);                  
             
         }
         
         $herdsmans = $this->paginate($this->Herdsmans->find('all', array('order' => 'Herdsmans.code ASC'))
-                ->where($this->request->session()->read('whereherdsman')), array('limit' => 15));
+                ->where($this->request->session()->read('whereherdsman')), array('limit' => PAGE_LIMIT));
         
 //        $chkside = sizeof($herdsmans->toArray());
 //        
 //        if($chkside == 0){
 //            $herdsmans = $this->paginate($this->Herdsmans, array('limit' => 5));
 //        }
-            
-        
-        
-        pr('1111111111111');   
-        
+                  
         $searchfrom = ['1' => 'รหัสผู้เลี้ยงโค' ,'2' => 'ชื่อ-นามสกุล', '3' => 'รหัสประจำตัวประชาชน', '4' => 'วันที่ขึ้นทะเบียน'];
         $this->set(compact('herdsmans','searchfrom'));
         $this->set('_serialize', ['herdsmans']);
@@ -140,7 +135,7 @@ class HerdsmansController extends AppController {
                 $filenameimg = $this->request->data['image']['name'];
                 $extimg = substr(strtolower(strrchr($filenameimg, '.')), 1);
 
-                $uploadpath = 'upload/img/';
+                $uploadpath = 'upload/img/herdsmans';
 
                 $image = $this->Images->newEntity();
                 $image->name = $this->request->getData('firstname') . '-' . $this->request->getData('lastname') . '.' . $extimg;
@@ -160,7 +155,6 @@ class HerdsmansController extends AppController {
                     $herdsman->createdby = 'ii';
                     $herdsman->updatedby = 'uu';
                     $herdsman->isactive = 'Y';
-                    pr($herdsman);
 
                     if ($this->Herdsmans->save($herdsman)) {
                         $this->Flash->success(__('The herdsman has been saved.'));
@@ -242,7 +236,6 @@ class HerdsmansController extends AppController {
 
             $herdsman = $this->Herdsmans->patchEntity($herdsman, $this->request->getData());
             $herdsman->updatedby = 'uu';
-            pr($herdsman);
             if ($this->Herdsmans->save($herdsman)) {
                 $this->Flash->success(__('The herdsman has been saved.'));
 
