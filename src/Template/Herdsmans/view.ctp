@@ -4,22 +4,14 @@
  * @var \App\Model\Entity\Herdsman $herdsman
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Herdsman'), ['action' => 'edit', $herdsman->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Herdsman'), ['action' => 'delete', $herdsman->id], ['confirm' => __('Are you sure you want to delete # {0}?', $herdsman->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Herdsmans'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Herdsman'), ['action' => 'add']) ?> </li>
-    </ul>
-</nav>
+
 
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
        
         <table class="table-condensed" style="width: 100%">
             <tr>
-                <td class="text-center" colspan="4">รูป <?= $herdsman->has('image') ? $herdsman->image->path : '' ?> </td>
+                <td class="text-center" colspan="4">รูป </td>
             </tr>
             <tr>
                 <td class="text-right"><b>รหัส : </b></td>
