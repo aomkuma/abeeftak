@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
+
 
 /**
  * Farms Controller
@@ -13,6 +15,19 @@ use App\Controller\AppController;
 class FarmsController extends AppController
 {
 
+    public $dung_destroy = [
+        'ทำบ่อก๊าซชีวภาพ'=>'ทำบ่อก๊าซชีวภาพ',
+        'จำหน่าย'=>'จำหน่าย',
+        'ทำปุ๋ยใช้เอง'=>'ทำปุ๋ยใช้เอง',
+        'ปล่องลงสู่สาธารณะ'=>'ปล่องลงสู่สาธารณะ'
+    ];
+
+    public $water_body = [
+        'น้ำประปา'=>'น้ำประปา',
+        'น้ำบาดาล'=>'น้ำบาดาล',
+        'น้ำบ่อ'=>'น้ำบ่อ',
+        'แม่น้ำ/คลอง/ห้วย'=>'แม่น้ำ/คลอง/ห้วย'
+    ];
     /**
      * Index method
      *
@@ -64,7 +79,11 @@ class FarmsController extends AppController
             $this->Flash->error(__('The farm could not be saved. Please, try again.'));
         }
         $addresses = $this->Farms->Addresses->find('list', ['limit' => 200]);
+
         $this->set(compact('farm', 'addresses'));
+        $this->set('dung_destroy',$this->dung_destroy);
+        $this->set('water_body',$this->water_body);
+        $this->set('provinces',$this->getListprovinces());
         $this->set('_serialize', ['farm']);
     }
 
@@ -112,5 +131,17 @@ class FarmsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    private function getListprovinces(){
+        $provinceModel = TableRegistry::get('Provinces');
+        $provinces = $provinceModel->find('list',[
+            'keyField'=>'id',
+            'valueField'=>'province_name',
+            'conditions'=>['Provinces.province_name'=>'ตาก']
+            ]);
+
+        //$provinces = $query->toArray();
+        return $provinces;
     }
 }
