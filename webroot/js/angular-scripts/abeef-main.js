@@ -10,4 +10,4 @@ app.config(function($controllerProvider, $compileProvider, $filterProvider, $pro
   };
 });
 
-var urlGlobal = 'http://localhost/abeeftak/';
+var urlGlobal = 'http://amctak.com/';
