@@ -261,7 +261,7 @@ class HerdsmansController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null) {
-        $this->request->allowMethod(['post', 'delete']);
+        //$this->request->allowMethod(['post', 'delete','put']);
         $herdsman = $this->Herdsmans->get($id);
         $address = $this->Addresses->get($herdsman->address_id);
         $image = $this->Images->get($herdsman->image_id);
