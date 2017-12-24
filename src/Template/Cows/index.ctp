@@ -26,7 +26,7 @@
             <div class="form-group row">
                 <label for="inputKey" class="col-lg-1 col-md-1 col-sm-12 col-xs-12 control-label">ค้นหา</label>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <input type="text" class="form-control" id="keyword" name="keyword" placeholder="รหัสโค" value="<?= $keyword ?>">
+                    <input type="text" class="form-control" id="keyword" name="keyword" placeholder="รหัสโค" value="<?= (empty($keyword)?'':$keyword) ?>">
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                     <!--<select class="form-control" name="gender">
@@ -34,7 +34,7 @@
                         <option value="M">ผู้</option>
                         <option value="F">เมีย</option>
                     </select>-->
-                    <?= $this->Form->input('gender', array('options' => array(''=>'เพศ','M'=>'ผู้','F'=>'เมีย'), 'label'=> false, 'value'=>$gender, 'class'=>'form-control')); ?>
+                    <?= $this->Form->input('gender', array('options' => array(''=>'เพศ ..','M'=>'ผู้','F'=>'เมีย'), 'label'=> false, 'value'=>(empty($gender)?'':$gender), 'class'=>'form-control')); ?>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                     <button type="submit" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-search"></span> ค้นหา</button>
