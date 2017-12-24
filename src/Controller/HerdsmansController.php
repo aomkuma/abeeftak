@@ -123,7 +123,7 @@ class HerdsmansController extends AppController {
             $address->villagename = $this->request->getData('villagename');
             $address->subdistrict = $this->request->getData('subdistrict');
             $address->district = $this->request->getData('district');
-            $address->province_id = '785bf32b-2ad6-4ede-98ac-4eac989b1430';
+            $address->province_id = '38';
             $address->postalcode = $this->request->getData('postalcode');
             $address->address_line = 'yy';
             $address->description = 'uu';
