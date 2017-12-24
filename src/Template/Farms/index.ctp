@@ -4,7 +4,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-2">
         <?=$this->Html->link(BT_ADD,['action'=>'add'],['escape'=>false])?>
     </div>
     
