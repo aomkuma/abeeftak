@@ -32,10 +32,10 @@
         <table class="table table-bordered table-striped ">
             <thead>
                 <tr>
-                    <th scope="col" class="actions"><?= __('แก้ไข') ?></th>
-                    <th scope="col" class="actions"><?= __('ลบ') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('ชื่อ') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('นามสกุล') ?></th>
+                    <th scope="col" class="actions" style="text-align: center"><?= __('แก้ไข') ?></th>
+                    <th scope="col" class="actions" style="text-align: center"><?= __('ลบ') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('ชื่อ - นามสกุล') ?></th>
+                   
                     <th scope="col"><?= $this->Paginator->sort('E-mail') ?></th>
 
                     <th scope="col"><?= $this->Paginator->sort('ประเภท') ?></th>
@@ -53,8 +53,8 @@
                             <?= $this->Html->link(BT_DELETE, ['action' => 'delete', $user->id], ['confirm' => __('ท่านต้องการลบข้อมูลสมาชืก ใช่ หรือ ไม่ '), 'escape' => false, 'label' => false]) ?>
 
                         </td>
-                        <td><?= h($user->firstname) ?></td>
-                        <td><?= h($user->lastname) ?></td>
+                        
+                        <td><?= h($user->firstname."    ".$user->lastname) ?></td>
                         <td><?= h($user->email) ?></td>
 
                         <td><?= $user->has('role') ? $this->Html->link($user->role->name, ['controller' => 'Roles', 'action' => 'view', $user->role->id]) : '' ?></td>
