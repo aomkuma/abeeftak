@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
+use Cake\Event\Event;
 
 /**
  * Cows Controller
@@ -13,6 +15,13 @@ use App\Controller\AppController;
 class CowsController extends AppController
 {
 
+    public $CowBreeds = null;
+
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+        $this->CowBreeds = TableRegistry::get('CowBreeds');
+    }
+
     /**
      * Index method
      *
@@ -21,9 +30,13 @@ class CowsController extends AppController
     public function index()
     {
         //print_r($this->request);
-        $keyword = $this->request->query['keyword'];
-        $gender = $this->request->query['gender'];
-        
+        if(!empty($this->request->query['keyword'])){
+            $keyword = $this->request->query['keyword'];
+        }
+        if(!empty($this->request->query['gender'])){
+            $gender = $this->request->query['gender'];
+        }
+
         $arr_con = [];
         if(!empty($keyword))
         {
@@ -110,6 +123,7 @@ class CowsController extends AppController
             $this->Flash->error(__('The cow could not be saved. Please, try again.'));
         }
         $cowBreeds = $this->Cows->CowBreeds->find('list', ['limit' => 200]);
+        $this->set('id', $id);
         $this->set(compact('cow', 'cowBreeds'));
         $this->set('_serialize', ['cow']);
     }
@@ -132,5 +146,77 @@ class CowsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function loadData(){
+        $data = $this->Cows->get($this->request->data('cows_id'), [
+            'contain' => ['CowBreeds', 'CowImages', 'MovementRecords', 'TreatmentRecords','GrowthRecords', 'BreedingRecords', 'GivebirthRecords']
+        ]);
+
+        $this->response->body(json_encode($data));
+        $this->response->statusCode(200);
+        $this->response->type('application/json');
+
+        return $this->response;
+    }
+
+    public function saveCows(){
+        $this->autoRender = false;
+        $Cow = $this->request->getData();
+        $CowBreed = $Cow['cow_breed'];
+        unset($Cow['cow_breed']);
+        unset($Cow['cow_images']);
+        unset($Cow['growth_records']);
+        unset($Cow['movement_records']);
+        unset($Cow['treatment_records']);
+        unset($Cow['givebirth_records']);
+        // print_r($CowBreed);exit;
+
+        if(empty($CowBreed['id'])){
+            $CowBreeds = $this->CowBreeds->newEntity();
+            $CowBreeds->createdby = 'aaa';
+        }else{
+            $CowBreeds = $this->CowBreeds->get($CowBreed['id']);
+            $CowBreeds->updatedby = 'bbb';
+        }
+        $CowBreeds->name = $CowBreed['name'];
+        
+        $this->CowBreeds->save($CowBreeds);
+        $cow_id = $CowBreeds->id;
+
+        if(!empty($Cow['id'])){
+            $cow = $this->Cows->get($Cow['id'], [
+                'contain' => []
+            ]);
+            $cow->createdby = 'aaa';
+        }else{
+            $cow = $this->Cows->newEntity();
+            $cow->code = 'TAK201700001';
+            $cow->cow_breed_id = $cow_id;
+
+            $cow->updatedby = 'bbb';
+        }
+        $cow->grade = $Cow['grade'];
+        $cow->birthday = $Cow['birthday'];
+        $cow->gender = $Cow['gender'];
+        $cow->isbreeder = $Cow['isbreeder'];
+        $cow->breeding = $Cow['breeding'];
+        $cow->father_code = $Cow['father_code'];
+        $cow->mother_code = $Cow['mother_code'];
+        $cow->origins = $Cow['origins'];
+        $cow->import_date = $Cow['import_date'];
+        
+
+        if($this->Cows->save($cow)){
+            $result = $Cows->id;
+        }else{
+            debug($cow->errors());
+            $result = 'fail to update';
+        }
+        $this->response->body(json_encode($result));
+        $this->response->statusCode(200);
+        $this->response->type('application/json');
+
+        return $this->response;
     }
 }
