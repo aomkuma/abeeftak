@@ -25,7 +25,7 @@ class UsersController extends AppController {
         $this->paginate = [
             'contain' => ['Roles']
         ];
-        $users = $this->paginate($this->Users, array('limit' => 10));
+        $users = $this->paginate($this->Users, array('limit' => PAGE_LIMIT));
 
 
 
@@ -165,7 +165,7 @@ class UsersController extends AppController {
                 'contain' => ['Roles']
             ]);
 
-            $users = $this->paginate($query, array('limit' => 1));
+            $users = $this->paginate($query, array('limit' => PAGE_LIMIT));
             $this->set(compact('users'));
             $this->set('_serialize', ['users']);
         }
