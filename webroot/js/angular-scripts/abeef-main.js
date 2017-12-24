@@ -10,4 +10,4 @@ app.config(function($controllerProvider, $compileProvider, $filterProvider, $pro
   };
 });
 
-var urlGlobal = 'http://127.0.0.1/abeeftak/';
+var urlGlobal = 'http://localhost/abeeftak/';
