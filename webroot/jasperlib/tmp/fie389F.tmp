@@ -1,0 +1,6 @@
+condition.fields=CtrlId
+dbhost=localhost
+dbname=spn
+dbuser=root
+dbpass=
+reportTemplate=C:/xampp/htdocs/abeeftak/webroot//jasperlib/report/beef1.jasper

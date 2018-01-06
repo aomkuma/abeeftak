@@ -219,4 +219,109 @@ class CowsController extends AppController
 
         return $this->response;
     }
+
+    public function printPDF(){
+        
+    //      error_reporting(E_ERROR);
+    // error_reporting(E_ALL);
+    // ini_set('display_errors','On');
+        $WWW_ROOT = str_replace("\\", "/", WWW_ROOT);//str_replace("\\", "/", "C:\xampp\htdocs\abeeftak\webroot\\");
+        //echo $WEB_ROOT;exit;
+        $this->autoRender = false;
+        
+        // Prepare resources & parameters
+        $export_type = 'PDF';
+        $NEWLINE = "\r\n";
+        
+        $CtrlId  =2;
+
+        $fields_content = "condition.fields=CtrlId".$NEWLINE;
+        $fields_content .= "dbhost=localhost".$NEWLINE;
+        $fields_content .= "dbname=spn".$NEWLINE;
+        $fields_content .= "dbuser=root".$NEWLINE;
+        $fields_content .= "dbpass=".$NEWLINE;
+        $fields_content .= "reportTemplate=" . $WWW_ROOT . "/jasperlib/report/beef1.jasper".$NEWLINE;   
+
+        $fields_condition .= "CtrlId.type=LONG".$NEWLINE;
+        $fields_condition .= "CtrlId.value=".$CtrlId.$NEWLINE;
+
+        // Temp files for java call
+        $tmp_path = $WWW_ROOT . "/jasperlib/tmp/";
+        if( !is_dir($tmp_path) ){
+            mkdir($tmp_path);
+        }
+
+        $xname = tempnam($tmp_path, "field_jprp");
+        $xname2 = tempnam($tmp_path, "cond_jprp");
+
+        $prop_field = $xname."_field.prop";
+        $prop_cond = $xname."_cond.prop";
+        $prop_field = $xname;
+        $prop_cond = $xname2;
+
+        // Create property jasper file
+        $f = fopen($prop_field,"w");
+        fwrite($f,$fields_content);
+        fclose($f);
+
+        // Create property parameter in jasper file
+        $f = fopen($prop_cond,"w");
+        
+        fwrite($f,$fields_condition);
+        fclose($f);
+
+        $x_file_field = $prop_field;
+        $x_file_cond = $prop_cond;
+
+        $JAVA_PATH = $WWW_ROOT . "/jdk1.6.0_37/bin/";
+        $cmd = $JAVA_PATH . "java -cp " . $WWW_ROOT . "/jasperlib/lib/cordiaupc.jar;" . $WWW_ROOT . "/jasperlib/jasper-dbs-mysql.jar jasper.dbs.mysql.JasperDbsMysql $export_type \"$x_file_field\" \"$x_file_cond\"";
+
+        // Begin call
+        exec($cmd, $cmd_response);
+        $result = implode("", $cmd_response);
+        $result = base64_decode($result);
+
+        // Create pdf file
+        $pdfFile = $this->keepPdfFile( $result,'pdf', $WWW_ROOT . '/jasperlib/pdf/' );
+
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename=test.pdf');
+        header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($pdfFile));
+        ob_clean();
+        flush();
+        $handle = fopen($pdfFile, "r");
+        if ($handle) {
+            while (($buffer = fgets($handle, 4096)) !== false) {
+                echo $buffer;
+            }
+            if (!feof($handle)) {
+                echo "Error: unexpected fgets() fail\n";
+            }
+            fclose($handle);
+        }
+        exit();
+        
+    }
+
+    private function keepPdfFile( $base64decode,$fileType, $pdfPath){
+
+        // $tmpKeep = "/jasperlib/report/pdf/";
+        $tmpKeep = $pdfPath;
+        if( !is_dir($tmpKeep) ){
+            mkdir($tmpKeep);
+        }
+        
+        $filename = $tmpKeep . $fileType . '_' . date("YmdHis").".pdf";
+        
+        $f=fopen($filename,"w");
+        fwrite($f, $base64decode);
+        fclose($f);
+        
+        return $filename;
+    }
 }
