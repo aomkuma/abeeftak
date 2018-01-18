@@ -31,7 +31,7 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-                
+
 
     </head>
 
@@ -40,7 +40,11 @@
         <?= $this->element('Layout/nav') ?>
 
         <div class="container">
+            <div style="text-align: center">
+                <?= $this->Flash->render() ?> 
+            </div>
             <?= $this->fetch('content') ?>
+
         </div>
 
         <!-- Bootstrap core JavaScript

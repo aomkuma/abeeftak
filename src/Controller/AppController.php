@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -12,6 +13,7 @@
  * @since     0.2.9
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Controller;
 
 use Cake\Controller\Controller;
@@ -25,8 +27,7 @@ use Cake\Event\Event;
  *
  * @link https://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller
-{
+class AppController extends Controller {
 
     /**
      * Initialization hook method.
@@ -37,25 +38,24 @@ class AppController extends Controller
      *
      * @return void
      */
-    public function initialize()
-    {
+    public function initialize() {
         parent::initialize();
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
-//       $this->loadComponent('Auth', [
+//        $this->loadComponent('Auth', [
 //            'loginAction' => [
+//                'controller' => 'users',
+//                'action' => 'index'
+//            ],
+//            'logoutRedirect' => [
 //                'controller' => 'users',
 //                'action' => 'login'
 //            ],
-//            'logoutRedirect' => [
-//                'controller' => 'home',
-//                'action' => 'index'
-//            ],
 //            'authenticate' => [
 //                'Form' => [
-//                    'fields' => ['username' => 'email']
+//                    'fields' => ['username' => 'email', 'password' => 'password']
 //                ]
 //            ]
 //        ]);
@@ -67,47 +67,79 @@ class AppController extends Controller
      * @param \Cake\Event\Event $event The beforeRender event.
      * @return \Cake\Http\Response|null|void
      */
-    public function beforeRender(Event $event)
-    {
+    public function beforeRender(Event $event) {
         // Note: These defaults are just to get started quickly with development
         // and should not be used in production.
         // You should instead set "_serialize" in each action as required.
         if (!array_key_exists('_serialize', $this->viewVars) &&
-            in_array($this->response->getType(), ['application/json', 'application/xml'])
+                in_array($this->response->getType(), ['application/json', 'application/xml'])
         ) {
             $this->set('_serialize', true);
         }
     }
-//     public function beforeFilter(Event $event) {
-//        parent::beforeFilter($event);
-//       
-//        //$this->Auth->allow();
-//      //  $this->authen();
-//    }
 
-//    private function authen(){
-//        $control = strtolower($this->request->params['controller']);
-//        $action = strtolower($this->request->params['action']);
-//     //  debug($action);
-//        $guestDeny = [
-////            'managehome','manage-home',
-////            'managechannels','manage-channels',
-//            'farms'];
-//
-//       if ((is_null($this->request->session()->read('Auth.User')))) {
-//            debug('111');
-//            if (in_array($control, $guestDeny)) {
-//                debug('22');
-//                $this->Auth->deny();
-//                return $this->redirect(['controller' => 'users', 'action' => 'login']);
-//            } else {
-//                debug('333');
-//                $this->Auth->allow();
-//            }
-//            
-//        }else{
-//            $this->Auth->allow();
-//            debug('44');
-//        }
-//    }
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+        //debug($this->request->session()->read());
+//        $this->Auth->allow();
+//        $this->authen();
+    }
+
+    private function authen() {
+        $control = strtolower($this->request->params['controller']);
+        $action = strtolower($this->request->params['action']);
+
+        $controllerguestDenyguestDeny = [
+            'actions', 'addresses', 'breedingrecords', 'controllers', 'cowbreeds', 'roles',
+            'cowimages', 'farms', 'givebirthrecords', 'growthrecords', 'herdsmans', 'images', 'movements',
+            'pages', 'roleaccesses', 'roles', 'treatmentrecords'];
+
+
+        if ((is_null($this->request->session()->read('Auth.User')))) {
+
+            if (in_array($control, $controllerguestDenyguestDeny)) {
+                $this->Auth->deny();
+               // debug('11' . $control);
+                return $this->redirect(['controller' => 'home', 'action' => 'index']);
+            } else {
+                if($control=='users'&&$action=='login'){
+                $this->Auth->allow();
+               // debug('22' . $control);
+                }else if($control=='home'){
+                    $this->Auth->allow();
+                  //   debug('222' . $control);
+                }else{
+                    $this->Auth->deny();
+                  //   debug('2222' . $control);
+                }
+            }
+        } else {
+            debug('33');
+            $status = '';
+            $Permissions = $this->request->session()->read('rolePermissions');
+            debug($Permissions['controller']);
+            debug($control);
+            if (in_array($control, $Permissions['controller'])) {
+                $actionArr = $Permissions['actions'][$control];
+                debug('44');
+//                debug($action);
+//                debug($actionArr);
+                if (in_array($action, $actionArr)) {
+
+                    debug('pass');
+                    $this->Auth->allow();
+                } else {
+                    debug('no');
+                    $this->Auth->deny();
+                     return $this->redirect(['controller' => 'users', 'action' => 'login']);
+                }
+            }else{
+                debug('no1');
+                $this->Auth->deny();
+                 return $this->redirect(['controller' => 'users', 'action' => 'login']);
+            }
+            
+        }
+    }
+
 }
