@@ -11,13 +11,13 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <table cellpadding="0" cellspacing="0" class="table table-hover">
+        <table class="table table-bordered table-striped ">
             <thead>
                 <tr>
                     <th scope="col" class="actions"><?= __('Actions') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('level') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('type') ?></th>
+                    <th scope="col">ชื่อฟาร์ม</th>
+                    <th scope="col">ระดับ</th>
+                    <th scope="col">ประเภท</th>
 
                     <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('createdby') ?></th>

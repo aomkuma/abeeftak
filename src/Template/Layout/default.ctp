@@ -4,69 +4,63 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta name="description" content="">
         <meta name="author" content="">
-        <?= $this->Html->meta('icon') ?>
 
-        <title>ABeef</title>
+        <title>SB Admin 2 - Bootstrap Admin Theme</title>
 
-        <!-- Bootstrap core CSS -->
-        <?= $this->Html->css('bootstrap.css', ['rel' => 'stylesheet']) ?>
+        <!-- Bootstrap Core CSS -->
+        <?= $this->Html->css('/startbootstrap/vendor/bootstrap/css/bootstrap.min.css') ?>
+
+        <!-- MetisMenu CSS -->
+        <?= $this->Html->css('/startbootstrap/vendor/metisMenu/metisMenu.min.css') ?>
+
+        <!-- Custom CSS -->
+        <?= $this->Html->css('/startbootstrap/dist/css/sb-admin-2.css') ?>
+
+        <!-- Morris Charts CSS -->
+        <?= $this->Html->css('/startbootstrap/vendor/morrisjs/morris.css') ?>
+
+
+        <!-- Custom Fonts -->
+        <?= $this->Html->css('/startbootstrap/vendor/font-awesome/css/font-awesome.min.css') ?>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
         <?= $this->Html->css('abeef_style.css', ['rel' => 'stylesheet']) ?>
 
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <?= $this->Html->css('ie10-viewport-bug-workaround.css', ['rel' => 'stylesheet']) ?>
+        <!-- jQuery -->
+        <?= $this->Html->script('/startbootstrap/vendor/jquery/jquery.min.js') ?>
 
-        <!-- Custom styles for this template -->
-        <?= $this->Html->css('dashboard.css', ['rel' => 'stylesheet']) ?>
+        <!-- Bootstrap Core JavaScript -->
+        <?= $this->Html->script('/startbootstrap/vendor/bootstrap/js/bootstrap.min.js') ?>
 
-        <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-        <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-        <?= $this->Html->script('ie-emulation-modes-warning.js') ?>
+        <!-- Metis Menu Plugin JavaScript -->
+        <?= $this->Html->script('/startbootstrap/vendor/metisMenu/metisMenu.min.js') ?>
 
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Morris Charts JavaScript -->
+        <?= $this->Html->script('/startbootstrap/vendor/raphael/raphael.min.js') ?>
+        <?= $this->Html->script('/startbootstrap/vendor/morrisjs/morris.min.js') ?>
+        <?= $this->Html->script('/startbootstrap/data/morris-data.js') ?>
 
-
+        <!-- Custom Theme JavaScript -->
+        <?= $this->Html->script('/startbootstrap/dist/js/sb-admin-2.js') ?>
     </head>
-
     <body>
-
-        <?= $this->element('Layout/nav') ?>
-
-        <div class="container">
-            <div style="text-align: center">
-                <?= $this->Flash->render() ?> 
+        <div id="wrapper">
+            <?= $this->element('Layout/nav') ?>
+            <div class="container">
+                <?= $this->Flash->render() ?>
+                
+                <?= $this->fetch('content') ?>
             </div>
-            <?= $this->fetch('content') ?>
-
+            <!-- /#page-wrapper -->
         </div>
-
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-
-        <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-        <?= $this->Html->script('bootstrap.min.js') ?>
-        <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-        <?= $this->Html->script('vendor/holder.min.js') ?>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <?= $this->Html->script('bootstrap.min.js') ?>
-        <?= $this->Html->script('ie10-viewport-bug-workaround.js') ?>
-        <?= $this->Html->css('bootstrap-datepicker.css') ?>
-        <?= $this->Html->script('angular-scripts/node_modules/angular/angular.min.js') ?>
-        <?= $this->Html->script('angular-scripts/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js') ?>
-        <?= $this->Html->script('angular-scripts/node_modules/angular-animate/angular-animate.min.js') ?>
-        <?= $this->Html->script('angular-scripts/node_modules/angular-cookies/angular-cookies.min.js') ?>
-        <?= $this->Html->script('angular-scripts/node_modules/ng-file-upload/ng-file-upload-shim.min.js') ?>
-        <?= $this->Html->script('angular-scripts/node_modules/ng-file-upload/ng-file-upload.min.js') ?>
-        <?= $this->Html->script('angular-scripts/abeef-main.js') ?>
-        <?= $this->Html->script('angular-scripts/service-factory/HttpService.js') ?>
-        <?= $this->Html->script('angular-scripts/controllers/CowUpdateController.js') ?>
+        <!-- /#wrapper -->
     </body>
 </html>
