@@ -1,17 +1,17 @@
 <div class="row">
-    <div class="col-md-12">
-        <h1 class="font-th-prompt400">ฟาร์ม</h1>
+    <div class="col-lg-12">
+        <h1 class="page-header font-th-prompt400">ฟาร์ม</h1>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-2">
-        <?=$this->Html->link(BT_ADD,['action'=>'add'],['escape'=>false])?>
+    <div class="col-md-12 bt-tool-group">
+        <?= $this->Html->link(BT_ADD, ['action' => 'add'], ['escape' => false]) ?>
     </div>
-    
+
 </div>
 <div class="row">
     <div class="col-md-12">
-        <table class="table table-bordered table-striped ">
+        <table class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
                     <th scope="col" class="actions"><?= __('Actions') ?></th>

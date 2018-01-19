@@ -28,6 +28,18 @@ class FarmsController extends AppController
         'น้ำบ่อ'=>'น้ำบ่อ',
         'แม่น้ำ/คลอง/ห้วย'=>'แม่น้ำ/คลอง/ห้วย'
     ];
+    
+    public $FarmLevels = [
+        'A-Standard'=>'A-Standard',
+        'A-Gold'=>'A-Gold',
+        'A-Premium'=>'A-Premium'
+    ];
+    
+    public $FarmTypes = [
+        'clientele'=>'ระดับ 1 - Clientele',
+        'breeder'=>'ระดับ 2 - Breeder',
+        'conservation'=>'ระดับ 3 - Conservation'
+    ];
     /**
      * Index method
      *
@@ -83,6 +95,8 @@ class FarmsController extends AppController
         $this->set(compact('farm', 'addresses'));
         $this->set('dung_destroy',$this->dung_destroy);
         $this->set('water_body',$this->water_body);
+        $this->set('farm_levels',$this->FarmLevels);
+        $this->set('farm_types',$this->FarmTypes);
         $this->set('provinces',$this->getListprovinces());
         $this->set('_serialize', ['farm']);
     }

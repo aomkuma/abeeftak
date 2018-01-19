@@ -12,13 +12,20 @@
     <!-- /.navbar-header -->
 
     <ul class="nav navbar-top-links navbar-right">
-        <li><?= $this->Html->link('Dashboard', ['controller' => 'home']) ?></li>
+        <li><?= $this->Html->link('แผงควบคุม', ['controller' => 'home']) ?></li>
         <li><?= $this->Html->link('ผู้เลี้ยงโค', ['controller' => 'herdsmans']) ?></li>
         <li><?= $this->Html->link('ฟาร์ม', ['controller' => 'farms']) ?></li>
         <li><?= $this->Html->link('โค', ['controller' => 'Cows']) ?></li>
         <li><?= $this->Html->link('รายงาน', ['controller' => 'Reports']) ?></li>
-        <li><?= $this->Html->link('ผู้ใช้งานระบบ', ['controller' => 'Users']) ?></li>
-        
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="fa fa-gears fa-fw"></i> ตั้งค่าระบบ <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+                <li><?= $this->Html->link('<i class="fa fa-group fa-fw"></i> ผู้ใช้งานระบบ', ['controller' => 'Users'],['escape'=>false]) ?></li>
+                <li><?= $this->Html->link('<i class="glyphicon glyphicon-grain fa-fw"></i> พันธุ์หญ้า', ['controller' => 'grasses'],['escape'=>false]) ?></li>
+            </ul>
+        </li>
        
         <!-- /.dropdown -->
         <li class="dropdown">

@@ -52,7 +52,7 @@
         <?= $this->Html->script('/startbootstrap/dist/js/sb-admin-2.js') ?>
     </head>
     <body>
-        <div id="wrapper">
+        <div id="wrapper" style="background-color: #FFFFFF;">
             <?= $this->element('Layout/nav') ?>
             <div class="container">
                 <?= $this->Flash->render() ?>

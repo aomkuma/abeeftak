@@ -8,7 +8,9 @@ and open the template in the editor.
     Author     : sakorn.s
 */
 @import url('https://fonts.googleapis.com/css?family=Prompt:400,700');
-
+html{
+    background-color: #FFFFFF !important;
+}
 .navbar-abeef {
   background-color: #4CAF50;
   border-color: #e7e7e7;
@@ -33,4 +35,7 @@ and open the template in the editor.
 .font-th-prompt700{
     font-family: 'Prompt', sans-serif !important;
     font-weight: 700 !important;
+}
+.bt-tool-group{
+    margin-bottom: 15px;
 }
