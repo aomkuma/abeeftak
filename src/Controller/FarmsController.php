@@ -98,6 +98,7 @@ class FarmsController extends AppController
         $this->set('farm_levels',$this->FarmLevels);
         $this->set('farm_types',$this->FarmTypes);
         $this->set('provinces',$this->getListprovinces());
+        $this->set('grass',$this->getGrassList());
         $this->set('_serialize', ['farm']);
     }
 
@@ -157,5 +158,12 @@ class FarmsController extends AppController
 
         //$provinces = $query->toArray();
         return $provinces;
+    }
+    
+    private function getGrassList(){
+        $GrassesModel = TableRegistry::get('Grasses');
+        $query = $GrassesModel->find('list');
+        
+        return $query;
     }
 }

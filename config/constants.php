@@ -14,3 +14,5 @@ define('BT_EDIT', '<button class="btn btn-info btn-sm"><span class="glyphicon gl
 define('BT_DELETE', '<button type="button" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></button>');
 define('BT_ADDUSER', '<button type="button" class="btn btn-info btn-block"><i class="glyphicon glyphicon-plus"></i> เพิ่มผู้ใช้</button>');
 define('PAGE_LIMIT', 20);
+
+

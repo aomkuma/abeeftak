@@ -43,18 +43,17 @@
         <!-- Metis Menu Plugin JavaScript -->
         <?= $this->Html->script('/startbootstrap/vendor/metisMenu/metisMenu.min.js') ?>
 
-        <!-- Morris Charts JavaScript -->
-        <?= $this->Html->script('/startbootstrap/vendor/raphael/raphael.min.js') ?>
-        <?= $this->Html->script('/startbootstrap/vendor/morrisjs/morris.min.js') ?>
-        <?= $this->Html->script('/startbootstrap/data/morris-data.js') ?>
+        
 
         <!-- Custom Theme JavaScript -->
         <?= $this->Html->script('/startbootstrap/dist/js/sb-admin-2.js') ?>
+        
+        <?=$this->Html->script('jquery.validate.min.js')?>
     </head>
     <body>
         <div id="wrapper" style="background-color: #FFFFFF;">
             <?= $this->element('Layout/nav') ?>
-            <div class="container">
+            <div class="container margin-top-20">
                 <?= $this->Flash->render() ?>
                 
                 <?= $this->fetch('content') ?>

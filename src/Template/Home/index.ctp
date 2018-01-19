@@ -536,3 +536,8 @@
     <!-- /.col-lg-4 -->
 </div>
 <!-- /.row -->
+
+<!-- Morris Charts JavaScript -->
+<?= $this->Html->script('/startbootstrap/vendor/raphael/raphael.min.js') ?>
+<?= $this->Html->script('/startbootstrap/vendor/morrisjs/morris.min.js') ?>
+<?= $this->Html->script('/startbootstrap/data/morris-data.js') ?>

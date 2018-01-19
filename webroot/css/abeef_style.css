@@ -11,6 +11,11 @@ and open the template in the editor.
 html{
     background-color: #FFFFFF !important;
 }
+
+.error{
+    color: #F44336 !important;
+    font-weight: 300 !important;
+}
 .navbar-abeef {
   background-color: #4CAF50;
   border-color: #e7e7e7;
@@ -21,6 +26,9 @@ html{
 
 .margin-20{
     margin: 20px 20px;
+}
+.margin-top-20{
+    margin-top: 20px !important;
 }
 .margin-bottom-20{
     margin-bottom: 20px;
