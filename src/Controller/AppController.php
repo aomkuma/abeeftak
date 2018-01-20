@@ -46,7 +46,7 @@ class AppController extends Controller {
 
 //        $this->loadComponent('Auth', [
 //            'loginAction' => [
-//                'controller' => 'users',
+//                'controller' => 'home',
 //                'action' => 'index'
 //            ],
 //            'logoutRedirect' => [
@@ -92,53 +92,55 @@ class AppController extends Controller {
         $controllerguestDenyguestDeny = [
             'actions', 'addresses', 'breedingrecords', 'controllers', 'cowbreeds', 'roles',
             'cowimages', 'farms', 'givebirthrecords', 'growthrecords', 'herdsmans', 'images', 'movements',
-            'pages', 'roleaccesses', 'roles', 'treatmentrecords'];
+            'pages', 'roleaccesses', 'roles', 'treatmentrecords', 'users', 'home'];
 
 
         if ((is_null($this->request->session()->read('Auth.User')))) {
 
-            if (in_array($control, $controllerguestDenyguestDeny)) {
-                $this->Auth->deny();
-               // debug('11' . $control);
-                return $this->redirect(['controller' => 'home', 'action' => 'index']);
-            } else {
-                if($control=='users'&&$action=='login'){
-                $this->Auth->allow();
-               // debug('22' . $control);
-                }else if($control=='home'){
-                    $this->Auth->allow();
-                  //   debug('222' . $control);
-                }else{
-                    $this->Auth->deny();
-                  //   debug('2222' . $control);
-                }
-            }
+//            if (in_array($control, $controllerguestDenyguestDeny)) {
+//                $this->Auth->deny();
+//               // debug('11' . $control);
+//                return $this->redirect(['controller' => 'home', 'action' => 'index']);
+//            } else {
+//                if($control=='users'&&$action=='login'){
+//                $this->Auth->allow();
+//               // debug('22' . $control);
+//                }else if($control=='home'){
+//                    $this->Auth->allow();
+//                  //   debug('222' . $control);
+//                }else{
+//                    $this->Auth->deny();
+//                  //   debug('2222' . $control);
+//                }
+//            }
+           if($control=='users'&&$action=='login'){
+               $this->Auth->allow();
+           }else{
+               $this->Auth->deny();
+                return $this->redirect(['controller' => 'users', 'action' => 'login']);
+           }
         } else {
-            debug('33');
+            // debug('33');
             $status = '';
             $Permissions = $this->request->session()->read('rolePermissions');
-            debug($Permissions['controller']);
-            debug($control);
+
             if (in_array($control, $Permissions['controller'])) {
                 $actionArr = $Permissions['actions'][$control];
-                debug('44');
-//                debug($action);
-//                debug($actionArr);
+
                 if (in_array($action, $actionArr)) {
 
-                    debug('pass');
+                    //  debug('pass');
                     $this->Auth->allow();
                 } else {
-                    debug('no');
+                    //    debug('no');
                     $this->Auth->deny();
-                     return $this->redirect(['controller' => 'users', 'action' => 'login']);
+                    return $this->redirect(['controller' => 'users', 'action' => 'login']);
                 }
-            }else{
-                debug('no1');
+            } else {
+                // debug('no1');
                 $this->Auth->deny();
-                 return $this->redirect(['controller' => 'users', 'action' => 'login']);
+                return $this->redirect(['controller' => 'users', 'action' => 'login']);
             }
-            
         }
     }
 

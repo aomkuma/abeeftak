@@ -1,9 +1,9 @@
-<div class="page-header col-lg-8 col-md-8 col-sm-8 col-lg-offset-2">
+<div class="page-header col-lg-10 col-md-10 col-sm-10 col-lg-offset-1">
     <h3 class="font-th-prompt400">เพิ่มประเภทผู้ใช้</h3>
 </div>
 
 
-<div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2" style="box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3)">
+<div class="col-lg-10 col-md-10 col-sm-10 col-lg-offset-1" style="box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3)">
 
     
     <?= $this->Form->create($role) ?>

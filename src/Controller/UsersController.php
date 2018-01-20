@@ -162,6 +162,7 @@ class UsersController extends AppController {
     }
 
     public function login() {
+        $this->viewBuilder()->layout('login');
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {
@@ -220,7 +221,7 @@ class UsersController extends AppController {
 
     public function logout() {
         $this->request->session()->destroy();
-        return $this->redirect($this->Auth->logout());
+      //  return $this->redirect($this->Auth->logout());
     }
 
     public function searchuser() {

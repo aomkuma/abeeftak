@@ -22,24 +22,26 @@
                 <i class="fa fa-gears fa-fw"></i> ตั้งค่าระบบ <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><?= $this->Html->link('<i class="fa fa-group fa-fw"></i> ผู้ใช้งานระบบ', ['controller' => 'Users'],['escape'=>false]) ?></li>
-                <li><?= $this->Html->link('<i class="glyphicon glyphicon-grain fa-fw"></i> พันธุ์หญ้า', ['controller' => 'grasses'],['escape'=>false]) ?></li>
+                <li><?= $this->Html->link('<i class="fa fa-group fa-fw"></i> ผู้ใช้งานระบบ', ['controller' => 'Users'], ['escape' => false]) ?></li>
+                <li><?= $this->Html->link('<i class="glyphicon glyphicon-grain fa-fw"></i> พันธุ์หญ้า', ['controller' => 'grasses'], ['escape' => false]) ?></li>
             </ul>
         </li>
-       
+
         <!-- /.dropdown -->
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                </li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                </li>
+                <?php
+                $user1 = $this->request->session()->read('Auth.User');
+                ?>
+
+                <li><?= $this->Html->link('<i class="fa fa-user fa-fw"></i> User Profile', ['controller' => 'Users', 'action' => 'edit', $user1['id']], ['escape' => false]) ?></li>
+
                 <li class="divider"></li>
-                <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                </li>
+
+                <li><?= $this->Html->link('<i class="fa fa-sign-out fa-fw"></i> Logout', ['controller' => 'Users', 'action' => 'logout'], ['escape' => false]) ?></li>
             </ul>
             <!-- /.dropdown-user -->
         </li>
