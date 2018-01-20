@@ -24,18 +24,19 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <?= $this->Form->control('name', ['class' => 'form-control', 'label' => 'ชื่อฟาร์ม','id'=>'name']) ?>
+                            <label for="">ชื่อฟาร์ม <i class="text-danger">*</i></label>
+                            <?= $this->Form->control('name', ['class' => 'form-control', 'label' => false,'id'=>'name']) ?>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="exampleInputFile">ระดับของฟาร์ม</label>
+                            <label for="">ระดับของฟาร์ม <i class="text-danger">*</i></label>
                             <?= $this->Form->select('level', $farm_levels, ['class' => 'form-control','id'=>'level']) ?>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="exampleInputFile">ประเภทของฟาร์ม</label>
+                            <label for="">ประเภทของฟาร์ม <i class="text-danger">*</i></label>
                             <?= $this->Form->select('type', $farm_types, ['class' => 'form-control','id'=>'type']) ?>
                         </div>
                     </div>
@@ -44,19 +45,19 @@
                     <div class="col-md-4">
                         <div class="checkbox">
                             <label>
-                                <?= $this->Form->checkbox('hasstable') ?> มีโรงเรือนเลี้ยงโค
+                                <?= $this->Form->checkbox('hasstable',['required'=>false]) ?> มีโรงเรือนเลี้ยงโค
                             </label>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="checkbox">
                             <label>
-                                <?= $this->Form->checkbox('hasmeadow') ?> มีแปลงหญ้า
+                                <?= $this->Form->checkbox('hasmeadow',['required'=>false]) ?> มีแปลงหญ้า
                             </label>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <label for="exampleInputFile">พันธุ์หญ้าหลักที่ปลูก</label>
+                        <label for="">พันธุ์หญ้าหลักที่ปลูก</label>
                         <?= $this->Form->select('grass_species', $grass, ['class' => 'form-control']) ?>
                     </div>
                 </div>
@@ -76,41 +77,48 @@
                     <div class="col-md-12">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <?= $this->Form->control('address.address_line', ['class' => 'form-control', 'label' => 'ที่อยู่']) ?>
+                                <label for="">ที่อยู่ <i class="text-danger">*</i></label>
+                                <?= $this->Form->control('address.address_line', ['class' => 'form-control', 'label' => false,'id'=>'address_line']) ?>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
-                                <?= $this->Form->control('address.houseno', ['class' => 'form-control', 'label' => 'บ้านเลขที่']) ?>
+                                <label for="">บ้านเลขที่ <i class="text-danger">*</i></label>
+                                <?= $this->Form->control('address.houseno', ['class' => 'form-control', 'label' => false]) ?>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
-                                <?= $this->Form->control('address.villageno', ['class' => 'form-control', 'label' => 'หมู่ที่']) ?>
+                                <label for="">หมู่ที่ <i class="text-danger">*</i></label>
+                                <?= $this->Form->control('address.villageno', ['class' => 'form-control', 'label' => false]) ?>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <?= $this->Form->control('address.villagename', ['class' => 'form-control', 'label' => 'หมู่บ้าน']) ?>
+                                <label for="">หมู่บ้าน <i class="text-danger">*</i></label>
+                                <?= $this->Form->control('address.villagename', ['class' => 'form-control', 'label' => false]) ?>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <?= $this->Form->control('address.subdistrict', ['class' => 'form-control', 'label' => 'ตำบล', 'id' => 'district']) ?>
+                                <label for="">ตำบล <i class="text-danger">*</i></label>
+                                <?= $this->Form->control('address.subdistrict', ['class' => 'form-control', 'label' => false, 'id' => 'district']) ?>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <?= $this->Form->control('address.district', ['class' => 'form-control', 'label' => 'อำเภอ', 'id' => 'amphoe']) ?>
+                                <label for="">อำเภอ <i class="text-danger">*</i></label>
+                                <?= $this->Form->control('address.district', ['class' => 'form-control', 'label' => false, 'id' => 'amphoe']) ?>
                             </div>
                         </div>
                         <div class="col-md-6">
-
-                            <?= $this->Form->control('address.province_id', ['type' => 'text', 'class' => 'form-control', 'label' => 'จังหวัด', 'id' => 'province', 'disabled' => 'disabled']) ?>
+                            <label for="">จังหวัด <i class="text-danger">*</i></label>
+                            <?= $this->Form->control('address.province_id', ['type' => 'text', 'class' => 'form-control', 'label' => false, 'id' => 'province', 'disabled' => 'disabled']) ?>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <?= $this->Form->control('address.postalcode', ['class' => 'form-control', 'label' => 'รหัสไปรษณีย์', 'id' => 'zipcode']) ?>
+                                <label for="">รหัสไปรษณีย์ <i class="text-danger">*</i></label>
+                                <?= $this->Form->control('address.postalcode', ['class' => 'form-control', 'label' => false, 'id' => 'zipcode']) ?>
                             </div>
                         </div>
                     </div>
@@ -156,7 +164,7 @@
 
     function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 11,
+            zoom: 12,
             center: {lat: defaultLat, lng: defaultLong}
         });
 
