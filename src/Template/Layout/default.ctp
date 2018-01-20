@@ -49,6 +49,15 @@
         <?= $this->Html->script('/startbootstrap/dist/js/sb-admin-2.js') ?>
         
         <?=$this->Html->script('jquery.validate.min.js')?>
+        <?= $this->Html->script('angular-scripts/node_modules/angular/angular.min.js') ?>
+        <?= $this->Html->script('angular-scripts/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js') ?>
+        <?= $this->Html->script('angular-scripts/node_modules/angular-animate/angular-animate.min.js') ?>
+        <?= $this->Html->script('angular-scripts/node_modules/angular-cookies/angular-cookies.min.js') ?>
+        <?= $this->Html->script('angular-scripts/node_modules/ng-file-upload/ng-file-upload-shim.min.js') ?>
+        <?= $this->Html->script('angular-scripts/node_modules/ng-file-upload/ng-file-upload.min.js') ?>
+        <?= $this->Html->script('angular-scripts/abeef-main.js') ?>
+        <?= $this->Html->script('angular-scripts/service-factory/HttpService.js') ?>
+        <?= $this->Html->script('angular-scripts/controllers/CowUpdateController.js') ?>
     </head>
     <body>
         <div id="wrapper" style="background-color: #FFFFFF;">
