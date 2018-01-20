@@ -82,12 +82,25 @@ class FarmsController extends AppController
     {
         $farm = $this->Farms->newEntity();
         if ($this->request->is('post')) {
-            $farm = $this->Farms->patchEntity($farm, $this->request->getData());
+            $data = $this->request->getData();
+            $farm = $this->Farms->patchEntity($farm, $data);
+            
+            $farm->hasstable = 'N';
+            if($data['hasstable'] == 1){
+                $farm->hasstable = 'Y';
+            }
+            
+            $farm->hasmeadow = 'N';
+            if($data['hasmeadow'] == 1){
+                $farm->hasmeadow = 'Y';
+            }
+            
             if ($this->Farms->save($farm)) {
                 $this->Flash->success(__('The farm has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
+            $this->log('','debug');
             $this->Flash->error(__('The farm could not be saved. Please, try again.'));
         }
         $addresses = $this->Farms->Addresses->find('list', ['limit' => 200]);
