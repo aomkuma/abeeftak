@@ -40,7 +40,7 @@
                     <button type="submit" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-search"></span> ค้นหา</button>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                   <?= $this->Html->link('<button type="" class="btn btn-info btn-block"><span class="glyphicon glyphicon-plus"></span> เพิ่มโค</button>', ['action' => 'add'],['escape'=>false]) ?> 
+                   <?= $this->Html->link('<button type="button" class="btn btn-info btn-block"><span class="glyphicon glyphicon-plus"></span> เพิ่มโค</button>', ['action' => 'add'],['escape'=>false]) ?>
                 </div>
             </div>
         </div>
