@@ -79,11 +79,11 @@ class FarmsTable extends Table
             ->allowEmpty('location_image');
 
         $validator
-            ->decimal('latitude')
+            ->scalar('latitude')
             ->allowEmpty('latitude');
 
         $validator
-            ->decimal('longitude')
+            ->scalar('longitude')
             ->allowEmpty('longitude');
 
         $validator
@@ -109,7 +109,7 @@ class FarmsTable extends Table
             ->allowEmpty('total_meadow');
 
         $validator
-            ->integer('total_space')
+            ->scalar('total_space')
             ->allowEmpty('total_space');
 
         $validator

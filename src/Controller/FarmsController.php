@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
-
+use Cake\I18n\Time;
 
 /**
  * Farms Controller
@@ -26,7 +26,7 @@ class FarmsController extends AppController
         'น้ำประปา'=>'น้ำประปา',
         'น้ำบาดาล'=>'น้ำบาดาล',
         'น้ำบ่อ'=>'น้ำบ่อ',
-        'แม่น้ำ/คลอง/ห้วย'=>'แม่น้ำ/คลอง/ห้วย'
+        'ธรรมชาติ'=>'ธรรมชาติ'
     ];
     
     public $FarmLevels = [
@@ -83,8 +83,10 @@ class FarmsController extends AppController
         $farm = $this->Farms->newEntity();
         if ($this->request->is('post')) {
             $data = $this->request->getData();
+            //debug($data);
             $farm = $this->Farms->patchEntity($farm, $data);
             
+            $farm->createdby = 'Default';
             $farm->hasstable = 'N';
             if($data['hasstable'] == 1){
                 $farm->hasstable = 'Y';
@@ -94,24 +96,25 @@ class FarmsController extends AppController
             if($data['hasmeadow'] == 1){
                 $farm->hasmeadow = 'Y';
             }
-            
+            $province = $this->findProvinceByName($data['address']['province_id']);
+            $farm->address->province_id = $province->id;
             if ($this->Farms->save($farm)) {
                 $this->Flash->success(__('The farm has been saved.'));
-
+                
                 return $this->redirect(['action' => 'index']);
             }
-            $this->log('','debug');
+            $this->log($farm->errors(),'debug');
             $this->Flash->error(__('The farm could not be saved. Please, try again.'));
         }
-        $addresses = $this->Farms->Addresses->find('list', ['limit' => 200]);
-
-        $this->set(compact('farm', 'addresses'));
+       
         $this->set('dung_destroy',$this->dung_destroy);
         $this->set('water_body',$this->water_body);
         $this->set('farm_levels',$this->FarmLevels);
         $this->set('farm_types',$this->FarmTypes);
         $this->set('provinces',$this->getListprovinces());
         $this->set('grass',$this->getGrassList());
+        
+        $this->set(compact('farm'));
         $this->set('_serialize', ['farm']);
     }
 
@@ -125,10 +128,26 @@ class FarmsController extends AppController
     public function edit($id = null)
     {
         $farm = $this->Farms->get($id, [
-            'contain' => []
+            'contain' => ['Addresses']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $farm = $this->Farms->patchEntity($farm, $this->request->getData());
+            $data = $this->request->getData();
+            $farm = $this->Farms->patchEntity($farm, $data);
+            
+            $farm->hasstable = 'N';
+            if($data['hasstable'] == 1){
+                $farm->hasstable = 'Y';
+            }
+            
+            $farm->hasmeadow = 'N';
+            if($data['hasmeadow'] == 1){
+                $farm->hasmeadow = 'Y';
+            }
+            $province = $this->findProvinceByName($data['address']['province_id']);
+            $farm->address->province_id = $province->id;
+            $farm->updated = Time::now();
+            $farm->updatedby = 'Default';
+            
             if ($this->Farms->save($farm)) {
                 $this->Flash->success(__('The farm has been saved.'));
 
@@ -136,8 +155,17 @@ class FarmsController extends AppController
             }
             $this->Flash->error(__('The farm could not be saved. Please, try again.'));
         }
-        $addresses = $this->Farms->Addresses->find('list', ['limit' => 200]);
-        $this->set(compact('farm', 'addresses'));
+        $province = $this->findProvinceById($farm->address->province_id);
+        $farm->address->province_id = $province['province_name'];
+        
+        $this->set('dung_destroy',$this->dung_destroy);
+        $this->set('water_body',$this->water_body);
+        $this->set('farm_levels',$this->FarmLevels);
+        $this->set('farm_types',$this->FarmTypes);
+        $this->set('provinces',$this->getListprovinces());
+        $this->set('grass',$this->getGrassList());
+        
+        $this->set(compact('farm'));
         $this->set('_serialize', ['farm']);
     }
 
@@ -161,6 +189,7 @@ class FarmsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
+    
     private function getListprovinces(){
         $provinceModel = TableRegistry::get('Provinces');
         $provinces = $provinceModel->find('list',[
@@ -178,5 +207,26 @@ class FarmsController extends AppController
         $query = $GrassesModel->find('list');
         
         return $query;
+    }
+    
+    private function findProvinceByName($name = null){
+        if(is_null($name)){
+            return null;
+        }
+        $provinceModel = TableRegistry::get('Provinces');
+        $data = $provinceModel->findByProvinceName($name);
+        //$this->log($data->first(),'debug');
+        //$this->log($name,'debug');
+        return $data->first();
+    }
+    private function findProvinceById($id = null){
+        if(is_null($id)){
+            return null;
+        }
+        $provinceModel = TableRegistry::get('Provinces');
+        $data = $provinceModel->get($id);
+        //$this->log($data->first(),'debug');
+        //$this->log($name,'debug');
+        return $data;
     }
 }

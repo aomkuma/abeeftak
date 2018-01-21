@@ -18,30 +18,42 @@
                     <th scope="col">ชื่อฟาร์ม</th>
                     <th scope="col">ระดับ</th>
                     <th scope="col">ประเภท</th>
-
-                    <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('createdby') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('updated') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('updatedby') ?></th>
+                    <th>ที่อยู่</th>
+                    <th scope="col">วันที่เพิ่ม</th>
+                    <th scope="col">ผู้เพิ่ม</th>
 
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($farms as $farm): ?>
+               
                     <tr>
                         <td class="actions">
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $farm->id]) ?>
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $farm->id]) ?>
-                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $farm->id], ['confirm' => __('Are you sure you want to delete # {0}?', $farm->id)]) ?>
+                            <?= $this->Html->link(BT_VIEW, ['action' => 'view', $farm->id],['escape'=>false]) ?>
+                            <?= $this->Html->link(BT_EDIT, ['action' => 'edit', $farm->id],['escape'=>false]) ?>
+                            <?= $this->Form->postLink(BT_DELETE, ['action' => 'delete', $farm->id], ['confirm' => __('คุณต้องการลบ "{0}"?', $farm->name),'escape'=>false]) ?>
                         </td>
                         <td><?= h($farm->name) ?></td>
                         <td><?= h($farm->level) ?></td>
                         <td><?= h($farm->type) ?></td>
-
+                        <td>
+                            <?php 
+                                $address = '';
+                                if(!is_null($farm->address->villagename)){
+                                    $address = $address.'หมู่บ้าน '. $farm->address->villagename.' ';
+                                }
+                                if(!is_null($farm->address->subdistrict)){
+                                    $address = $address.'ตำบล '. $farm->address->subdistrict.' ';
+                                }
+                                if(!is_null($farm->address->district)){
+                                    $address = $address.'อำเภอ '. $farm->address->district.' ';
+                                }
+                                
+                            ?>
+                            <?=h($address)?>
+                        </td>
                         <td><?= h($farm->created) ?></td>
                         <td><?= h($farm->createdby) ?></td>
-                        <td><?= h($farm->updated) ?></td>
-                        <td><?= h($farm->updatedby) ?></td>
 
                     </tr>
                 <?php endforeach; ?>
