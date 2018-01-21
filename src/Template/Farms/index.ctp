@@ -33,7 +33,7 @@
                             <?= $this->Html->link(BT_EDIT, ['action' => 'edit', $farm->id],['escape'=>false]) ?>
                             <?= $this->Form->postLink(BT_DELETE, ['action' => 'delete', $farm->id], ['confirm' => __('คุณต้องการลบ "{0}"?', $farm->name),'escape'=>false]) ?>
                         </td>
-                        <td><?= h($farm->name) ?></td>
+                        <td><?= $this->Html->link(h($farm->name),['action'=>'view',$farm->id],[]) ?></td>
                         <td><?= h($farm->level) ?></td>
                         <td><?= h($farm->type) ?></td>
                         <td>
