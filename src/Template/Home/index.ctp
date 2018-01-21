@@ -14,7 +14,7 @@
                         <?=$this->Html->image('farmer.png',['class'=>'img-responsive'])?>
                     </div>
                     <div class="col-xs-8 text-right">
-                        <div class="huge">26</div>
+                        <div class="huge"><?=h($herdsmanamt)?></div>
                         <div class="font-th-prompt400">จำนวนผู้เลี้ยงโคทั้งหมด</div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                         <?=$this->Html->image('barn.png',['class'=>'img-responsive'])?>
                     </div>
                     <div class="col-xs-8 text-right">
-                        <div class="huge">12</div>
+                        <div class="huge"><?=h($farmamt)?></div>
                         <div class="font-th-prompt400">จำนวนฟาร์มทั้งหมด</div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                         <?=$this->Html->image('islamic-halal.png',['class'=>'img-responsive'])?>
                     </div>
                     <div class="col-xs-8 text-right">
-                        <div class="huge">124</div>
+                        <div class="huge"><?=h($cowamt)?></div>
                         <div class="font-th-prompt400">จำนวนโคทั้งหมด</div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
         <!-- /.panel -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-bar-chart-o fa-fw"></i> Bar Chart Example
+                <i class="fa fa-bar-chart-o fa-fw"></i> จำนวนโคที่เพิ่มแต่ละเดือนประจำปี 2561
                 <div class="pull-right">
 
                 </div>
@@ -110,7 +110,7 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-bar-chart-o fa-fw"></i> Donut Chart Example
+                <i class="fa fa-bar-chart-o fa-fw"></i> จำนวนเพศผู้-เมีย
             </div>
             <div class="panel-body">
                 <div id="morris-donut-chart"></div>
@@ -133,14 +133,11 @@
         Morris.Donut({
             element: 'morris-donut-chart',
             data: [{
-                    label: "Download Sales",
+                    label: "เพศผู้",
                     value: 12
                 }, {
-                    label: "In-Store Sales",
+                    label: "เพศเมีย",
                     value: 30
-                }, {
-                    label: "Mail-Order Sales",
-                    value: 20
                 }],
             resize: true
         });
@@ -148,37 +145,45 @@
         Morris.Bar({
             element: 'morris-bar-chart',
             data: [{
-                    y: '2006',
-                    a: 100,
-                    b: 90
+                    y: 'ม.ค.',
+                    a: 100
                 }, {
-                    y: '2007',
-                    a: 75,
-                    b: 65
+                    y: 'ก.พ.',
+                    a: 75
                 }, {
-                    y: '2008',
-                    a: 50,
-                    b: 40
+                    y: 'มี.ค.',
+                    a: 50
                 }, {
-                    y: '2009',
-                    a: 75,
-                    b: 65
+                    y: 'เม.ย.',
+                    a: 75
                 }, {
-                    y: '2010',
-                    a: 50,
-                    b: 40
+                    y: 'พ.ค.',
+                    a: 50
                 }, {
-                    y: '2011',
-                    a: 75,
-                    b: 65
+                    y: 'มิ.ย.',
+                    a: 75
                 }, {
-                    y: '2012',
-                    a: 100,
-                    b: 90
+                    y: 'ก.ค.',
+                    a: 100
+                }, {
+                    y: 'ส.ค.',
+                    a: 100
+                }, {
+                    y: 'ก.ย.',
+                    a: 100
+                }, {
+                    y: 'ต.ค.',
+                    a: 100
+                }, {
+                    y: 'พ.ย.',
+                    a: 100
+                }, {
+                    y: 'ธ.ค.',
+                    a: 100
                 }],
             xkey: 'y',
-            ykeys: ['a', 'b'],
-            labels: ['Series A', 'Series B'],
+            ykeys: ['a'],
+            labels: ['จำนวน'],
             hideHover: 'auto',
             resize: true
         });
