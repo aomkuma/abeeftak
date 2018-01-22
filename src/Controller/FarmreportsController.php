@@ -33,7 +33,8 @@ class FarmreportsController extends AppController {
         $FarmsModel = TableRegistry::get('Farms');
         $farms = null;
         $issearch = false;
-
+        $jsondata = null;
+        
         if ($this->request->is(['post'])) {
 
             $data = $this->request->getData();
@@ -69,35 +70,13 @@ class FarmreportsController extends AppController {
                 ];
                 $farms = $this->paginate($q);
             } else {
-                $WWW_ROOT = str_replace("\\", "/", WWW_ROOT);
-                include $WWW_ROOT . '/PHPJasperLibrary/PHPJasperXML.inc.php';
-                include $WWW_ROOT . '/PHPJasperLibrary/tcpdf/tcpdf.php';
-                $PHPJasperXML = new \PHPJasperXML;
-                $server = "localhost";
-                $db = "abeef";
-                $user = "root";
-                $pass = "";
-                $version = "0.8b";
-                $pgport = 5432;
-                $pchartfolder = "./class/pchart2";
-
-                //display errors should be off in the php.ini file
-                ini_set('display_errors', 0);
-
-                //setting the path to the created jrxml file
-                $xml = simplexml_load_file($WWW_ROOT . "/jasperlib/report/farm/farmreport.jrxml");
-
-                $PHPJasperXML = new \PHPJasperXML();
-                //$PHPJasperXML->debugsql=true;
-                $PHPJasperXML->arrayParameter = array("CtrlId" => '1');
-                $PHPJasperXML->xml_dismantle($xml);
-
-                $PHPJasperXML->transferDBtoArray($server, $user, $pass, $db);
-                $res = $PHPJasperXML->outpage("I");
-                exit;
+                $data = $q->toArray();
+                $jsondata = json_encode($data);
+                
             }
         }
 
+        $this->set(compact('jsondata'));
         $this->set(compact('farms'));
         $this->set('_serialize', ['farms']);
         $this->set('farm_levels', $this->FarmLevels);

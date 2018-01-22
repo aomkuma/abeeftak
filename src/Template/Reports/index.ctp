@@ -67,13 +67,10 @@
             <div class="panel-body">
                 <ul>
                     <li>
-                        <?= $this->Html->link('รายงานจำนวนผู้ปฏิบัติงาน (Operator)', ['controller' => '', 'action' => ''], ['escape' => false]) ?>
+                        <?= $this->Html->link('รายงานจำนวนผู้ปฏิบัติงาน (Operator)', ['controller' => 'users', 'action' => 'printPDF'], ['escape' => false]) ?>
 
                     </li>
-                    <li>
-
-                        <?= $this->Html->link('รายงานข้อมูลผู้ปฏิบัติงาน (Operator)', ['controller' => '', 'action' => ''], ['escape' => false]) ?>
-                    </li>
+                   
                 </ul>
             </div>
             <div class="panel-footer">

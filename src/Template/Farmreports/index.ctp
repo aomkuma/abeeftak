@@ -1,3 +1,11 @@
+<?=$this->Html->script('farm/farm_report.js')?>
+<script>
+    var jsondata = <?=$jsondata?>;
+    
+    exportPDF(jsondata);
+    
+    console.log(jsondata);
+</script>
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header font-th-prompt400">รายงานฟาร์ม</h1>
