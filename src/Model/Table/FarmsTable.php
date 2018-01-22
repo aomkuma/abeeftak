@@ -10,6 +10,8 @@ use Cake\Validation\Validator;
  * Farms Model
  *
  * @property \App\Model\Table\AddressesTable|\Cake\ORM\Association\BelongsTo $Addresses
+ * @property \App\Model\Table\FarmCowsTable|\Cake\ORM\Association\HasMany $FarmCows
+ * @property \App\Model\Table\FarmHerdsmansTable|\Cake\ORM\Association\HasMany $FarmHerdsmans
  *
  * @method \App\Model\Entity\Farm get($primaryKey, $options = [])
  * @method \App\Model\Entity\Farm newEntity($data = null, array $options = [])
@@ -42,6 +44,12 @@ class FarmsTable extends Table
 
         $this->belongsTo('Addresses', [
             'foreignKey' => 'address_id'
+        ]);
+        $this->hasMany('FarmCows', [
+            'foreignKey' => 'farm_id'
+        ]);
+        $this->hasMany('FarmHerdsmans', [
+            'foreignKey' => 'farm_id'
         ]);
     }
 

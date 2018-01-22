@@ -30,6 +30,8 @@ use Cake\ORM\Entity;
  * @property string $updatedby
  *
  * @property \App\Model\Entity\Address $address
+ * @property \App\Model\Entity\FarmCow[] $farm_cows
+ * @property \App\Model\Entity\FarmHerdsman[] $farm_herdsmans
  */
 class Farm extends Entity
 {
@@ -65,6 +67,8 @@ class Farm extends Entity
         'createdby' => true,
         'updated' => true,
         'updatedby' => true,
-        'address' => true
+        'address' => true,
+        'farm_cows' => true,
+        'farm_herdsmans' => true
     ];
 }
