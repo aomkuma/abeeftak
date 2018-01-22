@@ -26,7 +26,7 @@
             <div class="form-group row">
                 <label for="inputKey" class="col-lg-1 col-md-1 col-sm-12 col-xs-12 control-label">ค้นหา</label>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <input type="text" class="form-control" id="keyword" name="keyword" placeholder="รหัสโค" value="<?= (empty($keyword)?'':$keyword) ?>">
+                    <input type="text" class="form-control" id="keyword" name="keyword" placeholder="รหัสโค / ชื่อโค" value="<?= (empty($keyword)?'':$keyword) ?>">
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                     <!--<select class="form-control" name="gender">

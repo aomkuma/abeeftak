@@ -28,14 +28,14 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-						<div class="form-group has-feedback" ng-class="{ 'has-success' : cow_info.cow_breed_id.$valid,'has-error' : cow_info.cow_breed_id.$invalid}">
+						<div class="form-group has-feedback" ng-class="{ 'has-success' : cow_info.breed_level.$valid,'has-error' : cow_info.breed_level.$invalid}">
 							<label>ระดับสายพันธุ์ :</label> 
-							<select class="form-control" name="cow_breed_id" ng-model="Cows.cow_breed_id" required="true">
+							<select class="form-control" name="breed_level" ng-model="Cows.breed_level" required="true" ng-options="level.id as level.name  for level in BreedLevelList">
 								<option value="">------- กรุณาเลือก -------</option>
-								<option value="1">1</option>
+								
 							</select>
-							<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="cow_info.cow_breed_id.$invalid"></span> 
-							<span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="cow_info.cow_breed_id.$valid"></span>
+							<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="cow_info.breed_level.$invalid"></span> 
+							<span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="cow_info.breed_level.$valid"></span>
 						</div>
 					</div>
 				</div>
@@ -124,6 +124,7 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+						<button type="button" class="btn btn-primary" ng-click="exportToPDF(FertilizeList)" ng-disabled="cow_info.$invalid"><span class="glyphicon glyphicon-floppy-disk"></span> PDF</button>
 						<button type="button" class="btn btn-primary" ng-click="saveCows('cows','saveCows', Cows)" ng-disabled="cow_info.$invalid"><span class="glyphicon glyphicon-floppy-disk"></span> บันทึก</button>
 					</div>
 				</div>
@@ -195,7 +196,7 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-						<button type="button" class="btn btn-primary" ng-click="saveWean(Wean)" ng-disabled="wean.$invalid"><span class="glyphicon glyphicon-floppy-disk"></span> บันทึก</button>
+						<button type="button" class="btn btn-primary" ng-click="saveWean('cows', 'saveWean', Wean, Cows.id)" ng-disabled="wean.$invalid"><span class="glyphicon glyphicon-floppy-disk"></span> บันทึก</button>
 					</div>
 				</div>
 		    </form>
@@ -215,59 +216,60 @@
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : fertilize.age.$valid,'has-error' : fertilize.age.$invalid}">
 							<label>อายุ :</label>
-							<input type="number" name="age" ng-model="Fertilize.age" class="form-control" min="0" max="99" >
+							<input type="number" name="age" ng-model="Fertilize.age" required="true" class="form-control" min="0" max="99" >
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-						<div class="form-group has-feedback">
+						<div class="form-group has-feedback" ng-class="{ 'has-success' : fertilize.food_type.$valid,'has-error' : fertilize.food_type.$invalid}">
 							<label>ประเภทอาหาร :</label>
-							<input type="text" name="food_type" ng-model="Fertilize.food_type" class="form-control">
+							<input type="text" name="food_type" ng-model="Fertilize.food_type" required="true" class="form-control">
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-						<div class="form-group has-feedback">
+						<div class="form-group has-feedback" ng-class="{ 'has-success' : fertilize.total_eating.$valid,'has-error' : fertilize.total_eating.$invalid}">
 							<label>จำนวนอาหารที่กิน :</label>
-							<input type="number" name="total_eating" ng-model="Fertilize.total_eating" class="form-control">
+							<input type="number" name="total_eating" required="true" ng-model="Fertilize.total_eating" class="form-control">
 						</div>
 					</div>
 				</div>
 				<div class="row">
 		    		<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : fertilize.weight.$valid,'has-error' : fertilize.weight.$invalid}">
-							<label>น้ำหนักแรกเกิด :</label>
-							<input type="number" name="weight" ng-model="Fertilize.weight" class="form-control" min="0" max="9999.99">
+							<label>น้ำหนัก :</label>
+							<input type="number" name="weight" required="true" ng-model="Fertilize.weight" class="form-control" min="0" max="9999.99">
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : fertilize.chest.$valid,'has-error' : fertilize.chest.$invalid}">
 							<label>รอบอก :</label>
-							<input type="number" name="chest" ng-model="Fertilize.chest" class="form-control" min="0" max="9999.99">
+							<input type="number" name="chest" required="true" ng-model="Fertilize.chest" class="form-control" min="0" max="9999.99">
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : fertilize.height.$valid,'has-error' : fertilize.height.$invalid}">
 							<label>ความสูง :</label>
-							<input type="number" name="height" ng-model="Fertilize.height" class="form-control" min="0" max="9999.99">
+							<input type="number" name="height" required="true" ng-model="Fertilize.height" class="form-control" min="0" max="9999.99">
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : fertilize.length.$valid,'has-error' : fertilize.length.$invalid}">
 							<label>ความยาว :</label>
-							<input type="number" name="length" ng-model="Fertilize.length" class="form-control" min="0" max="9999.99">
+							<input type="number" name="length" required="true" ng-model="Fertilize.length" class="form-control" min="0" max="9999.99">
 						</div>
 					</div>
 		    	</div>
 		    	<div class="row">
 		    		<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : fertilize.growth_stat.$valid,'has-error' : fertilize.growth_stat.$invalid}">
-							<label>อัตราการเจริญเติบโตหย่านม :</label>
-							<input type="number" name="growth_stat" ng-model="Fertilize.growth_stat" class="form-control" min="0" max="9999.99">
+							<label>อัตราการเจริญเติบโต :</label>
+							<input type="number" name="growth_stat" required="true" ng-model="Fertilize.growth_stat" class="form-control" min="0" max="9999.99">
 						</div>
 					</div>
 				</div>
 		    	<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-						<button type="button" class="btn btn-primary" ng-click="saveFertilize(Fertilize)" ng-disabled="fertilize.$invalid"><span class="glyphicon glyphicon-floppy-disk"></span> บันทึก</button>
+						<input type="hidden" name="id" ng-model="Fertilize.id">
+						<button type="button" class="btn btn-primary" ng-click="saveFertilize('cows', 'saveFertilize', Fertilize, Cows.id)" ng-disabled="fertilize.$invalid"><span class="glyphicon glyphicon-floppy-disk"></span> บันทึก</button>
 						<button type="button" class="btn btn-warning" ng-click="cancelFertilize()"><span class="glyphicon glyphicon-remove"></span> ยกเลิก</button>
 					</div>
 				</div>
@@ -294,10 +296,10 @@
 	    				</tr>
 	    			</thead>
 	    			<tbody>
-	    				<tr ng-repeat="data in Cows.growth_records | filter: { type: 'F' }">
+	    				<tr ng-repeat="data in FertilizeList | filter: { type: 'F' }">
 	    					<td>
 	    						<button class="btn btn-info btn-sm" ng-click="editFertilize(data)"><span class="glyphicon glyphicon-edit"></span></button> 
-	    						<button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
+	    						<button class="btn btn-danger btn-sm" ng-click="deleteFertilize('cows', 'deleteFertilize', data, $index)"><span class="glyphicon glyphicon-trash"></span></button>
 	    					</td>
 	    					<td>{{$index + 1}}</td>
 	    					<td>{{data.record_date | date:'dd/MM/yyyy'}}</td>
@@ -621,6 +623,9 @@
 								</span>
 				                </p>
 							</div>
+							<div class="col-lg-1">
+								<button class="btn btn-primary" ng-click="updloadImg(fileimg, Cows.id)"><span class="glyphicon glyphicon-upload"></span> อัพโหลด</button>
+							</div>
 							<div class="col-lg-3">
 								<img ngf-thumbnail="fileimg" style="height: 10vh;">
 								<div class="file-alert" ng-show="invalidMainImgFile.$error === 'maxSize'">ขนาดไฟล์ต้องไม่เกิน : {{invalidMainImgFile.$errorParam}}</div>
@@ -629,13 +634,13 @@
 						
 					</div>
 				</div>
+
 	    	</form>
 	    </uib-tab>
 	</uib-tabset>
 	
 </div>
 <div class="page-header"></div>
-
 <style type="text/css" media="screen">
 	.container {
 		width: 100%;

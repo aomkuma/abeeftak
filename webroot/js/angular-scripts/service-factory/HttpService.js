@@ -17,7 +17,7 @@ angular.module('HttpService',[]).factory('HttpService', ['$http', '$q', 'Upload'
 
         uploadRequest : function(service, action, obj) {
             // console.log(service, action);
-            Upload.upload({
+            return Upload.upload({
                 url: urlGlobal + '/' + service + '/' + action,
                 data: { 'uploadObj' : obj }
             }).then(function (response) {

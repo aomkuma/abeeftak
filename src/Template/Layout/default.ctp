@@ -58,6 +58,10 @@
         <?= $this->Html->script('angular-scripts/abeef-main.js') ?>
         <?= $this->Html->script('angular-scripts/service-factory/HttpService.js') ?>
         <?= $this->Html->script('angular-scripts/controllers/CowUpdateController.js') ?>
+        <?= $this->Html->script('angular-scripts/node_modules/pdfmake/build/pdfmake.min.js') ?>
+        <?= $this->Html->script('angular-scripts/node_modules/pdfmake/build/vfs_fonts.js') ?>
+        <?= $this->Html->script('angular-scripts/node_modules/pdfmake/build/build/vfs_fonts.js') ?>
+
     </head>
     <body>
         <div id="wrapper" style="background-color: #FFFFFF;">

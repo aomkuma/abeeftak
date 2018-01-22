@@ -16,10 +16,16 @@ class CowsController extends AppController
 {
 
     public $CowBreeds = null;
+    public $GrowthRecords = null;
+    public $Images = null;
+    public $CowImages = null;    
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
         $this->CowBreeds = TableRegistry::get('CowBreeds');
+        $this->GrowthRecords = TableRegistry::get('GrowthRecords');
+        $this->Images =  TableRegistry::get('Images');
+        $this->CowImages =  TableRegistry::get('CowImages');
     }
 
     /**
@@ -150,7 +156,7 @@ class CowsController extends AppController
 
     public function loadData(){
         $data = $this->Cows->get($this->request->data('cows_id'), [
-            'contain' => ['CowBreeds', 'CowImages', 'MovementRecords', 'TreatmentRecords','GrowthRecords', 'BreedingRecords', 'GivebirthRecords']
+            'contain' => ['CowBreeds', 'MovementRecords', 'TreatmentRecords','GrowthRecords', 'BreedingRecords', 'GivebirthRecords', 'CowImages'=>['Images']]
         ]);
 
         $this->response->body(json_encode($data));
@@ -162,6 +168,7 @@ class CowsController extends AppController
 
     public function saveCows(){
         $this->autoRender = false;
+
         $Cow = $this->request->getData();
         $CowBreed = $Cow['cow_breed'];
         unset($Cow['cow_breed']);
@@ -191,11 +198,12 @@ class CowsController extends AppController
             $cow->createdby = 'aaa';
         }else{
             $cow = $this->Cows->newEntity();
-            $cow->code = 'TAK201700001';
+            $cow->code = 'TAK6000001';
             $cow->cow_breed_id = $cow_id;
 
             $cow->updatedby = 'bbb';
         }
+        $cow->breed_level = $Cow['breed_level'];
         $cow->grade = $Cow['grade'];
         $cow->birthday = $Cow['birthday'];
         $cow->gender = $Cow['gender'];
@@ -206,13 +214,160 @@ class CowsController extends AppController
         $cow->origins = $Cow['origins'];
         $cow->import_date = $Cow['import_date'];
         
-
         if($this->Cows->save($cow)){
-            $result = $Cows->id;
+            $result['DATA']['ID'] = $cow->id;
         }else{
             debug($cow->errors());
             $result = 'fail to update';
         }
+
+        $this->response->body(json_encode($result));
+        $this->response->statusCode(200);
+        $this->response->type('application/json');
+
+        return $this->response;
+    }
+
+    public function saveWean(){
+        $this->autoRender = false;
+
+        $obj = $this->request->getData();
+        $weans = $obj['Wean'];
+        $cow_id = $obj['cow_id'];
+        // print_r($weans);
+        // exit;
+        if(empty($weans['id'])){
+            $Wean = $this->GrowthRecords->newEntity();
+            $Wean->type = 'W';
+            $Wean->createdby = 'aaa';
+            $Wean->cow_id = $cow_id;
+        }else{
+            $Wean = $this->GrowthRecords->get($weans['id']);
+            $Wean->updatedby = 'bbb';
+        }
+
+        $Wean->weight = $weans['weight'];
+        $Wean->chest = $weans['chest'];
+        $Wean->height = $weans['height'];
+        $Wean->length = $weans['length'];
+        $Wean->weight1 = $weans['weight1'];
+        $Wean->chest1 = $weans['chest1'];
+        $Wean->height1 = $weans['height1'];
+        $Wean->length1 = $weans['length1'];
+        $Wean->growth_stat = $weans['growth_stat'];
+        
+        if($this->GrowthRecords->save($Wean)){
+            $result['DATA']['ID'] = $Wean->id;
+        }else{
+            debug($Wean->errors());
+            $result = 'fail to update';
+        }
+
+        $this->response->body(json_encode($result));
+        $this->response->statusCode(200);
+        $this->response->type('application/json');
+
+        return $this->response;
+
+    }
+
+    public function saveFertilize(){
+        $this->autoRender = false;
+
+        $obj = $this->request->getData();
+        $fertilizes = $obj['Fertilize'];
+        $cow_id = $obj['cow_id'];
+        // print_r($fertilizes);
+        // exit;
+        if(empty($fertilizes['id'])){
+            $Fertilize = $this->GrowthRecords->newEntity();
+            $Fertilize->type = 'F';
+            $Fertilize->createdby = 'aaa';
+            $Fertilize->cow_id = $cow_id;
+            $action_type='ADD';
+        }else{
+            $Fertilize = $this->GrowthRecords->get($fertilizes['id']);
+            $Fertilize->updatedby = 'bbb';
+        }
+
+        $Fertilize->record_date = $fertilizes['record_date'];
+        $Fertilize->age = $fertilizes['age'];
+        $Fertilize->food_type = $fertilizes['food_type'];
+        $Fertilize->total_eating = $fertilizes['total_eating'];
+        $Fertilize->weight = $fertilizes['weight'];
+        $Fertilize->chest = $fertilizes['chest'];
+        $Fertilize->height = $fertilizes['height'];
+        $Fertilize->length = $fertilizes['length'];
+        $Fertilize->growth_stat = $fertilizes['growth_stat'];
+        
+        if($this->GrowthRecords->save($Fertilize)){
+            $result['DATA']['ACTION'] = $action_type;
+            $result['DATA']['ID'] = $Fertilize->id;
+            $result['DATA']['obj'] = $Fertilize;
+        }else{
+            debug($Fertilize->errors());
+            $result = 'fail to update';
+        }
+
+        $this->response->body(json_encode($result));
+        $this->response->statusCode(200);
+        $this->response->type('application/json');
+
+        return $this->response;
+
+    }
+
+    public function deleteFertilize(){
+        $this->autoRender = false;
+
+        $obj = $this->request->getData();
+        $id = $obj['id'];
+
+        $entity = $this->GrowthRecords->get($id);
+        $res = $this->GrowthRecords->delete($entity);
+        $result['DATA']['DeleteStatus'] = $res;
+
+        $this->response->body(json_encode($result));
+        $this->response->statusCode(200);
+        $this->response->type('application/json');
+
+        return $this->response;
+
+    }
+
+    public function uploadImage(){
+        $this->autoRender = false;
+
+        $obj = $this->request->getData();
+        // print_r($obj);
+        // exit;
+        $file = $obj['uploadObj']['imageObj'];
+        $cow_id = $obj['uploadObj']['cow_id'];
+
+        $WWW_ROOT = WWW_ROOT;
+        $WWW_ROOT = str_replace('\\','/', $WWW_ROOT);
+        $img_path = $WWW_ROOT . 'upload/img/';
+        // echo $WWW_ROOT . 'upload/img/' . $file['name'];
+        // exit;
+        if(move_uploaded_file($file['tmp_name'], $img_path . $file['name'])){
+            // insert table image
+            $images = $this->Images->newEntity();
+            $images->name = $file['name'];
+            $images->type = 'cows';
+            $images->path = $img_path;
+            if($this->Images->save($images)){
+                $img_id = $images->id;
+                $result['DATA']['ImgID'] = $img_id;
+                // Insert cows image
+                $cow_images = $this->CowImages->newEntity();
+                $cow_images->cow_id = $cow_id;
+                $cow_images->image_id = $img_id;
+                $this->CowImages->save($cow_images);
+            }
+        }else{
+            $result = 'Upload failed';
+        }
+
         $this->response->body(json_encode($result));
         $this->response->statusCode(200);
         $this->response->type('application/json');

@@ -48,6 +48,7 @@ class Cow extends Entity
         'gender' => true,
         'isbreeder' => true,
         'cow_breed_id' => true,
+        'breed_level' => true,
         'breeding' => true,
         'father_code' => true,
         'mother_code' => true,
