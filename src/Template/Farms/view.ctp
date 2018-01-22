@@ -1,110 +1,113 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Farm $farm
- */
-?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Farm'), ['action' => 'edit', $farm->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Farm'), ['action' => 'delete', $farm->id], ['confirm' => __('Are you sure you want to delete # {0}?', $farm->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Farms'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Farm'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Addresses'), ['controller' => 'Addresses', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Address'), ['controller' => 'Addresses', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="farms view large-9 medium-8 columns content">
-    <h3><?= h($farm->name) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= h($farm->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Name') ?></th>
-            <td><?= h($farm->name) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Level') ?></th>
-            <td><?= h($farm->level) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Type') ?></th>
-            <td><?= h($farm->type) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Address') ?></th>
-            <td><?= $farm->has('address') ? $this->Html->link($farm->address->id, ['controller' => 'Addresses', 'action' => 'view', $farm->address->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Description') ?></th>
-            <td><?= h($farm->description) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Location Image') ?></th>
-            <td><?= h($farm->location_image) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Hasstable') ?></th>
-            <td><?= h($farm->hasstable) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Hasmeadow') ?></th>
-            <td><?= h($farm->hasmeadow) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Grass Species') ?></th>
-            <td><?= h($farm->grass_species) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Water Body') ?></th>
-            <td><?= h($farm->water_body) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Dung Destroy') ?></th>
-            <td><?= h($farm->dung_destroy) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Createdby') ?></th>
-            <td><?= h($farm->createdby) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Updatedby') ?></th>
-            <td><?= h($farm->updatedby) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Latitude') ?></th>
-            <td><?= $this->Number->format($farm->latitude) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Longitude') ?></th>
-            <td><?= $this->Number->format($farm->longitude) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Total Stable') ?></th>
-            <td><?= $this->Number->format($farm->total_stable) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Total Cow Capacity') ?></th>
-            <td><?= $this->Number->format($farm->total_cow_capacity) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Total Meadow') ?></th>
-            <td><?= $this->Number->format($farm->total_meadow) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Total Space') ?></th>
-            <td><?= $this->Number->format($farm->total_space) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($farm->created) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Updated') ?></th>
-            <td><?= h($farm->updated) ?></td>
-        </tr>
-    </table>
+
+<style>
+    .farm-info{
+
+    }
+    .farm-info p{
+        font-size: 18px;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header font-th-prompt400"><?= h($farm->name) ?></h1>
+    </div>
 </div>
+<div class="row">
+    <div class="col-md-12 bt-tool-group">
+        <?= $this->Html->link(BT_BACK, ['action' => 'index'], ['escape' => false]) ?>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 farm-info">
+        <h3>ข้อมูลฟาร์ม</h3>
+        <p><strong>ชื่อฟาร์ม</strong> <?= h($farm->name) ?></p>
+        <p><strong>ระดับของฟาร์ม</strong> <?= h($farm->level) ?></p>
+        <p><strong>ประเภทของฟาร์ม</strong> <?= h($farm->type) ?></p>
+        <p><strong>แหล่งน้ำ</strong> <?= h($farm->water_body) ?></p>
+        <p><strong>วิธีกำจัดมูลโคในฟาร์ม</strong> <?= h($farm->dung_destroy) ?></p>
+        <?php
+        $stable = 'ไม่มี';
+        if ($farm->hasstable == 'Y') {
+            $stable = 'มี ' . $farm->total_stable . ' โรงเรือน';
+        }
+        ?>
+        <p><strong>โรงเรือนเลี้ยงโค</strong> <?= h($stable) ?></p>
+        <?php
+        $meadow = 'ไม่มี';
+        if ($farm->hasmeadow == 'Y') {
+            $meadow = 'มี ' . $farm->total_meadow . ' แปลง มีพื้นที่ ' . $farm->total_space;
+        }
+        ?>
+        <p><strong>แปลงหญ้า</strong> <?= h($meadow) ?></p>
+        <p><strong>รายละเอียดอื่น ๆ</strong></p>
+        <p><?= h($farm->description) ?></p>
+    </div>
+    <div class="col-md-6 farm-info">
+        <h3>ที่อยู่ฟาร์ม</h3>
+        <?php
+        $address = '';
+        if (!is_null($farm->address->villagename)) {
+            $address = $address . 'หมู่บ้าน ' . $farm->address->villagename . ' ';
+        }
+        if (!is_null($farm->address->subdistrict)) {
+            $address = $address . 'ตำบล ' . $farm->address->subdistrict . ' ';
+        }
+        if (!is_null($farm->address->district)) {
+            $address = $address . 'อำเภอ ' . $farm->address->district . ' ';
+        }
+        ?>
+        <p><?= h($address) ?></p>
+        <div id="map" class="map" style="height: 500px;"></div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12 text-center audit-trail">
+        <div class="col-md-3">เพิ่มโดย: <?=$farm->createdby?></div>
+        <div class="col-md-3">วันเวลาที่เพิ่ม: <?=$farm->created->i18nFormat('dd-MM-yyyy HH:mm');?></div>
+        <div class="col-md-3">แก้ไขโดย: <?=$farm->updatedby?></div>
+        <div class="col-md-3">วันเวลาที่แก้ไข: <?=$farm->updated->i18nFormat('dd-MM-yyyy HH:mm');?></div>
+    </div>
+    
+</div>
+
+
+
+
+<?= $this->Html->script('farm/farm_validations.js') ?>
+<?php
+$lat = 16.886323;
+$long = 99.129768;
+if ($farm->latitude != null && $farm->latitude != '' && $farm->longitude != null && $farm->longitude != '') {
+    $lat = $farm->latitude;
+    $long = $farm->longitude;
+}
+?>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlBNYnIC9qGPT2dEMmbpnPFMYtFbqaXpM&callback=initMap">
+</script>
+<script>
+
+    var marker;
+    var position;
+    var defaultLat = <?=$lat?>;
+    var defaultLong = <?=$long?>;
+
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: {lat: defaultLat, lng: defaultLong}
+        });
+
+        marker = new google.maps.Marker({
+            map: map,
+            draggable: true,
+            animation: google.maps.Animation.DROP,
+            position: {lat: defaultLat, lng: defaultLong}
+        });
+
+    }
+
+</script>
+

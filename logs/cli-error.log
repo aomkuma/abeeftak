@@ -23,3 +23,22 @@ Stack Trace:
 #20 {main}
 
 
+2018-01-21 11:13:37 Error: [Cake\Database\Exception] SQLSTATE[42S02]: Base table or view not found: 1146 Table 'abeef.runnings' doesn't exist in /Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/vendor/cakephp/cakephp/src/Database/Schema/Collection.php on line 131
+Stack Trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/vendor/cakephp/cakephp/src/Database/Schema/Collection.php(97): Cake\Database\Schema\Collection->_reflect('Column', 'runnings', Array, Object(Cake\Database\Schema\TableSchema))
+#1 /Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/vendor/cakephp/cakephp/src/Database/Schema/CachedCollection.php(63): Cake\Database\Schema\Collection->describe('runnings', Array)
+#2 /Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/vendor/cakephp/cakephp/src/ORM/Table.php(532): Cake\Database\Schema\CachedCollection->describe('runnings')
+#3 /Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/vendor/cakephp/cakephp/src/ORM/Table.php(653): Cake\ORM\Table->getSchema()
+#4 /Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/vendor/cakephp/bake/src/Shell/Task/ModelTask.php(220): Cake\ORM\Table->getPrimaryKey()
+#5 /Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/vendor/cakephp/bake/src/Shell/Task/ModelTask.php(130): Bake\Shell\Task\ModelTask->getAssociations(Object(Cake\ORM\Table))
+#6 /Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/vendor/cakephp/bake/src/Shell/Task/ModelTask.php(113): Bake\Shell\Task\ModelTask->getTableContext(Object(Cake\ORM\Table), 'runnings', 'Runnings')
+#7 /Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/vendor/cakephp/bake/src/Shell/Task/ModelTask.php(100): Bake\Shell\Task\ModelTask->bake('Runnings')
+#8 /Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/vendor/cakephp/bake/src/Shell/BakeShell.php(259): Bake\Shell\Task\ModelTask->main('Runnings')
+#9 /Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/vendor/cakephp/cakephp/src/Collection/CollectionTrait.php(51): Bake\Shell\BakeShell->Bake\Shell\{closure}('runnings', 0)
+#10 /Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/vendor/cakephp/bake/src/Shell/BakeShell.php(260): Cake\Collection\Collection->each(Object(Closure))
+#11 /Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/vendor/cakephp/cakephp/src/Console/Shell.php(493): Bake\Shell\BakeShell->all('runnings')
+#12 /Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/vendor/cakephp/cakephp/src/Console/CommandRunner.php(141): Cake\Console\Shell->runCommand(Array, true)
+#13 /Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/bin/cake.php(12): Cake\Console\CommandRunner->run(Array)
+#14 {main}
+
+

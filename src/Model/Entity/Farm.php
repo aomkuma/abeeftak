@@ -13,14 +13,14 @@ use Cake\ORM\Entity;
  * @property string $address_id
  * @property string $description
  * @property string $location_image
- * @property float $latitude
- * @property float $longitude
+ * @property string $latitude
+ * @property string $longitude
  * @property string $hasstable
  * @property int $total_stable
  * @property int $total_cow_capacity
  * @property string $hasmeadow
  * @property int $total_meadow
- * @property int $total_space
+ * @property string $total_space
  * @property string $grass_species
  * @property string $water_body
  * @property string $dung_destroy

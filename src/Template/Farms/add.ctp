@@ -20,47 +20,28 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="panel panel-default">
             <div class="panel-body">
-                <?= $this->Form->create($farm, ['novalidate' => true,'id'=>'frm']) ?>
+                <?= $this->Form->create($farm, ['novalidate' => true, 'id' => 'frm']) ?>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="">ชื่อฟาร์ม <i class="text-danger">*</i></label>
-                            <?= $this->Form->control('name', ['class' => 'form-control', 'label' => false,'id'=>'name']) ?>
+                            <?= $this->Form->control('name', ['class' => 'form-control', 'label' => false, 'id' => 'name']) ?>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="">ระดับของฟาร์ม <i class="text-danger">*</i></label>
-                            <?= $this->Form->select('level', $farm_levels, ['class' => 'form-control','id'=>'level']) ?>
+                            <?= $this->Form->select('level', $farm_levels, ['class' => 'form-control', 'id' => 'level']) ?>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="">ประเภทของฟาร์ม <i class="text-danger">*</i></label>
-                            <?= $this->Form->select('type', $farm_types, ['class' => 'form-control','id'=>'type']) ?>
+                            <?= $this->Form->select('type', $farm_types, ['class' => 'form-control', 'id' => 'type']) ?>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="checkbox">
-                            <label>
-                                <?= $this->Form->checkbox('hasstable',['required'=>false]) ?> มีโรงเรือนเลี้ยงโค
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="checkbox">
-                            <label>
-                                <?= $this->Form->checkbox('hasmeadow',['required'=>false]) ?> มีแปลงหญ้า
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="">พันธุ์หญ้าหลักที่ปลูก</label>
-                        <?= $this->Form->select('grass_species', $grass, ['class' => 'form-control']) ?>
-                    </div>
-                </div>
+
 
                 <div class="row">
                     <div class="col-md-4">
@@ -72,13 +53,67 @@
                         <?= $this->Form->select('dung_destroy', $dung_destroy, ['class' => 'form-control']) ?>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="checkbox">
+                            <label>
+                                <?= $this->Form->checkbox('hasstable', ['required' => false, 'id' => 'hasstable']) ?> มีโรงเรือนเลี้ยงโค
+                            </label>
+                        </div>
+                        <div class="col-md-12 box-border" id="hasstable_box" style="display: none;" >
+                            <div class="form-group">
+                                <label for="">จำนวนโรงเรือน</label>
+                                <?= $this->Form->control('total_stable', ['class' => 'form-control', 'label' => false, 'id' => 'total_stable', 'value' => '1']) ?>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-8">
+                        <div class="checkbox">
+                            <label>
+                                <?= $this->Form->checkbox('hasmeadow', ['required' => false, 'id' => 'hasmeadow']) ?> มีแปลงหญ้า
+                            </label>
+                        </div>
+                        <div class="col-md-12 box-border" id="hasmeadow_box" style="display: none;" >
+                            <div class="col-md-4">
+                                <div class="form-group" >
+                                    <label for="">พันธุ์หญ้าหลักที่ปลูก</label>
+                                    <?= $this->Form->select('grass_species', $grass, ['class' => 'form-control']) ?>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">จำนวนแปลงหญ้า</label>
+                                    <?= $this->Form->control('total_meadow', ['class' => 'form-control', 'label' => false, 'id' => 'total_meadow', 'value' => '1']) ?>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">พื้นที่ปลูก</label>
+                                    <?= $this->Form->control('total_space', ['class' => 'form-control', 'label' => false, 'id' => 'total_space', 'value' => '']) ?>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label for="">รายละเอียดอื่น ๆ</label>
+                            <?=$this->Form->textarea('description',['class'=>'form-control','rows'=>'3'])?>
+                        </div>
+                    </div>
+                </div>
                 <h3 class="page-header font-th-prompt400">ที่อยู่</h3>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">ที่อยู่ <i class="text-danger">*</i></label>
-                                <?= $this->Form->control('address.address_line', ['class' => 'form-control', 'label' => false,'id'=>'address_line']) ?>
+                                <?= $this->Form->control('address.address_line', ['class' => 'form-control', 'label' => false, 'id' => 'address_line']) ?>
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -113,7 +148,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="">จังหวัด <i class="text-danger">*</i></label>
-                            <?= $this->Form->control('address.province_id', ['type' => 'text', 'class' => 'form-control', 'label' => false, 'id' => 'province', 'disabled' => 'disabled']) ?>
+                            <?= $this->Form->control('address.province_id', ['type' => 'text', 'class' => 'form-control', 'label' => false, 'id' => 'province']) ?>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -123,18 +158,21 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <?= $this->Form->control('latitude', ['class' => 'form-control', 'label' => 'ตำแหน่งละติจูด']) ?>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <?= $this->Form->control('longitude', ['class' => 'form-control', 'label' => 'ตำแหน่งลองติจูด']) ?>
-                            </div>
+                        <div class="col-md-12 text-center">
+                            <h4 style="margin-top: 10px;" class="font-th-prompt400">ลากมุดสีแดงใน Google Map เพื่อระบุตำแน่งที่ตั้งของฟาร์ม</h4>
                         </div>
                         <div class="col-md-12">
                             <div id="map" class="map" style="height: 500px;"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <?= $this->Form->control('latitude', ['class' => 'form-control', 'label' => 'ตำแหน่งละติจูด', 'type' => 'text', 'maxlength' => '30']) ?>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <?= $this->Form->control('longitude', ['class' => 'form-control', 'label' => 'ตำแหน่งลองติจูด', 'type' => 'text', 'maxlength' => '30']) ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -151,7 +189,7 @@
     </div>
 </div>
 
-<?=$this->Html->script('farm/farm_validations.js')?>
+<?= $this->Html->script('farm/farm_validations.js') ?>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlBNYnIC9qGPT2dEMmbpnPFMYtFbqaXpM&callback=initMap">
 </script>
@@ -204,6 +242,23 @@
             $province: $('#province'), // input ของจังหวัด
             $zipcode: $('#zipcode'), // input ของรหัสไปรษณีย์
         });
+        $('#hasmeadow').change(function () {
+            if (this.checked) {
+                $('#hasmeadow_box').show();
+            } else {
+                $('#hasmeadow_box').hide();
+            }
+
+        });
+
+        $('#hasstable').change(function () {
+            if (this.checked) {
+                $('#hasstable_box').show();
+            } else {
+                $('#hasstable_box').hide();
+            }
+        });
+
     });
 
 

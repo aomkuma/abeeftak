@@ -33,6 +33,18 @@ html{
 .margin-bottom-20{
     margin-bottom: 20px;
 }
+
+.box-border{
+    border: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.audit-trail{
+    border-top: 1px solid #eee;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: #CFD8DC;
+}
 /*==========================================================*/
 /*THAI FONT*/
 

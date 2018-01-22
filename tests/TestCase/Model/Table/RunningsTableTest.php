@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\FarmsTable;
+use App\Model\Table\RunningsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\FarmsTable Test Case
+ * App\Model\Table\RunningsTable Test Case
  */
-class FarmsTableTest extends TestCase
+class RunningsTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\FarmsTable
+     * @var \App\Model\Table\RunningsTable
      */
-    public $Farms;
+    public $Runnings;
 
     /**
      * Fixtures
@@ -24,10 +24,7 @@ class FarmsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.farms',
-        'app.addresses',
-        'app.provinces',
-        'app.herdsmans'
+        'app.runnings'
     ];
 
     /**
@@ -38,8 +35,8 @@ class FarmsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Farms') ? [] : ['className' => FarmsTable::class];
-        $this->Farms = TableRegistry::get('Farms', $config);
+        $config = TableRegistry::exists('Runnings') ? [] : ['className' => RunningsTable::class];
+        $this->Runnings = TableRegistry::get('Runnings', $config);
     }
 
     /**
@@ -49,7 +46,7 @@ class FarmsTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Farms);
+        unset($this->Runnings);
 
         parent::tearDown();
     }
@@ -70,16 +67,6 @@ class FarmsTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
