@@ -14,8 +14,9 @@
     <ul class="nav navbar-top-links navbar-right">
         <li><?= $this->Html->link('แผงควบคุม', ['controller' => 'home']) ?></li>
         <li><?= $this->Html->link('ผู้เลี้ยงโค', ['controller' => 'herdsmans']) ?></li>
-        <li><?= $this->Html->link('ฟาร์ม', ['controller' => 'farms']) ?></li>
         <li><?= $this->Html->link('โค', ['controller' => 'Cows','action'=>'index']) ?></li>
+        <li><?= $this->Html->link('ฟาร์ม', ['controller' => 'farms']) ?></li>
+        
         <li><?= $this->Html->link('รายงาน', ['controller' => 'Reports']) ?></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
