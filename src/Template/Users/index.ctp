@@ -1,5 +1,6 @@
 <div class="page-header col-lg-8 col-md-8 col-sm-8 col-lg-offset-2">
     <h3>ผู้ใช้ระบบ</h3>
+    <?= $this->Html->link(BT_ADDUSER, ['action' => 'printPDFXml'], ['escape' => false]) ?>
 </div>
 
 <div class="form-group row">
