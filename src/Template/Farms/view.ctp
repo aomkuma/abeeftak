@@ -19,13 +19,14 @@
 </div>
 
 <div class="row">
-    <div class="col-md-6 farm-info">
+    <div class="col-md-12 farm-info">
         <h3>ข้อมูลฟาร์ม</h3>
-        <p><strong>ชื่อฟาร์ม</strong> <?= h($farm->name) ?></p>
-        <p><strong>ระดับของฟาร์ม</strong> <?= h($farm->level) ?></p>
-        <p><strong>ประเภทของฟาร์ม</strong> <?= h($farm->type) ?></p>
-        <p><strong>แหล่งน้ำ</strong> <?= h($farm->water_body) ?></p>
-        <p><strong>วิธีกำจัดมูลโคในฟาร์ม</strong> <?= h($farm->dung_destroy) ?></p>
+        <div class="col-md-4"><p><strong>ชื่อฟาร์ม</strong> <?= h($farm->name) ?></p></div>
+        <div class="col-md-4"><p><strong>ระดับของฟาร์ม</strong> <?= h($farm->level) ?></p></div>
+        <div class="col-md-4"><p><strong>ประเภทของฟาร์ม</strong> <?= h($farm->type) ?></p></div>
+        <div class="col-md-4"><p><strong>แหล่งน้ำ</strong> <?= h($farm->water_body) ?></p></div>
+        <div class="col-md-4"><p><strong>วิธีกำจัดมูลโคในฟาร์ม</strong> <?= h($farm->dung_destroy) ?></p></div>
+        
         <?php
         $stable = 'ไม่มี';
         if ($farm->hasstable == 'Y') {
@@ -39,11 +40,11 @@
             $meadow = 'มี ' . $farm->total_meadow . ' แปลง มีพื้นที่ ' . $farm->total_space;
         }
         ?>
-        <p><strong>แปลงหญ้า</strong> <?= h($meadow) ?></p>
-        <p><strong>รายละเอียดอื่น ๆ</strong></p>
-        <p><?= h($farm->description) ?></p>
+        <div class="col-md-4"><p><strong>แปลงหญ้า</strong> <?= h($meadow) ?></p></div>
+        <div class="col-md-8"><p><strong>รายละเอียดอื่น ๆ</strong> <?= h($farm->description) ?></p></div>
+        
     </div>
-    <div class="col-md-6 farm-info">
+    <div class="col-md-12 farm-info">
         <h3>ที่อยู่ฟาร์ม</h3>
         <?php
         $address = '';
