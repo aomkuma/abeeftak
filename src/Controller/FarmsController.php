@@ -48,13 +48,26 @@ class FarmsController extends AppController {
         $name = $this->request->query('name');
         $level = $this->request->query('level');
         $type = $this->request->query('type');
+        $conditions = [];
         
-        $data = $this->Farms->find();
+        if(!is_null($name)){
+            array_push($conditions, ['Farms.name LIKE '=>'%'.$name.'%']);
+        }
+        if(!is_null($level) && $level !=''){
+            array_push($conditions, ['Farms.level'=>$level]);
+        }
+        if(!is_null($type) && $type !=''){
+            array_push($conditions, ['Farms.type'=>$type]);
+        }
+        //debug($conditions);
+        
+        $data = $this->Farms->find()
+                ->where($conditions);
         
         $this->paginate = [
             'contain' => ['Addresses']
         ];
-        $farms = $this->paginate($this->Farms);
+        $farms = $this->paginate($data);
 
         $this->set('farm_levels', $this->FarmLevels);
         $this->set('farm_types', $this->FarmTypes);

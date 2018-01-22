@@ -31,7 +31,7 @@
             <div class="panel-body">
                 <ul>
                     <li>
-                        <?= $this->Html->link('รายงานฟาร์ม', ['controller' => '', 'action' => ''], ['escape' => false]) ?>
+                        <?= $this->Html->link('รายงานฟาร์ม', ['controller' => 'farmreports', 'action' => 'index'], ['escape' => false]) ?>
                     </li>
                 </ul>
             </div>
