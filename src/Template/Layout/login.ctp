@@ -19,7 +19,7 @@
 
         <!-- Custom CSS -->
         <?= $this->Html->css('/startbootstrap/dist/css/sb-admin-2.css') ?>
-
+        <?= $this->Html->css('custom.css') ?>
         <!-- Morris Charts CSS -->
         <?= $this->Html->css('/startbootstrap/vendor/morrisjs/morris.css') ?>
 
@@ -34,7 +34,7 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        <?= $this->Html->css('abeef_style.css', ['rel' => 'stylesheet']) ?>
+      
 
         <!-- jQuery -->
         <?= $this->Html->script('/startbootstrap/vendor/jquery/jquery.min.js') ?>
@@ -45,24 +45,19 @@
         <!-- Metis Menu Plugin JavaScript -->
         <?= $this->Html->script('/startbootstrap/vendor/metisMenu/metisMenu.min.js') ?>
 
-        <!-- Morris Charts JavaScript -->
-        <?= $this->Html->script('/startbootstrap/vendor/raphael/raphael.min.js') ?>
-        <?= $this->Html->script('/startbootstrap/vendor/morrisjs/morris.min.js') ?>
-        <?= $this->Html->script('/startbootstrap/data/morris-data.js') ?>
 
-        <!-- Custom Theme JavaScript -->
-        <?= $this->Html->script('/startbootstrap/dist/js/sb-admin-2.js') ?>
+
     </head>
 
     <body>
 
-        <div id="wrapper" style="background-color: #FFFFFF;">
+        <div id="wrapper" >
 
-            <div class="container">
+          
 
 
                 <?= $this->fetch('content') ?>
-            </div>
+           
             <!-- /#page-wrapper -->
         </div>
 

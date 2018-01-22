@@ -257,5 +257,35 @@ class UsersController extends AppController {
             $this->set('_serialize', ['users']);
         }
     }
+public function printPDFXml(){    
 
+        $this->autoRender = false;
+
+        $WWW_ROOT = str_replace("\\", "/", WWW_ROOT);
+        include $WWW_ROOT . '/PHPJasperLibrary/PHPJasperXML.inc.php';
+        include $WWW_ROOT . '/PHPJasperLibrary/tcpdf/tcpdf.php';
+        $PHPJasperXML = new \PHPJasperXML;
+        $server="localhost";
+        $db="abeef";
+        $user="root";
+        $pass="";
+        $version="0.8b";
+        $pgport=5432;
+        $pchartfolder="./class/pchart2";
+         
+        //display errors should be off in the php.ini file
+        ini_set('display_errors', 0);
+         
+        //setting the path to the created jrxml file
+        $xml =  simplexml_load_file($WWW_ROOT . "/jasperlib/report/UserReport.jrxml");
+         
+        $PHPJasperXML = new \PHPJasperXML();
+        //$PHPJasperXML->debugsql=true;
+        $PHPJasperXML->arrayParameter=array("CtrlId"=>'1');
+        $PHPJasperXML->xml_dismantle($xml);
+         
+        $PHPJasperXML->transferDBtoArray($server,$user,$pass,$db);
+        $res = $PHPJasperXML->outpage("I");
+        exit;
+    }
 }

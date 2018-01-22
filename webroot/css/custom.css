@@ -1,0 +1,11 @@
+/* Add here all your css styles (customizations) */
+@import url('https://fonts.googleapis.com/css?family=Prompt:300,400,500,700&subset=thai');
+@import url('https://fonts.googleapis.com/css?family=Mitr:200,400,600');
+body { 
+  background: url(../img/bg1.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+

@@ -32,9 +32,9 @@ class PHPJasperXML {
         if($cndriver=="mysql") {
 
             if(!$this->con) {
-                $this->myconn = @mysql_connect($db_host,$db_user,$db_pass);
+                $this->myconn = mysql_pconnect($db_host,$db_user,$db_pass);
                 if($this->myconn) {
-                    $seldb = @mysql_select_db($db_or_dsn_name,$this->myconn);
+                    $seldb = mysql_select_db($db_or_dsn_name,$this->myconn);
                     if($seldb) {
                         $this->con = true;
                         return true;
