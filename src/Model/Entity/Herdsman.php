@@ -8,14 +8,20 @@ use Cake\ORM\Entity;
  *
  * @property string $id
  * @property string $code
+ * @property string $aac_code
+ * @property string $amc_code
+ * @property int $grade
  * @property string $title
  * @property string $firstname
  * @property string $lastname
  * @property string $idcard
  * @property \Cake\I18n\FrozenDate $birthday
+ * @property string $account_number1
+ * @property string $account_number2
  * @property \Cake\I18n\FrozenDate $registerdate
  * @property string $isactive
  * @property string $address_id
+ * @property string $image_id
  * @property string $mobile
  * @property string $email
  * @property string $description
@@ -25,8 +31,7 @@ use Cake\ORM\Entity;
  * @property string $updatedby
  *
  * @property \App\Model\Entity\Address $address
- */
-class Herdsman extends Entity
+ */class Herdsman extends Entity
 {
 
     /**
@@ -40,14 +45,20 @@ class Herdsman extends Entity
      */
     protected $_accessible = [
         'code' => true,
+        'aac_code' => true,
+        'amc_code' => true,
+        'grade' => true,
         'title' => true,
         'firstname' => true,
         'lastname' => true,
         'idcard' => true,
         'birthday' => true,
+        'account_number1' => true,
+        'account_number2' => true,
         'registerdate' => true,
         'isactive' => true,
         'address_id' => true,
+        'image_id' => true,
         'mobile' => true,
         'email' => true,
         'description' => true,

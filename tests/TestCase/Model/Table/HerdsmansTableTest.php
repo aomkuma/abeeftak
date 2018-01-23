@@ -12,10 +12,8 @@ class HerdsmansTableTest extends TestCase
 {
 
     /**
-     * Test subject
-     *
-     * @var \App\Model\Table\HerdsmansTable
-     */
+     * Test subject     *
+     * @var \App\Model\Table\HerdsmansTable     */
     public $Herdsmans;
 
     /**
@@ -25,7 +23,21 @@ class HerdsmansTableTest extends TestCase
      */
     public $fixtures = [
         'app.herdsmans',
-        'app.addresses'
+        'app.addresses',
+        'app.provinces',
+        'app.farms',
+        'app.farm_cows',
+        'app.cows',
+        'app.cow_breeds',
+        'app.cow_images',
+        'app.images',
+        'app.movement_records',
+        'app.treatment_records',
+        'app.growth_records',
+        'app.breeding_records',
+        'app.givebirth_records',
+        'app.farm_herdsmans',
+        'app.herdsmen'
     ];
 
     /**
@@ -36,9 +48,7 @@ class HerdsmansTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('Herdsmans') ? [] : ['className' => HerdsmansTable::class];
-        $this->Herdsmans = TableRegistry::get('Herdsmans', $config);
-    }
+        $config = TableRegistry::exists('Herdsmans') ? [] : ['className' => HerdsmansTable::class];        $this->Herdsmans = TableRegistry::get('Herdsmans', $config);    }
 
     /**
      * tearDown method

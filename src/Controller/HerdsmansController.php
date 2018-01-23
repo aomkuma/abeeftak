@@ -117,13 +117,15 @@ class HerdsmansController extends AppController {
         if ($this->request->is('post')) {
 
             $address = $this->Addresses->newEntity();
-
+            
+            $province = $this->findProvinceByName($this->request->getData('province_id'));
+            
             $address->houseno = $this->request->getData('houseno');
             $address->villageno = $this->request->getData('villageno');
             $address->villagename = $this->request->getData('villagename');
             $address->subdistrict = $this->request->getData('subdistrict');
             $address->district = $this->request->getData('district');
-            $address->province_id = '38';
+            $address->province_id = $province->id;
             $address->postalcode = $this->request->getData('postalcode');
             $address->address_line = 'yy';
             $address->description = 'uu';
@@ -138,10 +140,10 @@ class HerdsmansController extends AppController {
                 $uploadpath = 'upload/img/herdsmans';
 
                 $image = $this->Images->newEntity();
-                $image->name = $this->request->getData('firstname') . '-' . $this->request->getData('lastname') . '.' . $extimg;
-                $image->path = $uploadpath . $this->request->getData('firstname') . '-' . $this->request->getData('lastname') . '.' . $extimg;
+                $image->name = $filenameimg;
+                $image->path = $uploadpath . $filenameimg;
 
-                $uploadfileimg = $uploadpath . $this->request->getData('firstname') . '-' . $this->request->getData('lastname') . '.' . $extimg;
+                $uploadfileimg = $uploadpath . $filenameimg;
 
                 if ($this->Images->save($image)) {
 
@@ -172,7 +174,7 @@ class HerdsmansController extends AppController {
             $this->Flash->error(__('The herdsman could not be saved. Please, try again.'));
         }
         $addresses = $this->Herdsmans->Addresses->find('list', ['limit' => 200]);
-        $grade = ['1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5'];
+        $grade = ['1' => 'ระดับ 1', '2' => 'ระดับ 2', '3' => 'ระดับ 3', '4' => 'ระดับ 4', '5' => 'ระดับ 5'];
         $title = ['mr' => 'นาย', 'mrs' => 'นาง', 'ms' => 'นางสาว', 'other' => 'อื่นๆ'];
         $this->set(compact('herdsman', 'addresses', 'grade', 'title'));
         $this->set('_serialize', ['herdsman']);
@@ -224,10 +226,10 @@ class HerdsmansController extends AppController {
 
                 $uploadpath = 'upload/img/';
 
-                $image->name = $this->request->getData('firstname') . '-' . $this->request->getData('lastname') . '.' . $extimg;
-                $image->path = $uploadpath . $this->request->getData('firstname') . '-' . $this->request->getData('lastname') . '.' . $extimg;
+                $image->name = $filenameimg;
+                $image->path = $uploadpath . $filenameimg;
 
-                $uploadfileimg = $uploadpath . $this->request->getData('firstname') . '-' . $this->request->getData('lastname') . '.' . $extimg;
+                $uploadfileimg = $uploadpath . $filenameimg;
 
                 $this->Images->save($image);
                 move_uploaded_file($this->request->data['image']['tmp_name'], $uploadfileimg);
@@ -244,10 +246,15 @@ class HerdsmansController extends AppController {
             }
             $this->Flash->error(__('The herdsman could not be saved. Please, try again.'));
         }
+        
         $address = $this->Addresses->get($herdsman->address_id);
+        
+        $province = $this->findProvinceById($address->province_id);
+        $address->province_id = $province['province_name'];
+        
         $image = $this->Images->get($herdsman->image_id);
         $imgpath = $image->path;
-        $grade = ['1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5'];
+        $grade = ['1' => 'ระดับ 1', '2' => 'ระดับ 2', '3' => 'ระดับ 3', '4' => 'ระดับ 4', '5' => 'ระดับ 5'];
         $title = ['mr' => 'นาย', 'mrs' => 'นาง', 'ms' => 'นางสาว', 'other' => 'อื่นๆ'];
         $this->set(compact('herdsman', 'address', 'grade', 'title', 'imgpath'));
         $this->set('_serialize', ['herdsman']);
@@ -279,6 +286,28 @@ class HerdsmansController extends AppController {
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+    
+    private function findProvinceByName($name = null) {
+        if (is_null($name)) {
+            return null;
+        }
+        $provinceModel = TableRegistry::get('Provinces');
+        $data = $provinceModel->findByProvinceName($name);
+        //$this->log($data->first(),'debug');
+        //$this->log($name,'debug');
+        return $data->first();
+    }
+    
+    private function findProvinceById($id = null) {
+        if (is_null($id)) {
+            return null;
+        }
+        $provinceModel = TableRegistry::get('Provinces');
+        $data = $provinceModel->get($id);
+        //$this->log($data->first(),'debug');
+        //$this->log($name,'debug');
+        return $data;
     }
 
 }

@@ -10,6 +10,8 @@ use Cake\Validation\Validator;
  * Herdsmans Model
  *
  * @property \App\Model\Table\AddressesTable|\Cake\ORM\Association\BelongsTo $Addresses
+ * @property |\Cake\ORM\Association\BelongsTo $Images
+ * @property |\Cake\ORM\Association\HasMany $FarmHerdsmans
  *
  * @method \App\Model\Entity\Herdsman get($primaryKey, $options = [])
  * @method \App\Model\Entity\Herdsman newEntity($data = null, array $options = [])
@@ -20,8 +22,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Herdsman findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
- */
-class HerdsmansTable extends Table
+ */class HerdsmansTable extends Table
 {
 
     /**
@@ -43,6 +44,13 @@ class HerdsmansTable extends Table
         $this->belongsTo('Addresses', [
             'foreignKey' => 'address_id'
         ]);
+        $this->belongsTo('Images', [
+            'foreignKey' => 'image_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->hasMany('FarmHerdsmans', [
+            'foreignKey' => 'herdsman_id'
+        ]);
     }
 
     /**
@@ -54,69 +62,43 @@ class HerdsmansTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->uuid('id')
-            ->allowEmpty('id', 'create');
-
+            ->uuid('id')            ->allowEmpty('id', 'create');
         $validator
-            ->scalar('code')
-            ->requirePresence('code', 'create')
-            ->notEmpty('code');
-
+            ->scalar('code')            ->requirePresence('code', 'create')            ->notEmpty('code');
         $validator
-            ->scalar('title')
-            ->requirePresence('title', 'create')
-            ->notEmpty('title');
-
+            ->scalar('aac_code')            ->allowEmpty('aac_code');
         $validator
-            ->scalar('firstname')
-            ->requirePresence('firstname', 'create')
-            ->notEmpty('firstname');
-
+            ->scalar('amc_code')            ->allowEmpty('amc_code');
         $validator
-            ->scalar('lastname')
-            ->requirePresence('lastname', 'create')
-            ->notEmpty('lastname');
-
+            ->integer('grade')            ->requirePresence('grade', 'create')            ->notEmpty('grade');
         $validator
-            ->scalar('idcard')
-            ->requirePresence('idcard', 'create')
-            ->notEmpty('idcard');
-
+            ->scalar('title')            ->requirePresence('title', 'create')            ->notEmpty('title');
         $validator
-            ->date('birthday')
-            ->allowEmpty('birthday');
-
+            ->scalar('firstname')            ->requirePresence('firstname', 'create')            ->notEmpty('firstname');
         $validator
-            ->date('registerdate')
-            ->requirePresence('registerdate', 'create')
-            ->notEmpty('registerdate');
-
+            ->scalar('lastname')            ->requirePresence('lastname', 'create')            ->notEmpty('lastname');
         $validator
-            ->scalar('isactive')
-            ->requirePresence('isactive', 'create')
-            ->notEmpty('isactive');
-
+            ->scalar('idcard')            ->requirePresence('idcard', 'create')            ->notEmpty('idcard');
         $validator
-            ->scalar('mobile')
-            ->allowEmpty('mobile');
-
+            ->date('birthday')            ->allowEmpty('birthday');
         $validator
-            ->email('email')
-            ->allowEmpty('email');
-
+            ->scalar('account_number1')            ->allowEmpty('account_number1');
         $validator
-            ->scalar('description')
-            ->allowEmpty('description');
-
+            ->scalar('account_number2')            ->allowEmpty('account_number2');
         $validator
-            ->scalar('createdby')
-            ->requirePresence('createdby', 'create')
-            ->notEmpty('createdby');
-
+            ->date('registerdate')            ->requirePresence('registerdate', 'create')            ->notEmpty('registerdate');
         $validator
-            ->scalar('updatedby')
-            ->allowEmpty('updatedby');
-
+            ->scalar('isactive')            ->requirePresence('isactive', 'create')            ->notEmpty('isactive');
+        $validator
+            ->scalar('mobile')            ->allowEmpty('mobile');
+        $validator
+            ->email('email')            ->allowEmpty('email');
+        $validator
+            ->scalar('description')            ->allowEmpty('description');
+        $validator
+            ->scalar('createdby')            ->requirePresence('createdby', 'create')            ->notEmpty('createdby');
+        $validator
+            ->scalar('updatedby')            ->allowEmpty('updatedby');
         return $validator;
     }
 
@@ -131,6 +113,7 @@ class HerdsmansTable extends Table
     {
         $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['address_id'], 'Addresses'));
+        $rules->add($rules->existsIn(['image_id'], 'Images'));
 
         return $rules;
     }

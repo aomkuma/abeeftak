@@ -33,14 +33,13 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h1 class="font-th-prompt400">รายการผู้เลี้ยงโค</h1>
+        <h1 class="font-th-prompt400">ผู้เลี้ยงโค</h1>
     </div>
 </div>
 
 <br>
-<div class="container">
     <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2">
+        <div class="col-md-12">
             <?= $this->Form->create('Post', array('url' => '/herdsmans/index')); ?>
             <table class="table-condensed">
                 <tr>
@@ -49,45 +48,9 @@
                 </tr>
                 <tr>
                     <td class="text-right">วันที่ขึ้นทะเบียน : </td>  
-                    <td>
-                        <div class='input-group date' id='datetimepicker1'> 
-                            <?= $this->Form->text('fromdate', ['class' => 'form-control', 'id' => 'todate', 'label' => false, 'readonly' => 'readonly']) ?> 
-                            <span class="input-group-addon"> 
-                                <span class="glyphicon glyphicon-th"></span> 
-                            </span> 
-                        </div>
-                        <script type="text/javascript">
-                            $(function () {
-                                $('#datetimepicker1').datepicker({
-
-                                    format: 'dd-mm-yyyy',
-                                    language: 'th',
-                                    thaiyear: true,
-                                    ignoreReadonly: true
-                                });
-                            });
-                        </script>
-                    </td>
+                    <td><input type="date" name="fromdate" class="form-control" required="true"></td>
                     <td>ถึง</td>
-                    <td>
-                        <div class='input-group date' id='datetimepicker2'> 
-                            <?= $this->Form->text('todate', ['class' => 'form-control', 'id' => 'todate', 'label' => false, 'readonly' => 'readonly']) ?> 
-                            <span class="input-group-addon"> 
-                                <span class="glyphicon glyphicon-th"></span> 
-                            </span> 
-                        </div>
-                        <script type="text/javascript">
-                            $(function () {
-                                $('#datetimepicker2').datepicker({
-
-                                    format: 'dd-mm-yyyy',
-                                    language: 'th',
-                                    thaiyear: true,
-                                    ignoreReadonly: true
-                                });
-                            });
-                        </script>
-                    </td>
+                    <td><input type="date" name="todate" class="form-control" required="true"></td>
                     <td><?= $this->Form->button('ค้นหา', ['class' => 'btn btn-primary', 'id' => 'checkblank']) ?></td>
                     <td><?= $this->Html->link(BT_ADD, ['action' => 'add'], ['escape' => false]) ?></td>
                 </tr>
@@ -127,8 +90,7 @@
                     <?= $this->Paginator->next(__('next') . ' >') ?>
                     <?= $this->Paginator->last(__('last') . ' >>') ?>
                 </ul>
-                <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+                <p><?= $this->Paginator->counter(['format' => __('หน้า {{page}} / {{pages}}, แสดง {{current}} รายการ จากทั้งหมด {{count}} รายการ')]) ?></p>
             </div>
         </div>
     </div>
-</div>
