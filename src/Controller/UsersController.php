@@ -169,41 +169,41 @@ class UsersController extends AppController {
                 $user = $this->Users->get($user['id']);
                 $this->Auth->setUser($user);
 
-                
-                $query = $this->RoleAccesses->find('all',[
-                    'contain'=>['Actions'=>['Controllers']],
-                    'conditions'=>['role_id'=>$user['role_id']]
+
+                $query = $this->RoleAccesses->find('all', [
+                    'contain' => ['Actions' => ['Controllers']],
+                    'conditions' => ['role_id' => $user['role_id']]
                 ]);
-    
+
                 $rolePermissions = $query->toArray();
                 //debug($rolePermissions);
                 $rolePermissions = $this->makePromissionArr($rolePermissions);
-                $this->request->session()->write('rolePermissions',$rolePermissions);
+                $this->request->session()->write('rolePermissions', $rolePermissions);
                 //debug($rolePermissions);
-                  return $this->redirect(['controller' => 'users', 'action' => 'index']);
+                return $this->redirect(['controller' => 'users', 'action' => 'index']);
             }
             //  $this->Flash->error(__('Invalid username or password, try again'));
         }
     }
-    
-    private function makePromissionArr($rolePermissions = null){
-        if(is_null($rolePermissions)){
+
+    private function makePromissionArr($rolePermissions = null) {
+        if (is_null($rolePermissions)) {
             return null;
         }
-        
+
         $newArr = [];
         $newActionArr = [];
-        foreach ($rolePermissions as $value){
-            
+        foreach ($rolePermissions as $value) {
+
             $controllerKey = $value['action']['controller']['value'];
             $p = array_search($controllerKey, $newArr);
             //debug($p);
-            if($p === false){
+            if ($p === false) {
                 array_push($newArr, $controllerKey);
                 $newActionArr[$controllerKey] = [$value['action']['value']];
                 //array_push($newActionArr[$controllerKey],$value['action']['value'] );
-            }else{
-               array_push($newActionArr[$controllerKey],$value['action']['value'] );
+            } else {
+                array_push($newActionArr[$controllerKey], $value['action']['value']);
             }
             //debug($controllerKey);
             //$newArr = ['controllername'=>$controllerKey,'actions'=>[]];
@@ -211,17 +211,17 @@ class UsersController extends AppController {
             //array_push($newArr['actions'], $actionArr);
         }
         //debug($newActionArr);
-        
+
         $rolePermissions = [
-            'controller'=>$newArr,
-            'actions'=>$newActionArr
+            'controller' => $newArr,
+            'actions' => $newActionArr
         ];
         return $rolePermissions;
     }
 
     public function logout() {
         $this->request->session()->destroy();
-      //  return $this->redirect($this->Auth->logout());
+        //  return $this->redirect($this->Auth->logout());
     }
 
     public function searchuser() {
@@ -257,35 +257,22 @@ class UsersController extends AppController {
             $this->set('_serialize', ['users']);
         }
     }
-public function printPDFXml(){    
 
-        $this->autoRender = false;
+    public function printpdf() {
 
-        $WWW_ROOT = str_replace("\\", "/", WWW_ROOT);
-        include $WWW_ROOT . '/PHPJasperLibrary/PHPJasperXML.inc.php';
-        include $WWW_ROOT . '/PHPJasperLibrary/tcpdf/tcpdf.php';
-        $PHPJasperXML = new \PHPJasperXML;
-        $server="localhost";
-        $db="abeef";
-        $user="root";
-        $pass="";
-        $version="0.8b";
-        $pgport=5432;
-        $pchartfolder="./class/pchart2";
-         
-        //display errors should be off in the php.ini file
-        ini_set('display_errors', 0);
-         
-        //setting the path to the created jrxml file
-        $xml =  simplexml_load_file($WWW_ROOT . "/jasperlib/report/UserReport.jrxml");
-         
-        $PHPJasperXML = new \PHPJasperXML();
-        //$PHPJasperXML->debugsql=true;
-        $PHPJasperXML->arrayParameter=array("CtrlId"=>'1');
-        $PHPJasperXML->xml_dismantle($xml);
-         
-        $PHPJasperXML->transferDBtoArray($server,$user,$pass,$db);
-        $res = $PHPJasperXML->outpage("I");
-        exit;
+       
+        $query = $this->Users->find('all', [
+            'contain' => ['Roles']
+        ]);
+        $detail = $query->toArray();
+        $detailjs= json_encode($detail);
+       
+        $query->select(['count' => $query->func()->count('users.id')])
+                ->group(['Roles.name']);
+       
+        $summary=$query->toArray();
+        $summaryjs= json_encode($summary);
+         $this->set(compact('summaryjs','detailjs'));
     }
+
 }
