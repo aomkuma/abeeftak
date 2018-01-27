@@ -1,14 +1,19 @@
 <?= $this->Html->script('farm/farm_report.js') ?>
+<?= $this->Html->script('/jquery.Thailand.js/dependencies/JQL.min.js') ?>
+<?= $this->Html->script('/jquery.Thailand.js/dependencies/typeahead.bundle.js') ?>
 
-    <script>
-        var jsondata = <?= $jsondata==null?"''":$jsondata ?>;
-        var filter_text = '<?= $filter_text ?>';
-        exportPDF(jsondata, filter_text);
+<?= $this->Html->css('/jquery.Thailand.js/dist/jquery.Thailand.min.css') ?>
+<?= $this->Html->script('/jquery.Thailand.js/dist/jquery.Thailand.min.js') ?>
 
-        //console.log(jsondata);
-    </script>
+<script>
+    var jsondata = <?= $jsondata == null ? "''" : $jsondata ?>;
+    var filter_text = '<?= $filter_text ?>';
+    exportPDF(jsondata, filter_text);
 
-    
+    //console.log(jsondata);
+</script>
+
+
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header font-th-prompt400">รายงานฟาร์ม</h1>
@@ -26,10 +31,10 @@
             <?= $this->Form->select('type', $farm_types, ['empty' => 'ประเภทของฟาร์ม..', 'class' => 'form-control', 'id' => 'type']) ?>
         </div>
         <div class="col-md-3">
-            <?= $this->Form->select('subdistrict', $farm_levels, ['empty' => 'ตำบล..', 'class' => 'form-control', 'id' => 'subdistrict']) ?>
+            <?= $this->Form->control('subdistrict', ['class' => 'form-control', 'label' => false, 'id' => 'district','placeholder'=>'ตำบล']) ?>
         </div>
         <div class="col-md-3">
-            <?= $this->Form->select('district', $farm_levels, ['empty' => 'อำเภอ..', 'class' => 'form-control', 'id' => 'district']) ?>
+            <?= $this->Form->control('district', ['class' => 'form-control', 'label' => false, 'id' => 'amphoe','placeholder'=>'อำเภอ']) ?>
         </div>
 
         <div class="col-md-2 col-md-offset-4" style="padding-top: 20px;">
@@ -88,3 +93,16 @@
         </div>
     </div>
 <?php } ?>
+
+<script>
+
+    $(document).ready(function () {
+        $.Thailand({
+            $district: $('#district'), // input ของตำบล
+            $amphoe: $('#amphoe'), // input ของอำเภอ
+            //$province: $('#province'), // input ของจังหวัด
+            //$zipcode: $('#zipcode'), // input ของรหัสไปรษณีย์
+        });
+       
+    });
+</script>
