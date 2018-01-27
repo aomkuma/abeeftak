@@ -1,11 +1,14 @@
-<?=$this->Html->script('farm/farm_report.js')?>
-<script>
-    var jsondata = <?=$jsondata?>;
+<?= $this->Html->script('farm/farm_report.js') ?>
+
+    <script>
+        var jsondata = <?= $jsondata==null?"''":$jsondata ?>;
+        var filter_text = '<?= $filter_text ?>';
+        exportPDF(jsondata, filter_text);
+
+        //console.log(jsondata);
+    </script>
+
     
-    exportPDF(jsondata);
-    
-    console.log(jsondata);
-</script>
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header font-th-prompt400">รายงานฟาร์ม</h1>
@@ -39,49 +42,49 @@
         <?= $this->Form->end() ?>
     </div>
 </div>
-<?php if($issearch){?>
-<div class="row margin-top-20">
-    <div class="col-md-12">
-        <table class="table table-striped table-bordered table-hover">
-            <thead>
-                <tr>
-                    
-                    <th scope="col">ชื่อฟาร์ม</th>
-                    <th scope="col">ระดับ</th>
-                    <th scope="col">ประเภท</th>
-                    <th>ที่อยู่</th>
-                    
-
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($farms as $farm): ?>
-
+<?php if ($issearch) { ?>
+    <div class="row margin-top-20">
+        <div class="col-md-12">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
                     <tr>
-                        
-                        <td><?= $this->Html->link(h($farm->name), ['action' => 'view', $farm->id], []) ?></td>
-                        <td><?= h($farm->level) ?></td>
-                        <td><?= h($farm->type) ?></td>
-                        <td>
-                            <?php
-                            $address = '';
-                            if (!is_null($farm->address->villagename)) {
-                                $address = $address . 'หมู่บ้าน ' . $farm->address->villagename . ' ';
-                            }
-                            if (!is_null($farm->address->subdistrict)) {
-                                $address = $address . 'ตำบล ' . $farm->address->subdistrict . ' ';
-                            }
-                            if (!is_null($farm->address->district)) {
-                                $address = $address . 'อำเภอ ' . $farm->address->district . ' ';
-                            }
-                            ?>
-                            <?= h($address) ?>
-                        </td>
-                       
+
+                        <th scope="col">ชื่อฟาร์ม</th>
+                        <th scope="col">ระดับ</th>
+                        <th scope="col">ประเภท</th>
+                        <th>ที่อยู่</th>
+
+
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php foreach ($farms as $farm): ?>
+
+                        <tr>
+
+                            <td><?= $this->Html->link(h($farm->name), ['action' => 'view', $farm->id], []) ?></td>
+                            <td><?= h($farm->level) ?></td>
+                            <td><?= h($farm->type) ?></td>
+                            <td>
+                                <?php
+                                $address = '';
+                                if (!is_null($farm->address->villagename)) {
+                                    $address = $address . 'หมู่บ้าน ' . $farm->address->villagename . ' ';
+                                }
+                                if (!is_null($farm->address->subdistrict)) {
+                                    $address = $address . 'ตำบล ' . $farm->address->subdistrict . ' ';
+                                }
+                                if (!is_null($farm->address->district)) {
+                                    $address = $address . 'อำเภอ ' . $farm->address->district . ' ';
+                                }
+                                ?>
+                                <?= h($address) ?>
+                            </td>
+
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 <?php } ?>
