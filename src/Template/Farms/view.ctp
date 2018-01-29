@@ -272,7 +272,7 @@ if ($farm->latitude != null && $farm->latitude != '' && $farm->longitude != null
         // Put the results in a div
         posting.done(function (data) {
             //$('#cow_list').load();
-            document.getElementById('cow_list').contentWindow.location.reload(true);
+            document.getElementById('herdsman_list').contentWindow.location.reload(true);
             document.getElementById("herdsmanfrm").reset();
         });
     });
