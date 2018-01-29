@@ -55,8 +55,7 @@
                         <div class="form-group">
                             <label>สถานะการเป็นพ่อพันธุ์ - แม่พันธุ์ :</label> <br>
                             <input type="radio" name="isbreeder" ng-model="Cows.isbreeder" ng-value="'N'"> ไม่เป็น &nbsp; 
-                            <span ng-show="Cows.gender == 'M'"><input type="radio" name="isbreeder" ng-model="Cows.isbreeder" ng-value="'F'"> พ่อพันธุ์</span> &nbsp;
-                            <span ng-show="Cows.gender == 'F'"><input type="radio" name="isbreeder" ng-model="Cows.isbreeder" ng-value="'M'"> แม่พันธุ์ &nbsp; </span>
+                            <input type="radio" name="isbreeder" ng-model="Cows.isbreeder" ng-value="'Y'" ng-show="Cows.gender == 'M' || Cows.gender == 'F'"> <span ng-show="Cows.gender == 'M'">พ่อพันธุ์</span><span ng-show="Cows.gender == 'F'">แม่พันธุ์</span> &nbsp;
                         </div>
                     </div>
                 </div>
@@ -64,7 +63,8 @@
                     <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="form-group has-feedback" ng-class="{ 'has-success' : cow_info.grade.$valid,'has-error' : cow_info.grade.$invalid}">
                             <label>สายพันธุ์ :</label>
-                            <input type="text" name="grade" ng-model="Cows.grade" class="form-control">
+                            <select class="form-control" ng-name="grade" ng-model="Cows.grade"  ng-options="grade.name as grade.name  for grade in GradeList">
+                            
                             <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="cow_info.grade.$invalid"></span> 
                             <span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="cow_info.grade.$valid"></span>
                         </div>

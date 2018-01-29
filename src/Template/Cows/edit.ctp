@@ -61,8 +61,8 @@
 						<div class="form-group">
 							<label>สถานะการเป็นพ่อพันธุ์ - แม่พันธุ์ :</label> <br>
 							<input type="radio" name="isbreeder" ng-model="Cows.isbreeder" ng-value="'N'"> ไม่เป็น &nbsp; 
-							<span ng-show="Cows.gender == 'M'"><input type="radio" name="isbreeder" ng-model="Cows.isbreeder" ng-value="'F'"> พ่อพันธุ์</span> &nbsp;
-							<span ng-show="Cows.gender == 'F'"><input type="radio" name="isbreeder" ng-model="Cows.isbreeder" ng-value="'M'"> แม่พันธุ์ &nbsp; </span>
+							<input type="radio" name="isbreeder" ng-model="Cows.isbreeder" ng-value="'Y'"> <span ng-show="Cows.gender == 'M'">พ่อพันธุ์</span><span ng-show="Cows.gender == 'F'">แม่พันธุ์</span> &nbsp;
+							<!--<span ng-show="Cows.gender == 'F'"><input type="radio" name="isbreeder" ng-model="Cows.isbreeder" ng-value="'Y'"> แม่พันธุ์ &nbsp; </span>-->
 						</div>
 					</div>
 				</div>
@@ -70,7 +70,10 @@
 					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : cow_info.grade.$valid,'has-error' : cow_info.grade.$invalid}">
 							<label>สายพันธุ์ :</label>
-							<input type="text" name="grade" ng-model="Cows.grade" class="form-control">
+							<!--<input type="text" name="grade" ng-model="Cows.grade" class="form-control"> -->
+							<select class="form-control" ng-name="grade" ng-model="Cows.grade"  ng-options="grade.name as grade.name  for grade in GradeList">
+								
+							</select>
 							<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="cow_info.grade.$invalid"></span> 
 							<span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="cow_info.grade.$valid"></span>
 						</div>
@@ -124,7 +127,6 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-						<button type="button" class="btn btn-primary" ng-click="exportToPDF(FertilizeList)" ng-disabled="cow_info.$invalid"><span class="glyphicon glyphicon-floppy-disk"></span> PDF</button>
 						<button type="button" class="btn btn-primary" ng-click="saveCows('cows','saveCows', Cows)" ng-disabled="cow_info.$invalid"><span class="glyphicon glyphicon-floppy-disk"></span> บันทึก</button>
 					</div>
 				</div>
@@ -316,7 +318,7 @@
 	    		</table>
 	    	</div>
 	    </uib-tab>
-	    <uib-tab index="3" heading="สถิติการผสม" ng-show="Cows.isbreeder == 'F'">
+	    <uib-tab index="3" heading="สถิติการผสม" ng-show="Cows.isbreeder == 'Y' && Cows.gender == 'M'">
 	    	<br>
 	    	<form name="breeder" novalidate ng-show="BreederUpdate">
 				<div class="row">
@@ -339,7 +341,7 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-						<button type="button" class="btn btn-primary" ng-click="saveBreeder(Breeder)" ng-disabled="breeder.$invalid"><span class="glyphicon glyphicon-floppy-disk"></span> บันทึก</button>
+						<button type="button" class="btn btn-primary" ng-click="saveBreeder('cows', 'saveBreeder', Breeder, Cows.id)" ng-disabled="breeder.$invalid"><span class="glyphicon glyphicon-floppy-disk"></span> บันทึก</button>
 						<button type="button" class="btn btn-warning" ng-click="cancelBreeder()"><span class="glyphicon glyphicon-remove"></span> ยกเลิก</button>
 					</div>
 				</div>
@@ -361,7 +363,7 @@
 	    				<tr ng-repeat="data in BreedingList">
 	    					<td>
 	    						<button class="btn btn-info btn-sm" ng-click="editBreeder(data)"><span class="glyphicon glyphicon-edit"></span></button> 
-	    						<button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
+	    						<button class="btn btn-danger btn-sm" ng-click="deleteBreeder('cows', 'deleteBreeder', data, $index)"><span class="glyphicon glyphicon-trash"></span></button>
 	    					</td>
 	    					<td>{{$index + 1}}</td>
 	    					<td>{{data.breeding_date | date:'dd/MM/yyyy'}}</td>
@@ -371,7 +373,7 @@
 	    		</table>
 	    	</div>
 	    </uib-tab>
-	    <uib-tab index="4" heading="ประวัติการให้ลูก" ng-show="Cows.isbreeder == 'M'">
+	    <uib-tab index="4" heading="ประวัติการให้ลูก" ng-show="Cows.isbreeder == 'Y' && Cows.gender == 'F'">
 	    	<br>
 	    	<form name="givebirth" novalidate ng-show="GivebirthUpdate">
 				<div class="row">
@@ -414,7 +416,7 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-						<button type="button" class="btn btn-primary" ng-click="saveGivebirth(Givebirth)" ng-disabled="givebirth.$invalid"><span class="glyphicon glyphicon-floppy-disk"></span> บันทึก</button>
+						<button type="button" class="btn btn-primary" ng-click="saveGivebirth('cows', 'saveGivebirth', Givebirth, Cows.id)" ng-disabled="givebirth.$invalid"><span class="glyphicon glyphicon-floppy-disk"></span> บันทึก</button>
 						<button type="button" class="btn btn-warning" ng-click="cancelGivebirth()"><span class="glyphicon glyphicon-remove"></span> ยกเลิก</button>
 					</div>
 				</div>
@@ -438,7 +440,7 @@
 	    				<tr ng-repeat="data in GivebirthList">
 	    					<td>
 	    						<button class="btn btn-info btn-sm" ng-click="editGivebirth(data)"><span class="glyphicon glyphicon-edit"></span></button> 
-	    						<button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
+	    						<button class="btn btn-danger btn-sm" ng-click="deleteGivebirth('cows', 'deleteGivebirth', data, $index)"><span class="glyphicon glyphicon-trash"></span></button>
 	    					</td>
 	    					<td>{{$index + 1}}</td>
 	    					<td>{{data.breeding_date | date:'dd/MM/yyyy'}}</td>
@@ -492,7 +494,7 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-						<button type="button" class="btn btn-primary" ng-click="saveMovement(Movement)" ng-disabled="movement.$invalid"><span class="glyphicon glyphicon-floppy-disk"></span> บันทึก</button>
+						<button type="button" class="btn btn-primary" ng-click="saveMovement('cows', 'saveMovement', Movement, Cows.id)" ng-disabled="movement.$invalid"><span class="glyphicon glyphicon-floppy-disk"></span> บันทึก</button>
 						<button type="button" class="btn btn-warning" ng-click="cancelMovement()"><span class="glyphicon glyphicon-remove"></span> ยกเลิก</button>
 					</div>
 				</div>
@@ -505,23 +507,23 @@
 	    			<thead>
 	    				<tr>
 	    					<th>#</th>
-	    					<th>ครั้งที่</th>
+	    					<!--<th>ครั้งที่</th>-->
 	    					<th>วันที่เคลื่อนย้าย</th>
-	    					<th>หมายเลขประจำตัวโคพ่อพันธุ์ที่ผสม</th>
-	    					<th>เจ้าหน้าที่ผู้ผสม</th>
-	    					<th>สถานะการผสม</th>
+	    					<th>ต้นทาง</th>
+	    					<th>ปลายทาง</th>
+	    					<th>วัตถุประสงค์การเคลื่อนย้าย</th>
 	    				</tr>
 	    			</thead>
 	    			<tbody>
 	    				<tr ng-repeat="data in MovementList">
 	    					<td>
 	    						<button class="btn btn-info btn-sm" ng-click="editMovement(data)"><span class="glyphicon glyphicon-edit"></span></button> 
-	    						<button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
+	    						<button class="btn btn-danger btn-sm" ng-click="deleteMovement('cows', 'deleteMovement', data, $index)"><span class="glyphicon glyphicon-trash"></span></button>
 	    					</td>
-	    					<td>{{$index + 1}}</td>
+	    					<!--<td>{{$index + 1}}</td>-->
+	    					<td>{{data.movement_date | date:'dd/MM/yyyy'}}</td>
 	    					<td>{{data.departure}}</td>
 	    					<td>{{data.destination}}</td>
-	    					<td>{{data.movement_date | date:'dd/MM/yyyy'}}</td>
 	    					<td>{{data.description}}</td>
 	    				</tr>
 	    			</tbody>
@@ -570,7 +572,7 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-						<button type="button" class="btn btn-primary" ng-click="saveTreatment(Treatment)" ng-disabled="treatment.$invalid"><span class="glyphicon glyphicon-floppy-disk"></span> บันทึก</button>
+						<button type="button" class="btn btn-primary" ng-click="saveTreatment('cows', 'saveTreatment', Treatment, Cows.id)" ng-disabled="treatment.$invalid"><span class="glyphicon glyphicon-floppy-disk"></span> บันทึก</button>
 						<button type="button" class="btn btn-warning" ng-click="cancelTreatment()"><span class="glyphicon glyphicon-remove"></span> ยกเลิก</button>
 					</div>
 				</div>
@@ -593,7 +595,7 @@
 	    				<tr ng-repeat="data in TreatmentList">
 	    					<td>
 	    						<button class="btn btn-info btn-sm" ng-click="editTreatment(data)"><span class="glyphicon glyphicon-edit"></span></button> 
-	    						<button class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
+	    						<button class="btn btn-danger btn-sm" ng-click="deleteTreatment('cows', 'deleteTreatment', data, $index)"><span class="glyphicon glyphicon-trash"></span></button>
 	    					</td>
 	    					<td>{{data.treatment_date | date:'dd/MM/yyyy'}}</td>
 	    					<td>{{data.disease}}</td>
@@ -613,7 +615,7 @@
 					<br>
 					(.png,.jpg,.raw ขนาดไม่เกิน 5 MB)
 					</label>
-					<div class="col-lg-10">
+					<div class="col-lg-8">
 						<div class="row">
 							<div class="col-lg-4" >
 								<p class="input-group">
@@ -622,19 +624,28 @@
 									<button class="btn btn-default" ngf-select ng-model="fileimg" accept="image/*" ngf-max-size="5MB" ngf-pattern="'.png,.jpg,.raw,.gif'" ngf-model-invalid="invalidMainImgFile">เลือก</button>
 								</span>
 				                </p>
+				                <br>
+				                 <input type="text" class="form-control" ng-model="short_desc" placeholder="รายละเอียดรูปภาพ" maxlength="50" />
 							</div>
 							<div class="col-lg-1">
-								<button class="btn btn-primary" ng-click="updloadImg(fileimg, Cows.id)"><span class="glyphicon glyphicon-upload"></span> อัพโหลด</button>
+								<button class="btn btn-primary" ng-click="updloadImg(fileimg, short_desc, Cows.id)"><span class="glyphicon glyphicon-upload"></span> อัพโหลด</button>
 							</div>
-							<div class="col-lg-3">
-								<img ngf-thumbnail="fileimg" style="height: 10vh;">
+							<div class="col-lg-7 text-center">
+								<img ngf-thumbnail="fileimg" style="height: 20vh;">
 								<div class="file-alert" ng-show="invalidMainImgFile.$error === 'maxSize'">ขนาดไฟล์ต้องไม่เกิน : {{invalidMainImgFile.$errorParam}}</div>
 							</div>
 						</div>
 						
 					</div>
+					<br><br>
 				</div>
-
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="col-lg-3" ng-repeat="img in ImageList">
+							<img src="../../{{img.image.path + img.image.name}}" style="height: 20vh; margin: 5em;" title="{{img.image.short_desc}}">
+						</div>
+					</div>
+				</div>
 	    	</form>
 	    </uib-tab>
 	</uib-tabset>
