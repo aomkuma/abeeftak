@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\ORM\TableRegistry;
 /**
  * FarmCows Controller
  *
@@ -13,6 +13,7 @@ use App\Controller\AppController;
  */
 class FarmCowsController extends AppController {
 
+    public $FarmCows = null;
     /**
      * Index method
      *
@@ -32,7 +33,7 @@ class FarmCowsController extends AppController {
     public function addcow() {
         $this->autoRender = false;
         if ($this->request->is(['patch', 'post', 'put'])) {
-            
+            $this->FarmCows = TableRegistry::get('FarmCows');
             $farmCows = $this->FarmCows->newEntity();
 
 
