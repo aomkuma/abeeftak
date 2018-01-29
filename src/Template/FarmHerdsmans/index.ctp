@@ -6,6 +6,7 @@
                 <th>#</th>
                 <th>รหัส</th>
                 <th>เพิ่มโดย</th>
+                <th></th>
             </tr>
         </thead>
         
@@ -14,6 +15,7 @@
                 <td><?= h($item->seq) ?></td>
                 <td><?= h($item->herdsman->firstname.' '.$item->herdsman->lastname) ?></td>
                 <td><?= h($item->createdby) ?></td>
+                <td><?=BT_DELETE?></td>
             </tr>
 
 

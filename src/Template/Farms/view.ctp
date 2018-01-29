@@ -216,6 +216,7 @@ if ($farm->latitude != null && $farm->latitude != '' && $farm->longitude != null
 </script>
 <script>
 
+    var url = '<?= SITE_URL ?>';
     var marker;
     var position;
     var defaultLat = <?= $lat ?>;
@@ -235,11 +236,23 @@ if ($farm->latitude != null && $farm->latitude != '' && $farm->longitude != null
         });
 
     }
+    
+    function reloadHerdsmanFrame(){
+        document.getElementById('herdsman_list').contentWindow.location.reload(true);
+    }
+    
+    function reloadCowFrame(){
+        document.getElementById('cow_list').contentWindow.location.reload(true);
+    }
+    
+    function removeRow(id,type){
+        
+    }
 
 
     $("#cowfrm").submit(function (event) {
         //alert('hi');
-        var url = '<?= SITE_URL ?>farmcows/addcow/';
+        var urlAddCow = url+'farmcows/addcow/';
         // Stop form from submitting normally
         event.preventDefault();
 
@@ -247,19 +260,19 @@ if ($farm->latitude != null && $farm->latitude != '' && $farm->longitude != null
         var formdata = $('#cowfrm').serialize();
         //console.log(formdata);
         // Send the data using post
-        var posting = $.post(url, {data: formdata});
+        var posting = $.post(urlAddCow, {data: formdata});
         //console.log(posting);
         // Put the results in a div
         posting.done(function (data) {
             //$('#cow_list').load();
-            document.getElementById('cow_list').contentWindow.location.reload(true);
+            reloadCowFrame();
             document.getElementById("cowfrm").reset();
         });
     });
     
      $("#herdsmanfrm").submit(function (event) {
         //alert('hi');
-        var url = '<?= SITE_URL ?>farmherdsmans/addherdsman/';
+        var urlAddHerdsman = url+'farmherdsmans/addherdsman/';
         // Stop form from submitting normally
         event.preventDefault();
 
@@ -267,12 +280,12 @@ if ($farm->latitude != null && $farm->latitude != '' && $farm->longitude != null
         var formdata = $('#herdsmanfrm').serialize();
         //console.log(formdata);
         // Send the data using post
-        var posting = $.post(url, {data: formdata});
+        var posting = $.post(urlAddHerdsman, {data: formdata});
         console.log(posting);
         // Put the results in a div
         posting.done(function (data) {
             //$('#cow_list').load();
-            document.getElementById('herdsman_list').contentWindow.location.reload(true);
+            reloadHerdsmanFrame();
             document.getElementById("herdsmanfrm").reset();
         });
     });

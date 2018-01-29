@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+
 /**
  * FarmCows Controller
  *
@@ -14,6 +15,7 @@ use Cake\ORM\TableRegistry;
 class FarmCowsController extends AppController {
 
     public $FarmCows = null;
+
     /**
      * Index method
      *
@@ -54,6 +56,7 @@ class FarmCowsController extends AppController {
             }
         }
     }
+
     /**
      * Delete method
      *
@@ -72,5 +75,7 @@ class FarmCowsController extends AppController {
 
         return $this->redirect(['action' => 'index']);
     }
+
+
 
 }
