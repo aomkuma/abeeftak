@@ -29,6 +29,16 @@ class FarmHerdsmansTableTest extends TestCase
         'app.addresses',
         'app.provinces',
         'app.herdsmans',
+        'app.images',
+        'app.farm_cows',
+        'app.cows',
+        'app.cow_breeds',
+        'app.cow_images',
+        'app.movement_records',
+        'app.treatment_records',
+        'app.growth_records',
+        'app.breeding_records',
+        'app.givebirth_records',
         'app.herdsmen'
     ];
 

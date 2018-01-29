@@ -43,14 +43,14 @@ class FarmHerdsmansFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => '4a7b0117-0fb5-4423-ad50-b7c327c5d84d',
-            'farm_id' => 'e389d907-178e-4b61-8310-2e45248f9895',
-            'herdsman_id' => 'ee8789e0-c5e3-4dc0-8438-cf3fbe6c0cb1',
+            'id' => '0f62e4f5-1e0e-4af3-9491-62abaa4f6ea0',
+            'farm_id' => '804c7030-c88c-40dd-b19e-cbe1431f6590',
+            'herdsman_id' => '82c4a864-0c2c-4096-b19a-91fbe4428c74',
             'description' => 'Lorem ipsum dolor sit amet',
             'seq' => 1,
-            'created' => '2018-01-22 15:55:01',
+            'created' => '2018-01-28 13:20:12',
             'createdby' => 'Lorem ipsum dolor sit amet',
-            'updated' => '2018-01-22 15:55:01',
+            'updated' => '2018-01-28 13:20:12',
             'updatedby' => 'Lorem ipsum dolor sit amet'
         ],
     ];

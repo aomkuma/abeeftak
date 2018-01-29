@@ -37,7 +37,10 @@
             <?= $this->Form->control('district', ['class' => 'form-control', 'label' => false, 'id' => 'amphoe','placeholder'=>'อำเภอ']) ?>
         </div>
 
-        <div class="col-md-2 col-md-offset-4" style="padding-top: 20px;">
+        <div class="col-md-2 col-md-offset-3" style="padding-top: 20px;">
+            <?=$this->Html->link('<button type="button" class="btn btn-default btn-block" ><span class="fa fa-circle-o"></span> Reset</button>',['controller'=>'farmreports'],['escape'=>false])?>
+        </div>
+        <div class="col-md-2" style="padding-top: 20px;">
             <button type="submit" class="btn btn-primary btn-block" name="search_bt" value="SEARCH"><span class="glyphicon glyphicon-search"></span> ค้นหา</button>
         </div>
         <div class="col-md-2" style="padding-top: 20px;">
