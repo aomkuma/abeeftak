@@ -1,4 +1,4 @@
-<?=$this->Html->script('cow/cowmale2_report.js')?>
+<?=$this->Html->script('cow/historyowner.js')?>
 <script>
     var jsondata = <?=$jsondata?>;
     
