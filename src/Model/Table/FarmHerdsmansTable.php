@@ -45,7 +45,7 @@ class FarmHerdsmansTable extends Table
             'foreignKey' => 'farm_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Herdsmen', [
+        $this->belongsTo('Herdsmans', [
             'foreignKey' => 'herdsman_id',
             'joinType' => 'INNER'
         ]);
@@ -92,7 +92,7 @@ class FarmHerdsmansTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['farm_id'], 'Farms'));
-        $rules->add($rules->existsIn(['herdsman_id'], 'Herdsmen'));
+        $rules->add($rules->existsIn(['herdsman_id'], 'Herdsmans'));
 
         return $rules;
     }
