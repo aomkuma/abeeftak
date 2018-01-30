@@ -49,7 +49,7 @@
             <div class="panel-body">
                 <ul>
                     <li>
-                        <?= $this->Html->link('รายงานจำนวนโค', ['controller' => '', 'action' => ''], ['escape' => false]) ?>
+                        <?= $this->Html->link('รายงานจำนวนโค', ['controller' => 'Reports', 'action' => 'cowqtyreport'], ['target'=>'_blank','escape' => false]) ?>
                     </li>
                 </ul>
             </div>
