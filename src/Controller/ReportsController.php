@@ -21,6 +21,10 @@ class ReportsController extends AppController {
     public $Farms = null;
     public $Addresses = null;
     public $FarmCows = null;
+    public $BreedingRecords = null;
+    public $GivebirthRecords = null;
+    public $MovementRecords = null;
+    public $CowBreeds = null;
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
@@ -29,6 +33,9 @@ class ReportsController extends AppController {
         $this->Farms = TableRegistry::get('Farms');
         $this->Addresses = TableRegistry::get('Addresses');
         $this->FarmCows = TableRegistry::get('FarmCows');
+        $this->BreedingRecords = TableRegistry::get('BreedingRecords');
+        $this->GivebirthRecords = TableRegistry::get('GivebirthRecords');
+        $this->MovementRecords = TableRegistry::get('MovementRecords');
     }
 
     /**
@@ -38,31 +45,6 @@ class ReportsController extends AppController {
      */
     public function index() {
         
-    }
-
-    public function exportcowfemale1() {
-        
-    }
-
-    public function exportcowmale2($id = null) {
-//        $where = [];
-//        
-//        array_push($where, ['GrowthRecords.type' => 'F']);
-//        $this->Herdsmans->find('all', array('order' => 'Herdsmans.code ASC'))
-//                ->where($this->request->session()->read('whereherdsman')
-//        $querytwo = $this->GrowthRecords->find('all', [
-//            'condition' => ['game_id' => $id],
-//            'order' => ['game2_nameEN asc']
-//        ]);
-
-        $growthRecord = $this->GrowthRecords->find('all', [
-            'conditions' => ['type' => 'F', 'cow_id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2']
-        ]);
-
-        $growthR = $growthRecord->toArray();
-        pr($growthR);
-        $jsondata = json_encode($growthR);
-        $this->set(compact('jsondata'));
     }
 
     public function cowqtyreport() {
@@ -110,6 +92,120 @@ class ReportsController extends AppController {
 //        $summaryjs = json_encode($results);
 //        $this->set(compact('summaryjs'));
 //        }
+    }
+    
+    public function cowcard($id = null) {
+        
+        $cow = $this->Cows->get($id, [
+            'contain' => []
+        ]);
+        
+        if ($cow->gender == 'M') {
+            
+            return $this->redirect('/reports/cowmale/'.$cow->id);
+            
+        } else {
+            
+            return $this->redirect('/reports/cowfemale/'.$cow->id);
+            
+        }
+        
+        
+    }
+    
+    public function cowmale($id = null) {
+
+
+        $cowmale = $this->Cows->find('all', [
+            'conditions' => ['Cows.id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2'],
+            'contain' => ['CowBreeds']
+        ]);
+
+        $growthRecord = $this->GrowthRecords->find('all', [
+            'conditions' => ['type' => 'F', 'cow_id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2'], array('limit' => 5)
+        ]);
+
+        $growthRecordW = $this->GrowthRecords->find('all', [
+            'conditions' => ['type' => 'W', 'cow_id' => '7210a34f-bd8e-45d2-a59b-f4f3fda2d08f']
+        ]);
+
+        $breedRecord = $this->BreedingRecords->find('all', [
+            'conditions' => ['cow_id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2']
+        ]);
+
+        $breedR = $breedRecord->toArray();
+        $jsondataBreed = json_encode($breedR);
+
+        $cowR = $cowmale->toArray();
+        $jsondatacow = json_encode($cowR);
+        $growthR = $growthRecord->toArray();
+        $jsondatagrowth = json_encode($growthR);
+        $growthW = $growthRecordW->toArray();
+        $jsondatagrowthW = json_encode($growthW);
+
+        $this->set(compact('jsondatacow', 'jsondatagrowth', 'jsondatagrowthW', 'jsondataBreed'));
+
+    }
+
+    public function cowfemale($id = null) {
+        
+        $cowfemale = $this->Cows->find('all', [
+            'conditions' => ['Cows.id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2'],
+            'contain' => ['CowBreeds']
+        ]);
+
+        $growthRecord = $this->GrowthRecords->find('all', [
+            'conditions' => ['type' => 'F', 'cow_id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2'], array('limit' => 5)
+        ]);
+
+        $growthRecordW = $this->GrowthRecords->find('all', [
+            'conditions' => ['type' => 'W', 'cow_id' => '7210a34f-bd8e-45d2-a59b-f4f3fda2d08f']
+        ]);
+        
+        $givebirthRecord = $this->GivebirthRecords->find('all', [
+            'conditions' => ['cow_id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2']
+        ]);
+
+        $gbR = $givebirthRecord->toArray();
+        $jsondatagbR = json_encode($gbR);
+
+        $cowR = $cowfemale->toArray();
+        $jsondatacow = json_encode($cowR);
+        $growthR = $growthRecord->toArray();
+        $jsondatagrowth = json_encode($growthR);
+        $growthW = $growthRecordW->toArray();
+        $jsondatagrowthW = json_encode($growthW);
+
+        $this->set(compact('jsondatacow', 'jsondatagrowth', 'jsondatagrowthW', 'jsondatagbR'));
+        
+    }
+    
+    public function animalcertificate($id = null) {
+        
+        $cow = $this->Cows->find('all', [
+            'conditions' => ['Cows.id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2'],
+            'contain' => ['CowBreeds']
+        ]);
+        
+        $cowR = $cow->toArray();
+        $jsondatacow = json_encode($cowR);
+        
+        $cowFather = $this->Cows->find('all', [
+            'conditions' => ['Cows.code' => $cowR[0]['father_code']],
+            'contain' => ['CowBreeds']
+        ]);
+        
+        $cowMother = $this->Cows->find('all', [
+            'conditions' => ['Cows.code' => $cowR[0]['mother_code']],
+            'contain' => ['CowBreeds']
+        ]);
+        
+        $cowFath = $cowFather->toArray();
+        $jsondataFath = json_encode($cowFath);
+        $cowMoth = $cowMother->toArray();
+        $jsondataMoth = json_encode($cowMoth);
+        
+        $this->set(compact('jsondatacow','jsondataFath','jsondataMoth'));
     }
 
 }

@@ -1,8 +1,10 @@
 <?=$this->Html->script('cow/animalcertificate.js')?>
 <script>
-    var jsondata = <?=$jsondata?>;
+    var jsondatacow = <?=$jsondatacow?>;
+    var jsondataFath = <?=$jsondataFath?>;
+    var jsondataMoth = <?=$jsondataMoth?>;
     
-    exportPDF(jsondata);
+    exportPDF(jsondatacow,jsondataFath,jsondataMoth);
     
-    console.log(jsondata);
+    console.log(jsondatacow,jsondataFath,jsondataMoth);
 </script>

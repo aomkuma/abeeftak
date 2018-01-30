@@ -1,8 +1,12 @@
 <?=$this->Html->script('cow/cowfemale.js')?>
 <script>
-    var jsondata = <?=$jsondata?>;
+    var jsondatacow = <?=$jsondatacow?>;
+    var jsondatagrowth = <?=$jsondatagrowth?>;
+    var jsondatagrowthW = <?=$jsondatagrowthW?>;
+    var jsondatagbR = <?=$jsondatagbR?>;
     
-    exportPDF(jsondatacow,jsondatagrowth);
+    
+    exportPDF(jsondatacow,jsondatagrowth,jsondatagrowthW,jsondatagbR);
     
     console.log(jsondatacow,jsondatagrowth);
 </script>
