@@ -42,7 +42,8 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
                         widths: [170,150,100,50],
                         body: data_detail
                     }
-                }
+                },
+                {text: 'สรุปการใช้ห้องประชุมประจำปี ', style: 'header', alignment:'center',margin: [0,10,0,0]}
             ],
             styles: {
                 header: {
@@ -67,6 +68,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     		if(result.status == 200)
     		{
     			$scope.Cows = result.data;
+                $scope.Cows.breed_level = parseInt($scope.Cows.breed_level);
                 $scope.Cows.birthday = convertDate($scope.Cows.birthday);
                 $scope.Cows.import_date = convertDate($scope.Cows.import_date);
                 
@@ -91,6 +93,8 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
                 // Make TreatmentList Object
                 $scope.TreatmentList = $scope.Cows.treatment_records;                
 
+                // Make Cow Images Object
+                $scope.ImageList =  $scope.Cows.cow_images;                
     		}else{
     			alert(result.errorMsg);
     		}
@@ -107,7 +111,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
             if(result.status != 200){
                 alert(result.errorMsg);
             }else if(obj.id == null){
-                window.location.href = '/cows/edit/' + result.data.DATA.ID;
+                window.location.href = urlGlobal + '/cows/edit/' + result.data.DATA.ID;
             }
         });
     }
@@ -169,6 +173,182 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
         });
     }    
 
+    $scope.saveBreeder = function(service, action, obj, cow_id){
+        var params = {'Breeder' : obj, 'cow_id' : cow_id};
+        HttpService.clientRequest(service, action, params).then(function(result){
+            if(result.status != 200){
+                alert(result.errorMsg);
+            }else{
+                
+                if(result.data.DATA.ACTION == 'ADD'){
+                    obj.id = result.data.DATA.ID;
+                    $scope.BreedingList.push(result.data.DATA.obj);
+                }
+                $scope.Breeder = {'id':null,'breeding_date':null,'mother_code':null};
+                $scope.BreederUpdate = false;
+            }
+        });
+    }
+
+    $scope.deleteBreeder = function(service, action, obj, index){
+        $scope.alertMessage = 'ต้องการลบข้อมูลสถิตินี้ ใช่หรือไม่ ?';
+        var modalInstance = $uibModal.open({
+            animation : true,
+            templateUrl : '../../webroot/js/angular-scripts/views/dialog_confirm.html',
+            size : 'sm',
+            scope : $scope,
+            backdrop : 'static',
+            controller : 'ModalDialogCtrl',
+            resolve : {
+                params : function() {
+                    return {};
+                } 
+            },
+        });
+        modalInstance.result.then(function (valResult) {
+            var params = {'id' : obj.id};
+            HttpService.clientRequest(service, action, params).then(function(result){
+                if(result.status != 200){
+                    alert(result.errorMsg);
+                }else{
+                    $scope.BreedingList.splice(index, 1);
+                }
+            });
+        });
+    }
+
+    $scope.saveGivebirth = function(service, action, obj, cow_id){
+        var params = {'Givebirth' : obj, 'cow_id' : cow_id};
+        HttpService.clientRequest(service, action, params).then(function(result){
+            if(result.status != 200){
+                alert(result.errorMsg);
+            }else{
+                
+                if(result.data.DATA.ACTION == 'ADD'){
+                    obj.id = result.data.DATA.ID;
+                    $scope.GivebirthList.push(result.data.DATA.obj);
+                }
+                $scope.Givebirth = {'id':null,'breeding_date':null,'father_code':null, 'authorities':null, 'breeding_status':null};
+                $scope.GivebirthUpdate = false;
+            }
+        });
+    }
+
+    $scope.deleteGivebirth = function(service, action, obj, index){
+        $scope.alertMessage = 'ต้องการลบประวัติการให้ลูกรายการนี้ ใช่หรือไม่ ?';
+        var modalInstance = $uibModal.open({
+            animation : true,
+            templateUrl : '../../webroot/js/angular-scripts/views/dialog_confirm.html',
+            size : 'sm',
+            scope : $scope,
+            backdrop : 'static',
+            controller : 'ModalDialogCtrl',
+            resolve : {
+                params : function() {
+                    return {};
+                } 
+            },
+        });
+        modalInstance.result.then(function (valResult) {
+            var params = {'id' : obj.id};
+            HttpService.clientRequest(service, action, params).then(function(result){
+                if(result.status != 200){
+                    alert(result.errorMsg);
+                }else{
+                    $scope.GivebirthList.splice(index, 1);
+                }
+            });
+        });
+    }
+
+    $scope.saveMovement = function(service, action, obj, cow_id){
+        var params = {'Movement' : obj, 'cow_id' : cow_id};
+        HttpService.clientRequest(service, action, params).then(function(result){
+            if(result.status != 200){
+                alert(result.errorMsg);
+            }else{
+                
+                if(result.data.DATA.ACTION == 'ADD'){
+                    obj.id = result.data.DATA.ID;
+                    $scope.MovementList.push(result.data.DATA.obj);
+                }
+                $scope.Movement = {'id':null,'movement_date':null,'departure':null, 'destination':null, 'description':null};
+                $scope.MovementUpdate = false;
+            }
+        });
+    }
+
+    $scope.deleteMovement = function(service, action, obj, index){
+        $scope.alertMessage = 'ต้องการลบประวัติการเคลื่อนย้ายรายการนี้ ใช่หรือไม่ ?';
+        var modalInstance = $uibModal.open({
+            animation : true,
+            templateUrl : '../../webroot/js/angular-scripts/views/dialog_confirm.html',
+            size : 'sm',
+            scope : $scope,
+            backdrop : 'static',
+            controller : 'ModalDialogCtrl',
+            resolve : {
+                params : function() {
+                    return {};
+                } 
+            },
+        });
+        modalInstance.result.then(function (valResult) {
+            var params = {'id' : obj.id};
+            HttpService.clientRequest(service, action, params).then(function(result){
+                if(result.status != 200){
+                    alert(result.errorMsg);
+                }else{
+                    $scope.MovementList.splice(index, 1);
+                }
+            });
+        });
+    }
+
+    $scope.saveTreatment = function(service, action, obj, cow_id){
+        var params = {'Treatment' : obj, 'cow_id' : cow_id};
+        HttpService.clientRequest(service, action, params).then(function(result){
+            if(result.status != 200){
+                alert(result.errorMsg);
+            }else{
+                
+                if(result.data.DATA.ACTION == 'ADD'){
+                    obj.id = result.data.DATA.ID;
+                    $scope.TreatmentList.push(result.data.DATA.obj);
+                }
+                $scope.Treatment = {'id':null,'treatment_date':null,'disease':null, 'drug_used':null, 'conservator':null};
+                $scope.TreatmentUpdate = false;
+            }
+        });
+    }
+
+    $scope.deleteTreatment = function(service, action, obj, index){
+        $scope.alertMessage = 'ต้องการลบประวัติการรักษารายการนี้ ใช่หรือไม่ ?';
+        var modalInstance = $uibModal.open({
+            animation : true,
+            templateUrl : '../../webroot/js/angular-scripts/views/dialog_confirm.html',
+            size : 'sm',
+            scope : $scope,
+            backdrop : 'static',
+            controller : 'ModalDialogCtrl',
+            resolve : {
+                params : function() {
+                    return {};
+                } 
+            },
+        });
+        modalInstance.result.then(function (valResult) {
+            var params = {'id' : obj.id};
+            HttpService.clientRequest(service, action, params).then(function(result){
+                if(result.status != 200){
+                    alert(result.errorMsg);
+                }else{
+                    $scope.TreatmentList.splice(index, 1);
+                }
+            });
+        });
+    }
+
     $scope.editFertilize = function(data){
         data.age = parseInt(data.age);
         data.total_eating = parseInt(data.total_eating);
@@ -195,6 +375,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     }
 
     $scope.addBreeder = function(){
+        $scope.Breeder = {'id':null,'breeding_date':null,'mother_code':null};
         $scope.Breeder = null;
         $scope.BreederUpdate = true;
     }
@@ -211,6 +392,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     }
 
     $scope.addGivebirth = function(){
+        $scope.Givebirth = {'id':null,'breeding_date':null,'father_code':null, 'authorities':null, 'breeding_status':null};
         $scope.Givebirth = null;
         $scope.GivebirthUpdate = true;
     }
@@ -223,10 +405,12 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     $scope.editMovement = function(data){
         data.movement_date = convertDate(data.movement_date);
         $scope.Movement = data;
+        // angular.copy(data, $scope.Movement);
         $scope.MovementUpdate = true;
     }
 
     $scope.addMovement = function(){
+        $scope.Movement = {'id':null,'movement_date':null,'departure':null, 'destination':null, 'description':null};
         $scope.Movement = null;
         $scope.MovementUpdate = true;
     }
@@ -243,6 +427,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     }
 
     $scope.addTreatment = function(){
+        $scope.Treatment = {'id':null,'treatment_date':null,'disease':null, 'drug_used':null, 'conservator':null};
         $scope.Treatment = null;
         $scope.TreatmentUpdate = true;
     }
@@ -252,12 +437,15 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
         $scope.TreatmentUpdate = false;
     }
 
-    $scope.updloadImg = function(img, cow_id){
-        var params = {'imageObj' : img, 'cow_id' : cow_id};
+    $scope.updloadImg = function(img, short_desc, cow_id){
+        var params = {'imageObj' : img , 'short_desc':short_desc, 'cow_id' : cow_id};
         HttpService.uploadRequest('cows', 'uploadImage', params).then(function(result){
-            if(result.status != 200){
+            if(result.status != 200 || result.data.STATUS == 'ERROR'){
                 alert(result.errorMsg);
             }else{
+                $scope.fileimg = null;
+                $scope.short_desc = null;
+                $scope.ImageList.push(result.data.DATA.obj);
                 console.log('sad');
             }
         });
@@ -274,6 +462,17 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     $scope.MovementUpdate = false;
     $scope.TreatmentUpdate = false;
     $scope.BreedLevelList = [{'id':1,'name':'1'},{'id':2,'name':'2'},{'id':3,'name':'3'},{'id':4,'name':'4'}];
+    $scope.GradeList = [
+                {'id':'1','name':'ชาโลเล่ย์'}
+                ,{'id':'2','name':'บรามัน'}
+                ,{'id':'3','name':'แองกัส'}
+                ,{'id':'4','name':'วากิว'}
+                ,{'id':'5','name':'แบงกัส'}
+                ,{'id':'6','name':'ตาก'}
+                ,{'id':'7','name':'กำแพงแสน'}
+                ,{'id':'8','name':'อื่นๆ'}
+            ];
+
 
 })
 .controller('ModalDialogCtrl', function ($scope, $uibModalInstance, params) {
@@ -323,7 +522,6 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     };
 })
 ;
-
 
 function convertDate(d){
     return new Date(d);   

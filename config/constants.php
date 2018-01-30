@@ -17,3 +17,5 @@ define('BT_ADDUSER', '<button type="button" class="btn btn-info btn-block"><i cl
 define('PAGE_LIMIT', 20);
 
 
+define('SITE_URL', 'http://localhost/abeeftak/');
+

@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use Cake\I18n\Time;
-
+use Cake\Event\Event;
 /**
  * Farms Controller
  *
@@ -37,6 +37,14 @@ class FarmsController extends AppController {
         'breeder' => 'ระดับ 2 - Breeder',
         'conservation' => 'ระดับ 3 - Conservation'
     ];
+    
+    public $FarmCows = null;
+    
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+        $this->FarmCows = TableRegistry::get('FarmCows');
+       
+    }
 
     /**
      * Index method
@@ -44,26 +52,26 @@ class FarmsController extends AppController {
      * @return \Cake\Http\Response|void
      */
     public function index() {
-        
+
         $name = $this->request->query('name');
         $level = $this->request->query('level');
         $type = $this->request->query('type');
         $conditions = [];
-        
-        if(!is_null($name)){
-            array_push($conditions, ['Farms.name LIKE '=>'%'.$name.'%']);
+
+        if (!is_null($name)) {
+            array_push($conditions, ['Farms.name LIKE ' => '%' . $name . '%']);
         }
-        if(!is_null($level) && $level !=''){
-            array_push($conditions, ['Farms.level'=>$level]);
+        if (!is_null($level) && $level != '') {
+            array_push($conditions, ['Farms.level' => $level]);
         }
-        if(!is_null($type) && $type !=''){
-            array_push($conditions, ['Farms.type'=>$type]);
+        if (!is_null($type) && $type != '') {
+            array_push($conditions, ['Farms.type' => $type]);
         }
         //debug($conditions);
-        
+
         $data = $this->Farms->find()
                 ->where($conditions);
-        
+
         $this->paginate = [
             'contain' => ['Addresses']
         ];
@@ -89,6 +97,19 @@ class FarmsController extends AppController {
             'contain' => ['Addresses']
         ]);
 
+        $CowsModel = TableRegistry::get('Cows');
+        $cows = $CowsModel->find('list', [
+            'keyField' => 'id', 'valueField' => 'code'
+        ]);
+        
+        
+        $HerdsmansModel = TableRegistry::get('Herdsmans');
+        $herdsmans = $HerdsmansModel->find('list',[
+            'keyField'=>'id','valueField'=>'firstname'
+        ]);
+
+        $this->set('cows', $cows);
+        $this->set('herdsmans',$herdsmans);
         $this->set('farm', $farm);
         $this->set('_serialize', ['farm']);
     }
@@ -204,6 +225,26 @@ class FarmsController extends AppController {
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    
+
+    public function getcowjson($farm_id = null) {
+        $this->autoRender = false;
+        if ($this->request->is('ajax') && !is_null($farm_id)) {
+            $this->response->disableCache();
+            
+            $q = $this->FarmCows->find()
+                    ->select(['Cows.code','Cows.id','FarmCows.id'])
+                    ->contain(['Cows'])
+                    ->where(['FarmCows.farm_id'=>$farm_id]);
+            
+            $farmCows = $q->toArray();
+            $farmCowJson = json_encode($farmCows);
+            echo $farmCowJson;
+        }else{
+            
+        }
     }
 
     private function getListprovinces() {

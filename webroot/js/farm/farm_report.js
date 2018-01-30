@@ -1,22 +1,26 @@
-function exportPDF (data) {
+function exportPDF (data,filter_text) {
+    if(data ===''){
+        return false;
+    }
     var data_detail = [];
     var headerRow = [];
-// set header
-//headerRow.push('ห้องประชุม');
-    headerRow.push({text: 'ห้องประชุม', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow.push({text: 'พื้นที่', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow.push({text: 'จำนวนครั้งที่ใช้งาน', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow.push({text: 'ปี', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+
+    headerRow.push({text: 'ลำดับ', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow.push({text: 'ชื่อฟาร์ม', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow.push({text: 'ระดับ', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow.push({text: 'ประเภท', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow.push({text: 'ที่อยู่', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
     data_detail.push(headerRow);
 
 // set detail
     var row_index = 1;
     data.forEach(function (sourceRow) {
         var dataRow = [];
+        dataRow.push(row_index);
         dataRow.push(sourceRow.name);
-        dataRow.push(sourceRow.name);
-        dataRow.push({text: sourceRow.name, alignment: 'center'});
-        dataRow.push({text: sourceRow.name, alignment: 'center'});
+        dataRow.push({text: sourceRow.level, alignment: 'center'});
+        dataRow.push({text: sourceRow.type, alignment: 'center'});
+        dataRow.push({text: sourceRow.address.text, alignment: 'left'});
         data_detail.push(dataRow);
         row_index++;
     });
@@ -32,11 +36,12 @@ function exportPDF (data) {
 
     var dd = {
         content: [
-            {text: 'สรุปการใช้ห้องประชุมประจำปี ', style: 'header', alignment: 'center', margin: [0, 10, 0, 0]},
+            {text: 'รายงานข้อมูลฟาร์ม ', style: 'header', alignment: 'center', margin: [0, 10, 0, 0]},
+            filter_text,
             {
                 table: {
                     headerRows: 1,
-                    widths: [170, 150, 100, 50],
+                    widths: [25, 100, 70, 70,'*'],
                     body: data_detail
                 }
             }
@@ -51,7 +56,7 @@ function exportPDF (data) {
             fontSize: 12,
             font: 'SriSuriwongse'
         }
-    }
+    };
 
-    pdfMake.createPdf(dd).download('summary_room.pdf');
+    pdfMake.createPdf(dd).download('farm_report.pdf');
 }
