@@ -52,6 +52,8 @@
             <thead>
                 <tr>
                     <th scope="col" class="actions"><?= __('Actions') ?></th>
+                    <th scope="col" class="actions"><?= __('บัตรประจำตัวโค') ?></th>
+                    <th scope="col" class="actions"><?= __('บัตรประจำตัวสัตว์') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('code','รหัสโค') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('cow_breed_id','ชื่อ') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('gender', 'เพศ') ?></th>
@@ -65,6 +67,8 @@
                         <?=$this->Html->link(BT_EDIT,['action' => 'edit', $cow->id],['escape'=>false])?>
                         <?= $this->Form->postLink(BT_DELETE, ['action' => 'delete', $cow->id], ['confirm' => __('Are you sure you want to delete # {0}?', $cow->id),'escape'=>false]) ?>
                     </td>
+                    <td><?=$this->Html->link(BT_EDIT,['controller' => 'Reports', 'action' => 'cowcard', $cow->id],['escape'=>false])?></td>
+                    <td><?=$this->Html->link(BT_EDIT,['controller' => 'Reports', 'action' => 'animalcertificate', $cow->id],['escape'=>false])?></td>
                     <td><?= h($cow->code) ?></td>
                     <td><?= $cow->cow_breed->name ?></td>
                     <td><?= (h($cow->gender)=='M'?'ผู้':'เมีย') ?></td>
