@@ -1,4 +1,4 @@
-function exportPDF(datacow, datagrowth, datagrowthW, dataBreed) {
+function exportPDF(datacow, datagrowth, datagrowthW, dataBreed, datafath, datamoth) {
     var data_detail = [];
     var firstRow = [];
 // set header
@@ -25,19 +25,27 @@ function exportPDF(datacow, datagrowth, datagrowthW, dataBreed) {
     data_detail.push(headerRow);
 
 // set detail
-    var row_index = 0;
-    datagrowth.forEach(function (sourceRow) {
-        var dataRow = [];
-        var sprdate = sourceRow.record_date.split('T');
-        dataRow.push({text: sprdate[0], alignment: 'center'});
-        dataRow.push({text: sourceRow.age, alignment: 'center'});
-        dataRow.push({text: sourceRow.weight, alignment: 'center'});
-        dataRow.push({text: sourceRow.growth_stat, alignment: 'center'});
-        dataRow.push({text: sourceRow.height, alignment: 'center'});
-        dataRow.push({text: sourceRow.chest, alignment: 'center'});
-        data_detail.push(dataRow);
-        row_index++;
-    });
+    for (var i = 0; i < 5; i++) {
+        var firstRow = [];
+        if (i < datagrowth.length) {
+            var sprdate = datagrowth[i]['record_date'].split('T');
+            firstRow.push({text: sprdate[0], alignment: 'center'});
+            firstRow.push({text: datagrowth[i]['age'], alignment: 'center'});
+            firstRow.push({text: datagrowth[i]['weight'], alignment: 'center'});
+            firstRow.push({text: datagrowth[i]['growth_stat'], alignment: 'center'});
+            firstRow.push({text: datagrowth[i]['height'], alignment: 'center'});
+            firstRow.push({text: datagrowth[i]['chest'], alignment: 'center'});
+        } else {
+            firstRow.push({text: '-', alignment: 'center'});
+            firstRow.push({text: '-', alignment: 'center'});
+            firstRow.push({text: '-', alignment: 'center'});
+            firstRow.push({text: '-', alignment: 'center'});
+            firstRow.push({text: '-', alignment: 'center'});
+            firstRow.push({text: '-', alignment: 'center'});
+        }
+        data_detail.push(firstRow);
+    }
+
     var sprdatecow = datacow[0]['birthday'].split('T');
     datacow[0]['birthday'] = sprdatecow[0];
 //return ;
@@ -56,19 +64,29 @@ function exportPDF(datacow, datagrowth, datagrowthW, dataBreed) {
     data_detail2.push(headerRow2);
 
 // set detail
-    var row_index2 = 1;
-    datagrowth.forEach(function (sourceRow) {
-        var dataRow2 = [];
-        var sprdate = sourceRow.record_date.split('T');
-        dataRow2.push({text: sprdate[0], alignment: 'center'});
-        dataRow2.push({text: sourceRow.age, alignment: 'center'});
-        dataRow2.push({text: sourceRow.weight, alignment: 'center'});
-        dataRow2.push({text: sourceRow.total_eating, alignment: 'center'});
-        dataRow2.push({text: sourceRow.growth_stat, alignment: 'center'});
-        dataRow2.push('');
-        data_detail2.push(dataRow2);
-        row_index2++;
-    });
+
+    for (var i = 0; i < 10; i++) {
+        var firstRow2 = [];
+        if (i < datagrowth.length) {
+            var sprdate = datagrowth[i]['record_date'].split('T');
+            firstRow2.push({text: sprdate[0], alignment: 'center'});
+            firstRow2.push({text: datagrowth[i]['age'], alignment: 'center'});
+            firstRow2.push({text: datagrowth[i]['weight'], alignment: 'center'});
+            firstRow2.push({text: datagrowth[i]['total_eating'], alignment: 'center'});
+            firstRow2.push({text: datagrowth[i]['growth_stat'], alignment: 'center'});
+            firstRow2.push({text: ''});
+        } else {
+            firstRow2.push({text: '-', alignment: 'center'});
+            firstRow2.push({text: '-', alignment: 'center'});
+            firstRow2.push({text: '-', alignment: 'center'});
+            firstRow2.push({text: '-', alignment: 'center'});
+            firstRow2.push({text: '-', alignment: 'center'});
+            firstRow2.push({text: '-', alignment: 'center'});
+        }
+
+
+        data_detail2.push(firstRow2);
+    }
 
     var data_detail3 = [];
     var headerRow3 = [];
@@ -83,22 +101,30 @@ function exportPDF(datacow, datagrowth, datagrowthW, dataBreed) {
 
     data_detail3.push(headerRow3);
 
-// set detail
-
     var row_index3 = 0;
-    for(var i = 0 ; i < dataBreed.length ; i++){
-        var dataRow3 = [];
-        var sprdate = dataBreed[row_index3]['breeding_date'].split('T');
-        dataRow3.push({text: sprdate[0], alignment: 'center'});
-        dataRow3.push({text: dataBreed[row_index3]['mother_code'], alignment: 'center'});
-        dataRow3.push('');
-        row_index3++;
-        var sprdate2 = dataBreed[row_index3]['breeding_date'].split('T');
-        dataRow3.push({text: sprdate2[0], alignment: 'center'});
-        dataRow3.push({text: dataBreed[row_index3]['mother_code'], alignment: 'center'});
-        dataRow3.push('');
-        data_detail3.push(dataRow3);
-        row_index3++;
+    for (var i = 0; i < 5; i++) {
+        var firstRow3 = [];
+        if (i < dataBreed.length) {
+            var sprdate = dataBreed[row_index3]['breeding_date'].split('T');
+            firstRow3.push({text: sprdate[0], alignment: 'center'});
+            firstRow3.push({text: dataBreed[row_index3]['mother_code'], alignment: 'center'});
+            firstRow3.push('');
+            row_index3++;
+            var sprdate2 = dataBreed[row_index3]['breeding_date'].split('T');
+            firstRow3.push({text: sprdate2[0], alignment: 'center'});
+            firstRow3.push({text: dataBreed[row_index3]['mother_code'], alignment: 'center'});
+            firstRow3.push('');
+
+            row_index3++;
+        } else {
+            firstRow3.push({text: '-', alignment: 'center'});
+            firstRow3.push({text: '-', alignment: 'center'});
+            firstRow3.push({text: '-', alignment: 'center'});
+            firstRow3.push({text: '-', alignment: 'center'});
+            firstRow3.push({text: '-', alignment: 'center'});
+            firstRow3.push({text: '-', alignment: 'center'});
+        }
+        data_detail3.push(firstRow3);
     }
 
     pdfMake.fonts = {
@@ -152,22 +178,22 @@ function exportPDF(datacow, datagrowth, datagrowthW, dataBreed) {
                     {text: [
                             {text: ' \n\n\n ', alignment: 'center'},
                             {text: '     รหัสปู่  '}
-                            , {text: '    12345     ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + datafath[0]['father_code'] + '      ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: '\n รหัส พ่อโค '}
                             , {text: '     ' + datacow[0]['father_code'] + '', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: '\n รหัสย่า ', alignment: 'center'}
-                            , {text: '    12345    ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + datafath[0]['mother_code'] + '      ', decoration: 'underline', decorationStyle: 'dashed'}
 
 
                         ], margin: [60, 0, 0, 0]},
                     {text: [
                             {text: ' \n\n\n ', alignment: 'center'},
-                            {text: '     รหัสปู่  '}
+                            {text: '    ' + datamoth[0]['father_code'] + '      '}
                             , {text: '    12345     ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: '\n      รหัส แม่โค '}
                             , {text: '     ' + datacow[0]['mother_code'] + '', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: '\n รหัสย่า ', alignment: 'center'}
-                            , {text: '    12345    ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + datamoth[0]['mother_code'] + '      ', decoration: 'underline', decorationStyle: 'dashed'}
 
 
                         ], margin: [30, 0, 0, 0]}

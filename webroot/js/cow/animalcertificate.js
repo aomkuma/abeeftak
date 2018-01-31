@@ -1,20 +1,20 @@
-function exportPDF(datacow, datafath, datamoth) {
+function exportPDF(datacow, datafath, datamoth, datamove) {
     if (datacow[0]['gender'] === 'M') {
         datacow[0]['gender'] = 'ผู้'
     } else {
         datacow[0]['gender'] = 'เมีย'
     }
 
-    if (datacow[0]['origin'] === 'IN') {
-        datacow[0]['origin'] = 'สัตว์ในประเทศ'
+    if (datacow[0]['origins'] === 'IN') {
+        datacow[0]['origins'] = 'สัตว์ในประเทศ'
     } else {
-        datacow[0]['origin'] = 'สัตว์นำเข้าจากประเทศ'
+        datacow[0]['origins'] = 'สัตว์นำเข้าจากประเทศ'
     }
 
     var sprdatecow = datacow[0]['birthday'].split('T');
     datacow[0]['birthday'] = sprdatecow[0];
 
-    if (datacow[0]['import_date'] !== '') {
+    if (datacow[0]['import_date'] !== null) {
         var sprdateim = datacow[0]['import_date'].split('T');
         datacow[0]['import_date'] = sprdateim[0];
     } else {
@@ -74,26 +74,23 @@ function exportPDF(datacow, datafath, datamoth) {
 
     data_detail2.push(headerRow2);
 
-//    var row_index = 1;
-//    data.forEach(function (sourceRow) {
-//        var dataRow = [];
-//        var sprdate = sourceRow.movement_date.split('T');
-//        dataRow.push({text: row_index, alignment: 'center'});
-//        dataRow.push({text: sourceRow.departure, alignment: 'center'});
-//        dataRow.push({text: sourceRow.destination, alignment: 'center'});
-//        dataRow.push({text: sprdate[0], alignment: 'center'});
-//        dataRow.push({text: sourceRow.description, alignment: 'center'});
-//        dataRow.push('');
-//        dataRow.push('');
-//        data_detail.push2(dataRow);
-//        row_index++;
-//    });
+    for (var i = 1; i <= 10; i++) {
+        var firstRow2 = [];
+        firstRow2.push({text: i, alignment: 'center', fontSize: 12, bold: true});
+        firstRow2.push({text: ''});
+        firstRow2.push({text: ''});
+        firstRow2.push({text: ''});
+        firstRow2.push({text: ''});
+        firstRow2.push({text: ''});
+        firstRow2.push({text: ''});
+
+        data_detail2.push(firstRow2);
+    }
 
     // ตาราง ประวัติการเคลื่อนย้าย  ////////////////////
     var data_detail3 = [];
     var headerRow3 = [];
 // set header
-//headerRow.push('ห้องประชุม');
     headerRow3.push({text: 'ลำดับ', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
     headerRow3.push({text: 'ต้นทาง', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
     headerRow3.push({text: 'ปลายทาง', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
@@ -103,22 +100,29 @@ function exportPDF(datacow, datafath, datamoth) {
     headerRow3.push({text: 'หมายเหตุ', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
 
     data_detail3.push(headerRow3);
-
-// set detail
-//    var row_index = 1;
-//    data.forEach(function (sourceRow) {
-//        var dataRow = [];
-//        var sprdate = sourceRow.movement_date.split('T');
-//        dataRow.push({text: row_index, alignment: 'center'});
-//        dataRow.push({text: sourceRow.departure, alignment: 'center'});
-//        dataRow.push({text: sourceRow.destination, alignment: 'center'});
-//        dataRow.push({text: sprdate[0], alignment: 'center'});
-//        dataRow.push({text: sourceRow.description, alignment: 'center'});
-//        dataRow.push('');
-//        dataRow.push('');
-//        data_detail.push(dataRow);
-//        row_index++;
-//    });
+    
+    for (var i = 0; i < 10; i++) {
+        var firstRow3 = [];
+        if (i < datamove.length) {
+            var sprdate = datamove[i]['movement_date'].split('T');
+            firstRow3.push({text: i+1, alignment: 'center'});
+            firstRow3.push({text: datamove[i]['departure'], alignment: 'center'});
+            firstRow3.push({text: datamove[i]['destination'], alignment: 'center'});
+            firstRow3.push({text: sprdate[0], alignment: 'center'});
+            firstRow3.push({text: datamove[i]['description'], alignment: 'center'});
+            firstRow3.push({text: ''});
+            firstRow3.push({text: ''});
+        } else {
+            firstRow3.push({text: '-', alignment: 'center'});
+            firstRow3.push({text: '-', alignment: 'center'});
+            firstRow3.push({text: '-', alignment: 'center'});
+            firstRow3.push({text: '-', alignment: 'center'});
+            firstRow3.push({text: '-', alignment: 'center'});
+            firstRow3.push({text: '-', alignment: 'center'});
+            firstRow3.push({text: '-', alignment: 'center'});
+        }
+        data_detail3.push(firstRow3);
+    }
 
 // ตาราง ประวัติการรักษา  ////////////////////
     var data_detail4 = [];
@@ -134,38 +138,128 @@ function exportPDF(datacow, datafath, datamoth) {
 
     data_detail4.push(headerRow4);
     
+    for (var i = 1; i <= 10; i++) {
+        var firstRow4 = [];
+        firstRow4.push({text: i, alignment: 'center', fontSize: 12, bold: true});
+        firstRow4.push({text: ''});
+        firstRow4.push({text: ''});
+        firstRow4.push({text: ''});
+        firstRow4.push({text: ''});
+        firstRow4.push({text: ''});
+
+        data_detail4.push(firstRow4);
+    }
+
     //////////
-    
+
     // ตาราง ประวัติการฉีดวัคซีน  ////////////////////
-    var data_detail4 = [];
-    var headerRow4 = [];
+    var data_detail5 = [];
+    var headerRow5 = [];
 // set header
 //headerRow.push('ห้องประชุม');
-    headerRow4.push({text: 'ลำดับ', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow4.push({text: 'วันที่รักษา', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow4.push({text: 'โรค', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow4.push({text: 'การให้ยารักษา', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow4.push({text: 'ผู้รักษา', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow4.push({text: 'หมายเหตุ', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow5.push({text: 'ชนิดวัคซีน \n Type', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow5.push({text: 'ครั้งที่ \n No.', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow5.push({text: 'ชุดที่ \n Lot No.', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow5.push({text: 'หมดอายุวันที่ \n Expried Date', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow5.push({text: 'วันที่ฉีด \n Vaccination Date', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow5.push({text: 'ฉีดครั้งต่อไป \n Next Vaccination', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow5.push({text: 'ผู้ฉีด \n Vaccinator', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow5.push({text: 'สัตวแพทย์ผู้รับรอง \n Vet Authorized', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
 
-    data_detail4.push(headerRow4);
-    
+    data_detail5.push(headerRow5);
+
+    for (var i = 1; i <= 10; i++) {
+        var firstRow5 = [];
+        if (i === 1) {
+            firstRow5.push({text: 'ปากและ \n เท้าเปื่อย \n FMD', style: 'tableHeader', rowSpan: 10, alignment: 'center', fontSize: 12, bold: true});
+            firstRow5.push({text: i, alignment: 'center', fontSize: 12, bold: true});
+            firstRow5.push({text: ''});
+            firstRow5.push({text: ''});
+            firstRow5.push({text: ''});
+            firstRow5.push({text: ''});
+            firstRow5.push({text: ''});
+            firstRow5.push({text: ''});
+        } else {
+            firstRow5.push({text: ''});
+            firstRow5.push({text: i, alignment: 'center', fontSize: 12, bold: true});
+            firstRow5.push({text: ''});
+            firstRow5.push({text: ''});
+            firstRow5.push({text: ''});
+            firstRow5.push({text: ''});
+            firstRow5.push({text: ''});
+            firstRow5.push({text: ''});
+        }
+
+
+        data_detail5.push(firstRow5);
+    }
+
+    for (var i = 1; i <= 5; i++) {
+        var firstRow52 = [];
+        if (i === 1) {
+            firstRow52.push({text: 'เฮโมรายิก \n เซพติซีเมีย \n Haemo', style: 'tableHeader', rowSpan: 5, alignment: 'center', fontSize: 12, bold: true});
+            firstRow52.push({text: i, alignment: 'center', fontSize: 12, bold: true});
+            firstRow52.push({text: ''});
+            firstRow52.push({text: ''});
+            firstRow52.push({text: ''});
+            firstRow52.push({text: ''});
+            firstRow52.push({text: ''});
+            firstRow52.push({text: ''});
+        } else {
+            firstRow52.push({text: ''});
+            firstRow52.push({text: i, alignment: 'center', fontSize: 12, bold: true});
+            firstRow52.push({text: ''});
+            firstRow52.push({text: ''});
+            firstRow52.push({text: ''});
+            firstRow52.push({text: ''});
+            firstRow52.push({text: ''});
+            firstRow52.push({text: ''});
+        }
+        data_detail5.push(firstRow52);
+    }
+
+    for (var i = 1; i <= 5; i++) {
+        var firstRow53 = [];
+        if (i === 1) {
+            firstRow53.push({text: 'บรูเซอโลซิล \n เซพติซีเมีย \n Bru', style: 'tableHeader', rowSpan: 5, alignment: 'center', fontSize: 12, bold: true});
+            firstRow53.push({text: i, alignment: 'center', fontSize: 12, bold: true});
+            firstRow53.push({text: ''});
+            firstRow53.push({text: ''});
+            firstRow53.push({text: ''});
+            firstRow53.push({text: ''});
+            firstRow53.push({text: ''});
+            firstRow53.push({text: ''});
+        } else {
+            firstRow53.push({text: ''});
+            firstRow53.push({text: i, alignment: 'center', fontSize: 12, bold: true});
+            firstRow53.push({text: ''});
+            firstRow53.push({text: ''});
+            firstRow53.push({text: ''});
+            firstRow53.push({text: ''});
+            firstRow53.push({text: ''});
+            firstRow53.push({text: ''});
+        }
+
+
+        data_detail5.push(firstRow53);
+    }
+
     //////////
-    
+
     // ตาราง ประวัติการผสมเทียม  ////////////////////
-    var data_detail4 = [];
-    var headerRow4 = [];
+    var data_detail6 = [];
+    var headerRow6 = [];
 // set header
 //headerRow.push('ห้องประชุม');
-    headerRow4.push({text: 'ลำดับ', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow4.push({text: 'วันที่รักษา', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow4.push({text: 'โรค', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow4.push({text: 'การให้ยารักษา', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow4.push({text: 'ผู้รักษา', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow4.push({text: 'หมายเหตุ', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow6.push({text: 'ลำดับ', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow6.push({text: 'วันที่รักษา', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow6.push({text: 'โรค', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow6.push({text: 'การให้ยารักษา', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow6.push({text: 'ผู้รักษา', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow6.push({text: 'หมายเหตุ', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
 
-    data_detail4.push(headerRow4);
-    
+    data_detail6.push(headerRow6);
+
     //////////
     pdfMake.fonts = {
         SriSuriwongse: {
@@ -266,7 +360,7 @@ function exportPDF(datacow, datafath, datamoth) {
                 }, margin: [40, 0, 0, 0]
                 , pageBreak: 'after', pageOrientation: 'landscape'
             },
-            {text: 'ประวัติการเคลื่อนย้าย รหัสโค :  '+ datacow[0]['code'], style: 'header', alignment: 'center', margin: [0, 10, 0, 0]}
+            {text: 'ประวัติการเคลื่อนย้าย รหัสโค :  ' + datacow[0]['code'], style: 'header', alignment: 'center', margin: [0, 10, 0, 0]}
             , {text: '\n'},
             {
                 table: {
@@ -276,7 +370,7 @@ function exportPDF(datacow, datafath, datamoth) {
                 }, margin: [40, 0, 0, 0]
                 , pageBreak: 'after', pageOrientation: 'landscape'
             },
-            {text: 'ประวัติการรักษา รหัสโค :  '+ datacow[0]['code'], style: 'header', alignment: 'center', margin: [0, 10, 0, 0]}
+            {text: 'ประวัติการรักษา รหัสโค :  ' + datacow[0]['code'], style: 'header', alignment: 'center', margin: [0, 10, 0, 0]}
             , {text: '\n'},
             {
                 table: {
@@ -286,18 +380,18 @@ function exportPDF(datacow, datafath, datamoth) {
                 }, margin: [40, 0, 0, 0]
                 , pageBreak: 'after', pageOrientation: 'landscape'
             },
-            {text: 'ประวัติการฉีดวัคซีน รหัสโค :  '+ datacow[0]['code'], style: 'header', alignment: 'center', margin: [0, 10, 0, 0]}
+            {text: 'ประวัติการฉีดวัคซีน รหัสโค :  ' + datacow[0]['code'], style: 'header', alignment: 'center', margin: [0, 10, 0, 0]}
             , {text: '\n'}
             ,
-//            {
-//                table: {
-//                    headerRows: 1,
-//                    widths: [50, 90, 130, 140, 100, 110],
-//                    body: data_detail5
-//                }, margin: [40, 0, 0, 0]
-//                , pageBreak: 'after', pageOrientation: 'landscape'
-//            },
-            {text: 'ประวัติการผสมเทียม รหัสโค :  '+ datacow[0]['code'], style: 'header', alignment: 'center', margin: [0, 10, 0, 0]}
+            {
+                table: {
+                    headerRows: 1,
+                    widths: [50, 30, 30, 100, 100, 100, 110, 110],
+                    body: data_detail5
+                }, margin: [40, 0, 0, 0]
+                , pageBreak: 'after', pageOrientation: 'landscape'
+            },
+            {text: 'ประวัติการผสมเทียม รหัสโค :  ' + datacow[0]['code'], style: 'header', alignment: 'center', margin: [0, 10, 0, 0]}
             , {text: '\n'}
 //            ,
 //            {
@@ -306,7 +400,6 @@ function exportPDF(datacow, datafath, datamoth) {
 //                    widths: [50, 90, 130, 140, 100, 110],
 //                    body: data_detail6
 //                }, margin: [40, 0, 0, 0]
-//                , pageBreak: 'after', pageOrientation: 'landscape'
 //            }
         ],
         styles: {

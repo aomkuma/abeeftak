@@ -271,6 +271,9 @@ class ReportsController extends AppController {
             'contain' => ['CowBreeds']
         ]);
 
+        $cowR = $cowmale->toArray();
+        $jsondatacow = json_encode($cowR);
+        
         $growthRecord = $this->GrowthRecords->find('all', [
             'conditions' => ['type' => 'F', 'cow_id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2'], array('limit' => 5)
         ]);
@@ -282,18 +285,30 @@ class ReportsController extends AppController {
         $breedRecord = $this->BreedingRecords->find('all', [
             'conditions' => ['cow_id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2']
         ]);
+        
+        $cowFather = $this->Cows->find('all', [
+            'conditions' => ['Cows.code' => $cowR[0]['father_code']],
+            'contain' => ['CowBreeds']
+        ]);
+        
+        $cowMother = $this->Cows->find('all', [
+            'conditions' => ['Cows.code' => $cowR[0]['mother_code']],
+            'contain' => ['CowBreeds']
+        ]);
 
         $breedR = $breedRecord->toArray();
         $jsondataBreed = json_encode($breedR);
-
-        $cowR = $cowmale->toArray();
-        $jsondatacow = json_encode($cowR);
+        
         $growthR = $growthRecord->toArray();
         $jsondatagrowth = json_encode($growthR);
         $growthW = $growthRecordW->toArray();
         $jsondatagrowthW = json_encode($growthW);
+        $cowFath = $cowFather->toArray();
+        $jsondataFath = json_encode($cowFath);
+        $cowMoth = $cowMother->toArray();
+        $jsondataMoth = json_encode($cowMoth);
 
-        $this->set(compact('jsondatacow', 'jsondatagrowth', 'jsondatagrowthW', 'jsondataBreed'));
+        $this->set(compact('jsondatacow', 'jsondatagrowth', 'jsondatagrowthW', 'jsondataBreed','jsondataFath','jsondataMoth'));
 
     }
 
@@ -303,6 +318,9 @@ class ReportsController extends AppController {
             'conditions' => ['Cows.id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2'],
             'contain' => ['CowBreeds']
         ]);
+        
+        $cowR = $cowfemale->toArray();
+        $jsondatacow = json_encode($cowR);
 
         $growthRecord = $this->GrowthRecords->find('all', [
             'conditions' => ['type' => 'F', 'cow_id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2'], array('limit' => 5)
@@ -315,18 +333,30 @@ class ReportsController extends AppController {
         $givebirthRecord = $this->GivebirthRecords->find('all', [
             'conditions' => ['cow_id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2']
         ]);
+        
+        $cowFather = $this->Cows->find('all', [
+            'conditions' => ['Cows.code' => $cowR[0]['father_code']],
+            'contain' => ['CowBreeds']
+        ]);
+        
+        $cowMother = $this->Cows->find('all', [
+            'conditions' => ['Cows.code' => $cowR[0]['mother_code']],
+            'contain' => ['CowBreeds']
+        ]);
 
         $gbR = $givebirthRecord->toArray();
         $jsondatagbR = json_encode($gbR);
-
-        $cowR = $cowfemale->toArray();
-        $jsondatacow = json_encode($cowR);
+        
         $growthR = $growthRecord->toArray();
         $jsondatagrowth = json_encode($growthR);
         $growthW = $growthRecordW->toArray();
         $jsondatagrowthW = json_encode($growthW);
+        $cowFath = $cowFather->toArray();
+        $jsondataFath = json_encode($cowFath);
+        $cowMoth = $cowMother->toArray();
+        $jsondataMoth = json_encode($cowMoth);
 
-        $this->set(compact('jsondatacow', 'jsondatagrowth', 'jsondatagrowthW', 'jsondatagbR'));
+        $this->set(compact('jsondatacow', 'jsondatagrowth', 'jsondatagrowthW', 'jsondatagbR','jsondataFath','jsondataMoth'));
         
     }
     
@@ -350,12 +380,20 @@ class ReportsController extends AppController {
             'contain' => ['CowBreeds']
         ]);
         
+        $movementRecord = $this->MovementRecords->find('all', [
+            'conditions' => ['cow_id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2']
+        ]);
+
+        $moveR = $movementRecord->toArray();
+        $jsondatamoveR = json_encode($moveR);
+        $this->set(compact('$jsondatamoveR'));
+        
         $cowFath = $cowFather->toArray();
         $jsondataFath = json_encode($cowFath);
         $cowMoth = $cowMother->toArray();
         $jsondataMoth = json_encode($cowMoth);
         
-        $this->set(compact('jsondatacow','jsondataFath','jsondataMoth'));
+        $this->set(compact('jsondatacow','jsondataFath','jsondataMoth','jsondatamoveR'));
     }
 
 }
