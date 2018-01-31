@@ -174,7 +174,7 @@ class HerdsmansController extends AppController {
             $this->Flash->error(__('The herdsman could not be saved. Please, try again.'));
         }
         $addresses = $this->Herdsmans->Addresses->find('list', ['limit' => 200]);
-        $grade = ['1' => 'ระดับ 1', '2' => 'ระดับ 2', '3' => 'ระดับ 3', '4' => 'ระดับ 4', '5' => 'ระดับ 5'];
+        $grade = ['1' => 'General', '2' => 'Standard', '3' => 'Gold', '4' => 'Premium', '5' => 'Platinum'];
         $title = ['mr' => 'นาย', 'mrs' => 'นาง', 'ms' => 'นางสาว', 'other' => 'อื่นๆ'];
         $this->set(compact('herdsman', 'addresses', 'grade', 'title'));
         $this->set('_serialize', ['herdsman']);
@@ -254,7 +254,7 @@ class HerdsmansController extends AppController {
         
         $image = $this->Images->get($herdsman->image_id);
         $imgpath = $image->path;
-        $grade = ['1' => 'ระดับ 1', '2' => 'ระดับ 2', '3' => 'ระดับ 3', '4' => 'ระดับ 4', '5' => 'ระดับ 5'];
+        $grade = ['1' => 'General', '2' => 'Standard', '3' => 'Gold', '4' => 'Premium', '5' => 'Platinum'];
         $title = ['mr' => 'นาย', 'mrs' => 'นาง', 'ms' => 'นางสาว', 'other' => 'อื่นๆ'];
         $this->set(compact('herdsman', 'address', 'grade', 'title', 'imgpath'));
         $this->set('_serialize', ['herdsman']);
