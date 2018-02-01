@@ -12,7 +12,7 @@
             <div class="panel-body">
                 <ul>
                     <li>
-                        <?= $this->Html->link('รายงานสมาชิกผู้เลี้ยงโค', ['controller' => '', 'action' => ''], ['escape' => false]) ?>
+                        <?= $this->Html->link('รายงานสมาชิกผู้เลี้ยงโค', ['controller' => 'herdsman-reports', 'action' => 'index'], ['escape' => false]) ?>
                     </li>
                 </ul>
 
