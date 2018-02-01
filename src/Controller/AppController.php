@@ -44,21 +44,21 @@ class AppController extends Controller {
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 
-//        $this->loadComponent('Auth', [
-//            'loginAction' => [
-//                'controller' => 'home',
-//                'action' => 'index'
-//            ],
-//            'logoutRedirect' => [
-//                'controller' => 'users',
-//                'action' => 'login'
-//            ],
-//            'authenticate' => [
-//                'Form' => [
-//                    'fields' => ['username' => 'email', 'password' => 'password']
-//                ]
-//            ]
-//        ]);
+        $this->loadComponent('Auth', [
+            'loginAction' => [
+                'controller' => 'home',
+                'action' => 'index'
+            ],
+            'logoutRedirect' => [
+                'controller' => 'users',
+                'action' => 'login'
+            ],
+            'authenticate' => [
+                'Form' => [
+                    'fields' => ['username' => 'email', 'password' => 'password']
+                ]
+            ]
+        ]);
     }
 
     /**
@@ -81,8 +81,8 @@ class AppController extends Controller {
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
         //debug($this->request->session()->read());
-//        $this->Auth->allow();
-//        $this->authen();
+        $this->Auth->allow();
+        $this->authen();
     }
 
     private function authen() {
