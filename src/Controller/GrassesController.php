@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -10,16 +11,15 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\Grass[] paginate($object = null, array $settings = [])
  */
-class GrassesController extends AppController
-{
+class GrassesController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
+    public function index() {
+        $this->response->disableCache();
         $grasses = $this->paginate($this->Grasses);
 
         $this->set(compact('grasses'));
@@ -33,8 +33,7 @@ class GrassesController extends AppController
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $grass = $this->Grasses->get($id, [
             'contain' => []
         ]);
@@ -48,13 +47,12 @@ class GrassesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $grass = $this->Grasses->newEntity();
         if ($this->request->is('post')) {
             $grass = $this->Grasses->patchEntity($grass, $this->request->getData());
             if ($this->Grasses->save($grass)) {
-                $this->Flash->success('บันทึก '.$grass->name.' เรียบร้อย');
+                $this->Flash->success('บันทึก ' . $grass->name . ' เรียบร้อย');
 
                 return $this->redirect(['action' => 'index']);
             }
@@ -71,8 +69,7 @@ class GrassesController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $grass = $this->Grasses->get($id, [
             'contain' => []
         ]);
@@ -96,8 +93,7 @@ class GrassesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $grass = $this->Grasses->get($id);
         if ($this->Grasses->delete($grass)) {
@@ -108,4 +104,5 @@ class GrassesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

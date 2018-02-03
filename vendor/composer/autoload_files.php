@@ -12,6 +12,7 @@ return array(
     $vendorDir . '/cakephp/cakephp/src/Collection/functions.php',
     $vendorDir . '/cakephp/cakephp/src/I18n/functions.php',
     $vendorDir . '/cakephp/cakephp/src/Utility/bootstrap.php',
+    $vendorDir . '/symfony/polyfill-php72/bootstrap.php',
     $vendorDir . '/symfony/var-dumper/Resources/functions/dump.php',
     $vendorDir . '/psy/psysh/src/Psy/functions.php',
 );

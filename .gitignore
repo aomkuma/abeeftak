@@ -4,3 +4,4 @@
 /nbproject/*
 /logs/*
 /vendor/
+*.DS_Store

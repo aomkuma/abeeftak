@@ -15,7 +15,7 @@
         <?= $this->Html->css('/startbootstrap/vendor/bootstrap/css/bootstrap.min.css') ?>
 
         <!-- MetisMenu CSS -->
-        <?= $this->Html->css('/startbootstrap/vendor/metisMenu/metisMenu.min.css') ?>
+        <?= $this->Html->css('/startbootstrap/vendor/metis-menu/metis-menu.min.css') ?>
 
         <!-- Custom CSS -->
         <?= $this->Html->css('/startbootstrap/dist/css/sb-admin-2.css') ?>

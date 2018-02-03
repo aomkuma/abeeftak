@@ -31,6 +31,8 @@ use Cake\Utility\Inflector;
  * models, and templates. Going further, Bake can also write Unit Tests for you.
  *
  * @link https://book.cakephp.org/3.0/en/bake/usage.html
+ *
+ * @property \Bake\Shell\Task\ModelTask $Model
  */
 class BakeShell extends Shell
 {
@@ -54,6 +56,9 @@ class BakeShell extends Shell
         parent::startup();
         Configure::write('debug', true);
         Cache::disable();
+        if (!Plugin::loaded('WyriHaximus/TwigView')) {
+            Plugin::load('WyriHaximus/TwigView', ['bootstrap' => true]);
+        }
 
         $task = $this->_camelize($this->command);
 

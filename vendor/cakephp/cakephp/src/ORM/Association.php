@@ -1059,7 +1059,7 @@ abstract class Association
      * @param mixed $conditions Conditions to be used, accepts anything Query::where()
      * can take.
      * @see \Cake\ORM\Table::updateAll()
-     * @return bool Success Returns true if one or more rows are affected.
+     * @return int Count Returns the affected rows.
      */
     public function updateAll($fields, $conditions)
     {
@@ -1431,7 +1431,7 @@ abstract class Association
      * the saving operation to the target table.
      *
      * @param \Cake\Datasource\EntityInterface $entity the data to be saved
-     * @param array|\ArrayObject $options The options for saving associated data.
+     * @param array $options The options for saving associated data.
      * @return bool|\Cake\Datasource\EntityInterface false if $entity could not be saved, otherwise it returns
      * the saved entity
      * @see \Cake\ORM\Table::save()

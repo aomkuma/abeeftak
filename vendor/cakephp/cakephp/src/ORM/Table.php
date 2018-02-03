@@ -482,7 +482,7 @@ class Table implements RepositoryInterface, EventListenerInterface, EventDispatc
     /**
      * Sets the connection instance.
      *
-     * @param \Cake\Datasource\ConnectionInterface $connection The connection instance
+     * @param \Cake\Database\Connection|\Cake\Datasource\ConnectionInterface $connection The connection instance
      * @return $this
      */
     public function setConnection(ConnectionInterface $connection)
@@ -968,8 +968,9 @@ class Table implements RepositoryInterface, EventListenerInterface, EventDispatc
     {
         $options += ['sourceTable' => $this];
         $association = new BelongsTo($associated, $options);
+        $this->_associations->add($association->getName(), $association);
 
-        return $this->_associations->add($association->getName(), $association);
+        return $association;
     }
 
     /**
@@ -1012,8 +1013,9 @@ class Table implements RepositoryInterface, EventListenerInterface, EventDispatc
     {
         $options += ['sourceTable' => $this];
         $association = new HasOne($associated, $options);
+        $this->_associations->add($association->getName(), $association);
 
-        return $this->_associations->add($association->getName(), $association);
+        return $association;
     }
 
     /**
@@ -1062,8 +1064,9 @@ class Table implements RepositoryInterface, EventListenerInterface, EventDispatc
     {
         $options += ['sourceTable' => $this];
         $association = new HasMany($associated, $options);
+        $this->_associations->add($association->getName(), $association);
 
-        return $this->_associations->add($association->getName(), $association);
+        return $association;
     }
 
     /**
@@ -1114,8 +1117,9 @@ class Table implements RepositoryInterface, EventListenerInterface, EventDispatc
     {
         $options += ['sourceTable' => $this];
         $association = new BelongsToMany($associated, $options);
+        $this->_associations->add($association->getName(), $association);
 
-        return $this->_associations->add($association->getName(), $association);
+        return $association;
     }
 
     /**
@@ -1289,7 +1293,7 @@ class Table implements RepositoryInterface, EventListenerInterface, EventDispatc
         );
 
         return $query->formatResults(function ($results) use ($options) {
-            /* @var \Cake\Collection\CollectionInterface $results */
+            /** @var \Cake\Collection\CollectionInterface $results */
             return $results->combine(
                 $options['keyField'],
                 $options['valueField'],
@@ -1339,7 +1343,7 @@ class Table implements RepositoryInterface, EventListenerInterface, EventDispatc
         $options = $this->_setFieldMatchers($options, ['keyField', 'parentField']);
 
         return $query->formatResults(function ($results) use ($options) {
-            /* @var \Cake\Collection\CollectionInterface $results */
+            /** @var \Cake\Collection\CollectionInterface $results */
             return $results->nest($options['keyField'], $options['parentField'], $options['nestingKey']);
         });
     }
