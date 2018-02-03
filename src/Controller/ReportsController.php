@@ -275,15 +275,15 @@ class ReportsController extends AppController {
         $jsondatacow = json_encode($cowR);
         
         $growthRecord = $this->GrowthRecords->find('all', [
-            'conditions' => ['type' => 'F', 'cow_id' => $cowR->id], array('limit' => 5)
+            'conditions' => ['type' => 'F', 'cow_id' => $cowR[0]['id']], array('limit' => 5)
         ]);
 
         $growthRecordW = $this->GrowthRecords->find('all', [
-            'conditions' => ['type' => 'W', 'cow_id' => $cowR->id]
+            'conditions' => ['type' => 'W', 'cow_id' => $cowR[0]['id']]
         ]);
 
         $breedRecord = $this->BreedingRecords->find('all', [
-            'conditions' => ['cow_id' => $cowR->id]
+            'conditions' => ['cow_id' => $cowR[0]['id']]
         ]);
         
         $cowFather = $this->Cows->find('all', [
@@ -323,15 +323,15 @@ class ReportsController extends AppController {
         $jsondatacow = json_encode($cowR);
 
         $growthRecord = $this->GrowthRecords->find('all', [
-            'conditions' => ['type' => 'F', 'cow_id' => $cowR->id], array('limit' => 5)
+            'conditions' => ['type' => 'F', 'cow_id' => $cowR[0]['id']], array('limit' => 5)
         ]);
 
         $growthRecordW = $this->GrowthRecords->find('all', [
-            'conditions' => ['type' => 'W', 'cow_id' => $cowR->id]
+            'conditions' => ['type' => 'W', 'cow_id' => $cowR[0]['id']]
         ]);
         
         $givebirthRecord = $this->GivebirthRecords->find('all', [
-            'conditions' => ['cow_id' => $cowR->id]
+            'conditions' => ['cow_id' => $cowR[0]['id']]
         ]);
         
         $cowFather = $this->Cows->find('all', [
@@ -381,7 +381,7 @@ class ReportsController extends AppController {
         ]);
         
         $movementRecord = $this->MovementRecords->find('all', [
-            'conditions' => ['cow_id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2']
+            'conditions' => ['cow_id' => $cowR[0]['id']]
         ]);
 
         $moveR = $movementRecord->toArray();
