@@ -8,7 +8,6 @@ use Cake\Network\Session\DatabaseSession;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 
-
 /**
  * Users Controller
  *
@@ -164,6 +163,10 @@ class UsersController extends AppController {
 
     public function login() {
         $this->viewBuilder()->layout('login');
+       debug($this->request->session()->read('Auth.User'));
+        if ((!is_null($this->request->session()->read('Auth.User')))) {
+            return $this->redirect(['controller' => 'users', 'action' => 'index']);
+        }
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {
@@ -177,11 +180,11 @@ class UsersController extends AppController {
                 ]);
 
                 $rolePermissions = $query->toArray();
-                //debug($rolePermissions);
+             
                 $rolePermissions = $this->makePromissionArr($rolePermissions);
                 $this->request->session()->write('rolePermissions', $rolePermissions);
-                //debug($rolePermissions);
-                return $this->redirect(['controller' => 'users', 'action' => 'index']);
+              
+                  return $this->redirect(['controller' => 'users', 'action' => 'index']);
             }
             //  $this->Flash->error(__('Invalid username or password, try again'));
         }
@@ -261,19 +264,19 @@ class UsersController extends AppController {
 
     public function printpdf() {
 
-       
+
         $query = $this->Users->find('all', [
             'contain' => ['Roles']
         ]);
         $detail = $query->toArray();
-        $detailjs= json_encode($detail);
-       
+        $detailjs = json_encode($detail);
+
         $query->select(['count' => $query->func()->count('users.id')])
                 ->group(['Roles.name']);
-       
-        $summary=$query->toArray();
-        $summaryjs= json_encode($summary);
-         $this->set(compact('summaryjs','detailjs'));
+
+        $summary = $query->toArray();
+        $summaryjs = json_encode($summary);
+        $this->set(compact('summaryjs', 'detailjs'));
     }
 
 }

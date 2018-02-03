@@ -61,7 +61,7 @@ class AppController extends Controller {
             ]
         ]);
     }
-    
+
     public function forceSSL() {
         return $this->redirect('https://' . env('SERVER_NAME') . $this->request->here);
     }
@@ -101,48 +101,33 @@ class AppController extends Controller {
 
 
         if ((is_null($this->request->session()->read('Auth.User')))) {
-
-//            if (in_array($control, $controllerguestDenyguestDeny)) {
-//                $this->Auth->deny();
-//               // debug('11' . $control);
-//                return $this->redirect(['controller' => 'home', 'action' => 'index']);
-//            } else {
-//                if($control=='users'&&$action=='login'){
-//                $this->Auth->allow();
-//               // debug('22' . $control);
-//                }else if($control=='home'){
-//                    $this->Auth->allow();
-//                  //   debug('222' . $control);
-//                }else{
-//                    $this->Auth->deny();
-//                  //   debug('2222' . $control);
-//                }
-//            }
-           if($control=='users'&&$action=='login'){
-               $this->Auth->allow();
-           }else{
-               $this->Auth->deny();
+            debug('11');
+//           
+            if ($control == 'users' && $action == 'login') {
+                $this->Auth->allow();
+            } else {
+                $this->Auth->deny();
                 return $this->redirect(['controller' => 'users', 'action' => 'login']);
-           }
+            }
         } else {
-            // debug('33');
+          
             $status = '';
             $Permissions = $this->request->session()->read('rolePermissions');
 
             if (in_array($control, $Permissions['controller'])) {
+                
                 $actionArr = $Permissions['actions'][$control];
 
                 if (in_array($action, $actionArr)) {
-
-                    //  debug('pass');
+                 
                     $this->Auth->allow();
                 } else {
-                    //    debug('no');
+                
                     $this->Auth->deny();
                     return $this->redirect(['controller' => 'users', 'action' => 'login']);
                 }
             } else {
-                // debug('no1');
+             
                 $this->Auth->deny();
                 return $this->redirect(['controller' => 'users', 'action' => 'login']);
             }
