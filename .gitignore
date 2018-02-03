@@ -5,3 +5,5 @@
 /logs/*
 /vendor/
 *.DS_Store
+webroot/img/.DS_Store
+vendor/.DS_Store
