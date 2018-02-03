@@ -86,7 +86,7 @@ class AppController extends Controller {
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
         $this->Security->requireSecure();
-        $this->Auth->allow();
+        //$this->Auth->allow();
         $this->authen();
     }
 
