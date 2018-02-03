@@ -163,7 +163,7 @@ class UsersController extends AppController {
 
     public function login() {
         $this->viewBuilder()->layout('login');
-       debug($this->request->session()->read('Auth.User'));
+     
         if ((!is_null($this->request->session()->read('Auth.User')))) {
             return $this->redirect(['controller' => 'users', 'action' => 'index']);
         }
