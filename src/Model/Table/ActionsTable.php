@@ -39,7 +39,14 @@ class ActionsTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
+        $this->addBehavior('Timestamp', [
+            'events' => [
+                'Model.beforeSave' => [
+                    'created' => 'new',
+                    'updated' => 'always',
+                ]
+            ]
+        ]);
 
         $this->belongsTo('Controllers', [
             'foreignKey' => 'controller_id',

@@ -39,7 +39,14 @@ class RolesTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
+        $this->addBehavior('Timestamp', [
+            'events' => [
+                'Model.beforeSave' => [
+                    'created' => 'new',
+                    'updated' => 'always',
+                ]
+            ]
+        ]);
 
         $this->hasMany('RoleAccesses', [
             'foreignKey' => 'role_id'

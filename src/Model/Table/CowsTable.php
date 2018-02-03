@@ -41,7 +41,14 @@ class CowsTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
+        $this->addBehavior('Timestamp', [
+            'events' => [
+                'Model.beforeSave' => [
+                    'created' => 'new',
+                    'updated' => 'always',
+                ]
+            ]
+        ]);
 
         $this->belongsTo('CowBreeds', [
             'foreignKey' => 'cow_breed_id',
