@@ -15,7 +15,7 @@
         <?= $this->Html->css('/startbootstrap/vendor/bootstrap/css/bootstrap.min.css') ?>
 
         <!-- MetisMenu CSS -->
-      
+
 
         <!-- Custom CSS -->
         <?= $this->Html->css('/startbootstrap/dist/css/sb-admin-2.css') ?>
@@ -55,12 +55,12 @@
 
 
 
-
+            <?= $this->Flash->render() ?>
             <?= $this->fetch('content') ?>
 
             <!-- /#page-wrapper -->
         </div>
-<script>
+        <script>
 
             $(function () {
 
@@ -71,7 +71,7 @@
                             email: true
                         },
                         password: {
-                            required: true 
+                            required: true
                         }
                     },
                     messages: {

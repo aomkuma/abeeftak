@@ -103,7 +103,7 @@ class AppController extends Controller {
         if ((is_null($this->request->session()->read('Auth.User')))) {
          
 //           
-            if ($control == 'users' && $action == 'login') {
+           if ($control == 'users' && in_array($action, ['login','logout'])) {
                 $this->Auth->allow();
             } else {
                 $this->Auth->deny();
