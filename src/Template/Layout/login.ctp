@@ -15,7 +15,7 @@
         <?= $this->Html->css('/startbootstrap/vendor/bootstrap/css/bootstrap.min.css') ?>
 
         <!-- MetisMenu CSS -->
-        <?= $this->Html->css('/startbootstrap/vendor/metis-menu/metis-menu.min.css') ?>
+      
 
         <!-- Custom CSS -->
         <?= $this->Html->css('/startbootstrap/dist/css/sb-admin-2.css') ?>
@@ -34,7 +34,7 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-      
+
 
         <!-- jQuery -->
         <?= $this->Html->script('/startbootstrap/vendor/jquery/jquery.min.js') ?>
@@ -44,7 +44,7 @@
 
         <!-- Metis Menu Plugin JavaScript -->
         <?= $this->Html->script('/startbootstrap/vendor/metisMenu/metisMenu.min.js') ?>
-
+        <?= $this->Html->script('jquery.validate.min.js') ?>
 
 
     </head>
@@ -53,14 +53,42 @@
 
         <div id="wrapper" >
 
-          
 
 
-                <?= $this->fetch('content') ?>
-           
+
+            <?= $this->fetch('content') ?>
+
             <!-- /#page-wrapper -->
         </div>
+<script>
 
+            $(function () {
+
+                $("#login").validate({
+                    rules: {
+                        email: {
+                            required: true,
+                            email: true
+                        },
+                        password: {
+                            required: true 
+                        }
+                    },
+                    messages: {
+                        email: {
+                            required: "กรุณากรอก Email",
+                            email: "รูปแบบ email ไม่ถูกต้อง"
+                        },
+                        password: {
+                            required: "กรุณากรอก Password"
+                        }
+                    },
+                    submitHandler: function (form) {
+                        form.submit();
+                    }
+                });
+            });
+        </script>
     </body>
 
 </html>

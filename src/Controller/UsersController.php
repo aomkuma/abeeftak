@@ -185,8 +185,11 @@ class UsersController extends AppController {
                 $this->request->session()->write('rolePermissions', $rolePermissions);
               
                   return $this->redirect(['controller' => 'users', 'action' => 'index']);
+            }else{
+                $this->Flash->error(__('Invalid username or password, try again'));
+                return $this->redirect(['controller' => 'users', 'action' => 'login']);
             }
-            //  $this->Flash->error(__('Invalid username or password, try again'));
+            
         }
     }
 

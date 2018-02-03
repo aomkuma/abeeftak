@@ -7,13 +7,13 @@
                         <h3 style="text-align: center" class="panel-title">LOGIN</h3>
                     </div>
                     <div class="panel-body">
-                         <?= $this->Form->create('login', ['id' => 'frm', 'novalidate' => true, 'class' => 'g-py-15']) ?>
+                         <?= $this->Form->create('login', ['id' => 'login', 'novalidate' => true, 'class' => 'g-py-15']) ?>
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                                    <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus id="email">
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    <input class="form-control" placeholder="Password" name="password" type="password" value="" id="password">
                                 </div>
                                
                                 <!-- Change this to a button or input when using this as a form -->
