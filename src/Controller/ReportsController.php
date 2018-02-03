@@ -267,7 +267,7 @@ class ReportsController extends AppController {
 
 
         $cowmale = $this->Cows->find('all', [
-            'conditions' => ['Cows.id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2'],
+            'conditions' => ['Cows.id' => $id],
             'contain' => ['CowBreeds']
         ]);
 
@@ -275,15 +275,15 @@ class ReportsController extends AppController {
         $jsondatacow = json_encode($cowR);
         
         $growthRecord = $this->GrowthRecords->find('all', [
-            'conditions' => ['type' => 'F', 'cow_id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2'], array('limit' => 5)
+            'conditions' => ['type' => 'F', 'cow_id' => $cowR->id], array('limit' => 5)
         ]);
 
         $growthRecordW = $this->GrowthRecords->find('all', [
-            'conditions' => ['type' => 'W', 'cow_id' => '7210a34f-bd8e-45d2-a59b-f4f3fda2d08f']
+            'conditions' => ['type' => 'W', 'cow_id' => $cowR->id]
         ]);
 
         $breedRecord = $this->BreedingRecords->find('all', [
-            'conditions' => ['cow_id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2']
+            'conditions' => ['cow_id' => $cowR->id]
         ]);
         
         $cowFather = $this->Cows->find('all', [
@@ -315,7 +315,7 @@ class ReportsController extends AppController {
     public function cowfemale($id = null) {
         
         $cowfemale = $this->Cows->find('all', [
-            'conditions' => ['Cows.id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2'],
+            'conditions' => ['Cows.id' => $id],
             'contain' => ['CowBreeds']
         ]);
         
@@ -323,15 +323,15 @@ class ReportsController extends AppController {
         $jsondatacow = json_encode($cowR);
 
         $growthRecord = $this->GrowthRecords->find('all', [
-            'conditions' => ['type' => 'F', 'cow_id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2'], array('limit' => 5)
+            'conditions' => ['type' => 'F', 'cow_id' => $cowR->id], array('limit' => 5)
         ]);
 
         $growthRecordW = $this->GrowthRecords->find('all', [
-            'conditions' => ['type' => 'W', 'cow_id' => '7210a34f-bd8e-45d2-a59b-f4f3fda2d08f']
+            'conditions' => ['type' => 'W', 'cow_id' => $cowR->id]
         ]);
         
         $givebirthRecord = $this->GivebirthRecords->find('all', [
-            'conditions' => ['cow_id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2']
+            'conditions' => ['cow_id' => $cowR->id]
         ]);
         
         $cowFather = $this->Cows->find('all', [
@@ -363,7 +363,7 @@ class ReportsController extends AppController {
     public function animalcertificate($id = null) {
         
         $cow = $this->Cows->find('all', [
-            'conditions' => ['Cows.id' => 'e334a24b-81f2-456c-8f44-a8b47aa70ce2'],
+            'conditions' => ['Cows.id' => $id],
             'contain' => ['CowBreeds']
         ]);
         

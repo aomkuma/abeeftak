@@ -48,9 +48,9 @@
                 </tr>
                 <tr>
                     <td class="text-right">วันที่ขึ้นทะเบียน : </td>  
-                    <td><input type="date" name="fromdate" class="form-control" required="true"></td>
+                    <td><input type="date" name="fromdate" class="form-control"></td>
                     <td>ถึง</td>
-                    <td><input type="date" name="todate" class="form-control" required="true"></td>
+                    <td><input type="date" name="todate" class="form-control"></td>
                     <td><?= $this->Form->button('ค้นหา', ['class' => 'btn btn-primary', 'id' => 'checkblank']) ?></td>
                     <td><?= $this->Html->link(BT_ADD, ['action' => 'add'], ['escape' => false]) ?></td>
                 </tr>
