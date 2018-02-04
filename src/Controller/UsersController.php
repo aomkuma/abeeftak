@@ -286,5 +286,10 @@ class UsersController extends AppController {
         $summaryjs = json_encode($summary);
         $this->set(compact('summaryjs', 'detailjs'));
     }
+    
+    public function displaypermission(){
+        
+        
+    }
 
 }

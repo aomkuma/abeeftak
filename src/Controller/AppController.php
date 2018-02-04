@@ -118,18 +118,21 @@ class AppController extends Controller {
                 
                 $actionArr = $Permissions['actions'][$control];
 
-                if (in_array($action, $actionArr)) {
+                if($action=='displaypermission'){
+                    $this->Auth->allow();
+                }
+                else if (in_array($action, $actionArr)) {
                 
                     $this->Auth->allow();
                 } else {
                 
                     $this->Auth->deny();
-                    return $this->redirect(['controller' => 'users', 'action' => 'login']);
+                    return $this->redirect(['controller' => 'users', 'action' => 'displaypermission']);
                 }
             } else {
              
                 $this->Auth->deny();
-                return $this->redirect(['controller' => 'users', 'action' => 'login']);
+                return $this->redirect(['controller' => 'users', 'action' => 'displaypermission']);
             }
         }
     }
