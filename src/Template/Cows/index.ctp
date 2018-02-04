@@ -51,28 +51,28 @@
             <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th scope="col" class="actions"><?= __('Actions') ?></th>
-                    <th scope="col" class="actions"><?= __('บัตรประจำตัวโค') ?></th>
-                    <th scope="col" class="actions"><?= __('บัตรประจำตัวสัตว์') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('code','รหัสโค') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('cow_breed_id','ชื่อ') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('gender', 'เพศ') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('birthday','วัน-เดือน-ปี เกิด') ?></th>
+                    <th scope="col" class="actions text-center"><?= __('Actions') ?></th>
+                    <th scope="col" class="actions text-center"><?= __('บัตรประจำตัวโค') ?></th>
+                    <th scope="col" class="actions text-center"><?= __('บัตรประจำตัวสัตว์') ?></th>
+                    <th scope="col" class="text-center"><?= $this->Paginator->sort('code','รหัสโค') ?></th>
+                    <th scope="col" class="text-center"><?= $this->Paginator->sort('cow_breed_id','ชื่อ') ?></th>
+                    <th scope="col" class="text-center"><?= $this->Paginator->sort('gender', 'เพศ') ?></th>
+                    <th scope="col" class="text-center"><?= $this->Paginator->sort('birthday','วัน-เดือน-ปี เกิด') ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($cows as $cow): ?>
                 <tr>
-                    <td class="actions">
+                    <td class="actions text-center">
                         <?=$this->Html->link(BT_EDIT,['action' => 'edit', $cow->id],['escape'=>false])?>
                         <?= $this->Form->postLink(BT_DELETE, ['action' => 'delete', $cow->id], ['confirm' => __('Are you sure you want to delete # {0}?', $cow->id),'escape'=>false]) ?>
                     </td>
-                    <td><?=$this->Html->link(BT_EDIT,['controller' => 'Reports', 'action' => 'cowcard', $cow->id],['escape'=>false])?></td>
-                    <td><?=$this->Html->link(BT_EDIT,['controller' => 'Reports', 'action' => 'animalcertificate', $cow->id],['escape'=>false])?></td>
+                    <td class="text-center"><?= $this->Html->link('<i class="glyphicon glyphicon-print" style="font-size : 25px;" ></i>', '/reports/cowcard/' . $cow->id, ['escape' => false]); ?></td>
+                    <td class="text-center"><?= $this->Html->link('<i class="glyphicon glyphicon-print" style="font-size : 25px;"></i>', '/reports/animalcertificate/' . $cow->id, ['escape' => false]); ?></td>
                     <td><?= h($cow->code) ?></td>
                     <td><?= $cow->cow_breed->name ?></td>
                     <td><?= (h($cow->gender)=='M'?'ผู้':'เมีย') ?></td>
-                    <td><?= h($cow->birthday) ?></td>
+                    <td class="text-center"><?= h($cow->birthday) ?></td>
                     
                     
                 </tr>

@@ -59,8 +59,10 @@
                 return false;
 
             }
-
+            
         });
+
+        
 
     });
 </script>
@@ -111,7 +113,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="">วันที่ขึ้นทะเบียน <i class="text-danger">*</i></label>
-                        <input type="date" name="registerdate" class="form-control" required="true" value="<?php echo date("d-m-Y", strtotime($herdsman->registerdate)); ?>">
+                        <input type="date" name="registerdate" id="registerdate" class="form-control" required="true" value="<?php echo date("Y-m-d", strtotime($herdsman->registerdate)); ?>" >
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -157,7 +159,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="">วันเดือนปีเกิด <i class="text-danger">*</i></label>
-                        <input type="date" name="birthday" class="form-control" required="true">
+                        <input type="date" name="birthday" class="form-control" required="true" value="<?php echo date("Y-m-d", strtotime($herdsman->birthdate)); ?>">
                     </div>
                 </div>
             </div>
@@ -210,47 +212,47 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="">ที่อยู่ <i class="text-danger">*</i></label>
-                            <?= $this->Form->control('address_line', ['class' => 'form-control', 'label' => false, 'id' => 'address_line',  'required' => true]) ?>
+                            <?= $this->Form->control('address_line', ['class' => 'form-control', 'label' => false, 'id' => 'address_line', 'required' => true]) ?>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="">บ้านเลขที่ <i class="text-danger">*</i></label>
-                            <?= $this->Form->control('houseno', ['class' => 'form-control', 'label' => false,  'required' => true]) ?>
+                            <?= $this->Form->control('houseno', ['class' => 'form-control', 'label' => false, 'required' => true]) ?>
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="">หมู่ที่ <i class="text-danger">*</i></label>
-                            <?= $this->Form->control('villageno', ['class' => 'form-control', 'label' => false,  'required' => true]) ?>
+                            <?= $this->Form->control('villageno', ['class' => 'form-control', 'label' => false, 'required' => true]) ?>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="">หมู่บ้าน <i class="text-danger">*</i></label>
-                            <?= $this->Form->control('villagename', ['class' => 'form-control', 'label' => false,  'required' => true]) ?>
+                            <?= $this->Form->control('villagename', ['class' => 'form-control', 'label' => false, 'required' => true]) ?>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">ตำบล <i class="text-danger">*</i></label>
-                            <?= $this->Form->control('subdistrict', ['class' => 'form-control', 'label' => false, 'id' => 'district',  'required' => true]) ?>
+                            <?= $this->Form->control('subdistrict', ['class' => 'form-control', 'label' => false, 'id' => 'district', 'required' => true]) ?>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">อำเภอ <i class="text-danger">*</i></label>
-                            <?= $this->Form->control('district', ['class' => 'form-control', 'label' => false, 'id' => 'amphoe',  'required' => true]) ?>
+                            <?= $this->Form->control('district', ['class' => 'form-control', 'label' => false, 'id' => 'amphoe', 'required' => true]) ?>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="">จังหวัด <i class="text-danger">*</i></label>
-                        <?= $this->Form->control('province_id', ['type' => 'text', 'class' => 'form-control', 'label' => false, 'id' => 'province',  'required' => true]) ?>
+                        <?= $this->Form->control('province_id', ['type' => 'text', 'class' => 'form-control', 'label' => false, 'id' => 'province', 'required' => true]) ?>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">รหัสไปรษณีย์ <i class="text-danger">*</i></label>
-                            <?= $this->Form->control('postalcode', ['class' => 'form-control', 'label' => false, 'id' => 'zipcode',  'required' => true]) ?>
+                            <?= $this->Form->control('postalcode', ['class' => 'form-control', 'label' => false, 'id' => 'zipcode', 'required' => true]) ?>
                         </div>
                     </div>
                 </div>
