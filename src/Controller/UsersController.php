@@ -182,7 +182,7 @@ class UsersController extends AppController {
                 $rolePermissions = $query->toArray();
              
                 $rolePermissions = $this->makePromissionArr($rolePermissions);
-        
+                //debug($rolePermissions);
                 $this->request->session()->write('rolePermissions', $rolePermissions);
               $this->Flash->success(__('Login สำเร็จ'));
                   return $this->redirect(['controller' => 'users', 'action' => 'index']);

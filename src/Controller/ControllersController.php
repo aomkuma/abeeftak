@@ -20,9 +20,11 @@ class ControllersController extends AppController {
      */
     public function index() {
         $controllers = $this->paginate($this->Controllers);
-
+        
+        
         $this->set(compact('controllers'));
         $this->set('_serialize', ['controllers']);
+        
     }
 
     /**

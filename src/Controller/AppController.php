@@ -119,7 +119,7 @@ class AppController extends Controller {
                 $actionArr = $Permissions['actions'][$control];
 
                 if (in_array($action, $actionArr)) {
-                 
+                
                     $this->Auth->allow();
                 } else {
                 

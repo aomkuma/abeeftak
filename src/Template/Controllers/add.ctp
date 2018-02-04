@@ -17,11 +17,11 @@
     <fieldset>
         <legend><?= __('Add Controller') ?></legend>
         <?php
-//            echo $this->Form->control('name');
-//            echo $this->Form->control('value');
-//            echo $this->Form->control('description');
-//            echo $this->Form->control('createdby');
-//            echo $this->Form->control('updatedby');
+            echo $this->Form->control('name');
+            echo $this->Form->control('value');
+            echo $this->Form->control('description');
+            echo $this->Form->control('createdby');
+            echo $this->Form->control('updatedby');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
