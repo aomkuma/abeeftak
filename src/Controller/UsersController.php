@@ -100,7 +100,10 @@ class UsersController extends AppController {
             if ($query->count() == 1) {
                 $this->Flash->error(__('E-mail นี้ถูกใช้ไปแล้ว'));
             } else {
+                $getname = $this->request->session()->read('Auth.User');
                 $user = $this->Users->patchEntity($user, $this->request->getData());
+                $user['createdby'] = $getname['firstname'].' '.$getname['lastname'];
+
                 if ($this->Users->save($user)) {
                     $this->Flash->success(__('บันทึกข้อมูลสำเร็จ'));
 
@@ -163,7 +166,7 @@ class UsersController extends AppController {
 
     public function login() {
         $this->viewBuilder()->layout('login');
-     
+
         if ((!is_null($this->request->session()->read('Auth.User')))) {
             return $this->redirect(['controller' => 'users', 'action' => 'index']);
         }
@@ -180,17 +183,16 @@ class UsersController extends AppController {
                 ]);
 
                 $rolePermissions = $query->toArray();
-             
+
                 $rolePermissions = $this->makePromissionArr($rolePermissions);
                 //debug($rolePermissions);
                 $this->request->session()->write('rolePermissions', $rolePermissions);
-              $this->Flash->success(__('Login สำเร็จ'));
-                  return $this->redirect(['controller' => 'users', 'action' => 'index']);
-            }else{
+                $this->Flash->success(__('Login สำเร็จ'));
+                return $this->redirect(['controller' => 'users', 'action' => 'index']);
+            } else {
                 $this->Flash->error(__('Invalid username or password, try again'));
                 return $this->redirect(['controller' => 'users', 'action' => 'login']);
             }
-            
         }
     }
 
@@ -229,7 +231,7 @@ class UsersController extends AppController {
 
     public function logout() {
         $this->request->session()->destroy();
-         return $this->redirect($this->Auth->logout());
+        return $this->redirect($this->Auth->logout());
     }
 
     public function searchuser() {
