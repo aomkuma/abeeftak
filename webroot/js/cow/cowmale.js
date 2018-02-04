@@ -178,22 +178,22 @@ function exportPDF(datacow, datagrowth, datagrowthW, dataBreed, datafath, datamo
                     {text: [
                             {text: ' \n\n\n ', alignment: 'center'},
                             {text: '     รหัสปู่  '}
-                            , {text: '    ' + datafath[0]['father_code'] + '      ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + ( datafath.length === 0 ?' - ':datafath[0]['father_code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: '\n รหัส พ่อโค '}
                             , {text: '     ' + datacow[0]['father_code'] + '', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: '\n รหัสย่า ', alignment: 'center'}
-                            , {text: '    ' + datafath[0]['mother_code'] + '      ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + ( datafath.length === 0 ?' - ':datafath[0]['mother_code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
 
 
                         ], margin: [60, 0, 0, 0]},
                     {text: [
                             {text: ' \n\n\n ', alignment: 'center'},
-                            {text: '    ' + datamoth[0]['father_code'] + '      '}
-                            , {text: '    12345     ', decoration: 'underline', decorationStyle: 'dashed'}
+                            {text: '     รหัสปู่  '}
+                            , {text: '    ' + ( datamoth.length === 0 ?' - ':datamoth[0]['father_code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: '\n      รหัส แม่โค '}
                             , {text: '     ' + datacow[0]['mother_code'] + '', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: '\n รหัสย่า ', alignment: 'center'}
-                            , {text: '    ' + datamoth[0]['mother_code'] + '      ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + ( datamoth.length === 0 ?' - ':datamoth[0]['mother_code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
 
 
                         ], margin: [30, 0, 0, 0]}

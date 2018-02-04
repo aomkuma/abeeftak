@@ -123,13 +123,13 @@ function exportPDF(datacow, datagrowth, datagrowthW, datagbR, datafath, datamoth
                             {text: '\n\n วันเกิด  '}
                             , {text: '    ' + datacow[0]['birthday'] + '      ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' น้ำหนักแรกเกิด '}
-                            , {text: '    ' + datagrowthW[0]['weight'] + '       ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + ( datagrowthW.length === 0 ?' - ':datagrowthW[0]['weight']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' กิโลกรัม '}
                             , {text: '\n\n น้ำหนักหย่านม '}
-                            , {text: '    ' + datagrowthW[0]['weight1'] + '       ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + ( datagrowthW.length === 0 ?' - ':datagrowthW[0]['weight1']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' กิโลกรัม '}
                             , {text: ' อัตรการเจริญเติบโต '}
-                            , {text: '    ' + datagrowthW[0]['growth_stat'] + '       ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + ( datagrowthW.length === 0 ?' - ':datagrowthW[0]['growth_stat']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' กิโลกรัม '}
 
                         ], margin: [60, 0, 0, 0]},
@@ -149,22 +149,22 @@ function exportPDF(datacow, datagrowth, datagrowthW, datagbR, datafath, datamoth
                     {text: [
                             {text: ' \n\n\n ', alignment: 'center'},
                             {text: '     รหัสปู่  '}
-                            , {text: '    ' + datafath[0]['father_code'] + '      ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + ( datafath.length === 0 ?' - ':datafath[0]['father_code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: '\n รหัส พ่อโค '}
                             , {text: '     ' + datacow[0]['father_code'] + '', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: '\n รหัสย่า ', alignment: 'center'}
-                            , {text: '    ' + datafath[0]['mother_code'] + '      ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + ( datafath.length === 0 ?' - ':datafath[0]['mother_code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
 
 
                         ], margin: [60, 0, 0, 0]},
                     {text: [
                             {text: ' \n\n\n ', alignment: 'center'},
-                            {text: '    ' + datamoth[0]['father_code'] + '      '}
-                            , {text: '    12345     ', decoration: 'underline', decorationStyle: 'dashed'}
+                            {text: '     รหัสปู่  '}
+                            , {text: '    ' + ( datamoth.length === 0 ?' - ':datamoth[0]['father_code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: '\n      รหัส แม่โค '}
                             , {text: '     ' + datacow[0]['mother_code'] + '', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: '\n รหัสย่า ', alignment: 'center'}
-                            , {text: '    ' + datamoth[0]['mother_code'] + '      ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + ( datamoth.length === 0 ?' - ':datamoth[0]['mother_code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
 
 
                         ], margin: [30, 0, 0, 0]}
@@ -187,7 +187,7 @@ function exportPDF(datacow, datagrowth, datagrowthW, datagbR, datafath, datamoth
                     headerRows: 1,
                     widths: [70, 100, 70, 90, 70, 100, 70, 90],
                     body: data_detail3, alignment: 'center'
-                }, margin: [40, 10, 0, 0]
+                }, margin: [30, 10, 0, 0]
             }
 
 

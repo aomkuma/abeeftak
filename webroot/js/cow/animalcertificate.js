@@ -20,7 +20,6 @@ function exportPDF(datacow, datafath, datamoth, datamove) {
     } else {
         datacow[0]['import_date'] = '-';
     }
-
     // ตารางรูป //////////////////////////////////
     var data_detail = [];
     var firstRow = [];
@@ -291,18 +290,18 @@ function exportPDF(datacow, datafath, datamoth, datamove) {
                             , {text: '    ' + datacow[0]['birthday'] + '      ', decoration: 'underline', decorationStyle: 'dashed'}
 
                             , {text: '\n\n พ่อพันธุ์ชื่อ '}
-                            , {text: '    ' + datafath[0]['cow_breed']['name'] + '       ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' +( datafath.length === 0 ?' - ':datafath[0]['cow_breed']['name']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' หมายเลขทะเบียนโค '}
-                            , {text: '    ' + datafath[0]['code'] + '      ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + ( datafath.length === 0 ?' - ':datafath[0]['code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' พันธุ์ '}
-                            , {text: '    ' + datafath[0]['grade'] + '       ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + ( datafath.length === 0 ?' - ': datafath[0]['grade']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
 
                             , {text: '\n\n แม่พันธุ์ชื่อ '}
-                            , {text: '    ' + datamoth[0]['cow_breed']['name'] + '       ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + ( datamoth.length === 0 ?' - ':datamoth[0]['cow_breed']['name']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' หมายเลขทะเบียนโค '}
-                            , {text: '    ' + datamoth[0]['code'] + '      ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + ( datamoth.length === 0 ?' - ':datamoth[0]['code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' พันธุ์ '}
-                            , {text: '    ' + datamoth[0]['grade'] + '       ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + ( datamoth.length === 0 ?' - ':datamoth[0]['grade']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
 
                             , {text: '\n\n สถานภาพสัตว์ '}
                             , {text: '    ' + datacow[0]['origins'] + '       ', decoration: 'underline', decorationStyle: 'dashed'}
