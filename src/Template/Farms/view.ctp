@@ -132,7 +132,7 @@
         <div class="col-md-3">เพิ่มโดย: <?= $farm->createdby ?></div>
         <div class="col-md-3">วันเวลาที่เพิ่ม: <?= $farm->created->i18nFormat('dd-MM-yyyy HH:mm'); ?></div>
         <div class="col-md-3">แก้ไขโดย: <?= $farm->updatedby ?></div>
-        <div class="col-md-3">วันเวลาที่แก้ไข: <?= $farm->updated->i18nFormat('dd-MM-yyyy HH:mm'); ?></div>
+        <div class="col-md-3">วันเวลาที่แก้ไข: <?= is_null($farm->updated)?'-':$farm->updated->i18nFormat('dd-MM-yyyy HH:mm'); ?></div>
     </div>
 
 </div>
