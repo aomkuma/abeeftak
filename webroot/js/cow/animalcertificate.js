@@ -127,7 +127,6 @@ function exportPDF(datacow, datafath, datamoth, datamove) {
     var data_detail4 = [];
     var headerRow4 = [];
 // set header
-//headerRow.push('ห้องประชุม');
     headerRow4.push({text: 'ลำดับ', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
     headerRow4.push({text: 'วันที่รักษา', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
     headerRow4.push({text: 'โรค', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
@@ -251,13 +250,41 @@ function exportPDF(datacow, datafath, datamoth, datamove) {
 // set header
 //headerRow.push('ห้องประชุม');
     headerRow6.push({text: 'ลำดับ', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow6.push({text: 'วันที่รักษา', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow6.push({text: 'โรค', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow6.push({text: 'การให้ยารักษา', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow6.push({text: 'ผู้รักษา', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-    headerRow6.push({text: 'หมายเหตุ', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow6.push({text: 'วันที่ผสม', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow6.push({text: 'พ่อพันธู์', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow6.push({text: 'สถานะการผสม', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow6.push({text: 'วันคลอด', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow6.push({text: 'หมายเลขลูก', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow6.push({text: 'เพศ', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
+    headerRow6.push({text: 'เจ้าหน้าที่', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
 
     data_detail6.push(headerRow6);
+    
+    for (var i = 1; i <= 10; i++) {
+        var firstRow6 = [];
+        if (i === 1) {
+            firstRow6.push({text: i, alignment: 'center', fontSize: 12, bold: true});
+            firstRow6.push({text: ''});
+            firstRow6.push({text: ''});
+            firstRow6.push({text: ''});
+            firstRow6.push({text: ''});
+            firstRow6.push({text: ''});
+            firstRow6.push({text: ''});
+            firstRow6.push({text: ''});
+        } else {
+            firstRow6.push({text: i, alignment: 'center', fontSize: 12, bold: true});
+            firstRow6.push({text: ''});
+            firstRow6.push({text: ''});
+            firstRow6.push({text: ''});
+            firstRow6.push({text: ''});
+            firstRow6.push({text: ''});
+            firstRow6.push({text: ''});
+            firstRow6.push({text: ''});
+        }
+
+
+        data_detail6.push(firstRow6);
+    }
 
     //////////
     pdfMake.fonts = {
@@ -392,14 +419,14 @@ function exportPDF(datacow, datafath, datamoth, datamove) {
             },
             {text: 'ประวัติการผสมเทียม รหัสโค :  ' + datacow[0]['code'], style: 'header', alignment: 'center', margin: [0, 10, 0, 0]}
             , {text: '\n'}
-//            ,
-//            {
-//                table: {
-//                    headerRows: 1,
-//                    widths: [50, 90, 130, 140, 100, 110],
-//                    body: data_detail6
-//                }, margin: [40, 0, 0, 0]
-//            }
+            ,
+            {
+                table: {
+                    headerRows: 1,
+                    widths: [30, 100, 90, 70, 100, 90, 50, 90],
+                    body: data_detail6
+                }, margin: [40, 0, 0, 0]
+            }
         ],
         styles: {
             header: {

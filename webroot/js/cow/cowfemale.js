@@ -47,7 +47,7 @@ function exportPDF(datacow, datagrowth, datagrowthW, datagbR, datafath, datamoth
     }
 
     var sprdatecow = datacow[0]['birthday'].split('T');
-    datacow[0]['birthday'] = sprdatecow[0]
+    datacow[0]['birthday'] = sprdatecow[0];
 //return ;
 
     var data_detail3 = [];
