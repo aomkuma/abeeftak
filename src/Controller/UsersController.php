@@ -185,6 +185,8 @@ class UsersController extends AppController {
                 $rolePermissions = $query->toArray();
 
                 $rolePermissions = $this->makePromissionArr($rolePermissions);
+                $this->log($user['firstname'],'debug');
+                $this->log($rolePermissions,'debug');
                 //debug($rolePermissions);
                 $this->request->session()->write('rolePermissions', $rolePermissions);
                 $this->Flash->success(__('Login สำเร็จ'));
