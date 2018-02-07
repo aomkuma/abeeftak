@@ -43,7 +43,7 @@ class AppController extends Controller {
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
-        $this->loadComponent('Security', ['blackHoleCallback' => 'forceSSL']);
+        //$this->loadComponent('Security', ['blackHoleCallback' => 'forceSSL']);
 
         $this->loadComponent('Auth', [
             'loginAction' => [
@@ -61,11 +61,11 @@ class AppController extends Controller {
             ]
         ]);
     }
-
+/*
     public function forceSSL() {
         return $this->redirect('https://' . env('SERVER_NAME') . $this->request->here);
     }
-
+*/
     /**
      * Before render callback.
      *
@@ -85,7 +85,7 @@ class AppController extends Controller {
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        $this->Security->requireSecure();
+        //$this->Security->requireSecure();
         //$this->Auth->allow();
         $this->authen();
     }
