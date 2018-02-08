@@ -454,7 +454,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
 	// Loaf all data
     if(cows_id != '')
     {
-	   $scope.getCows('cows','loadData',{cows_id : cows_id});
+	   $scope.getCows('cows','loaddata',{cows_id : cows_id});
     }
     $scope.FertilizeUpdate = false;
     $scope.BreederUpdate = false;
@@ -472,7 +472,6 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
                 ,{'id':'7','name':'กำแพงแสน'}
                 ,{'id':'8','name':'อื่นๆ'}
             ];
-
 
 })
 .controller('ModalDialogCtrl', function ($scope, $uibModalInstance, params) {
