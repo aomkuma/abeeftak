@@ -63,14 +63,14 @@ class RoleAccessesController extends AppController {
         if ($this->request->is('post')) {
             $roleid = $this->request->getData('role_id');
             $act = $this->request->data['action'];
-            
+            $getname = $this->request->session()->read('Auth.User');
 
             foreach ($act as $controller):
                 if ($controller['action_id'] != 0) {
                     $roleAccess = $this->RoleAccesses->newEntity();
                     $roleAccess->role_id = $roleid;
                     $roleAccess->action_id = $controller['action_id'];
-                    $roleAccess->createdby = 'uan';
+                    $roleAccess->createdby = $getname['firstname'].' '.$getname['lastname'];
 
                     if ($this->RoleAccesses->save($roleAccess)) {
                         pr('1');
@@ -104,6 +104,7 @@ class RoleAccessesController extends AppController {
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $roleAccess = $this->RoleAccesses->patchEntity($roleAccess, $this->request->getData());
+            
             if ($this->RoleAccesses->save($roleAccess)) {
                 $this->Flash->success(__('The role access has been saved.'));
 
