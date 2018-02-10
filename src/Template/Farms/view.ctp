@@ -7,11 +7,7 @@
         font-size: 16px;
     }
 </style>
-<script>
-    function resizeIframe(obj) {
-        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
-    }
-</script>
+
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header font-th-prompt400"><?= h($farm->name) ?></h1>
@@ -20,8 +16,6 @@
 <div class="row">
     <div class="col-md-12 bt-tool-group">
         <?= $this->Html->link(BT_BACK, ['action' => 'index'], ['escape' => false]) ?>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addHerdsman">เพิ่มผู้เลี้ยงเข้าฟาร์ม</button>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addcow">เพิ่มโคเข้าฟาร์ม</button>
     </div>
 
 </div>
@@ -107,22 +101,23 @@
         </div>
 
     </div>
-    <div class="col-md-5">
+    <div class="col-lg-5">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">ผู้เลี้ยง</h3>
+                <h3 class="panel-title">ผู้เลี้ยงโค <?=$this->Html->link('<span class="label label-success"><i class="glyphicon glyphicon-plus"></i> เพิ่ม</span>','javascript:void();',['escape'=>false,'data-toggle'=>'modal', 'data-target'=>'#addHerdsman'])?></h3>
+                
             </div>
             <div class="panel-body">
-                <iframe id="herdsman_list" src="<?= SITE_URL . 'farm-herdsmans' ?>" class="col-lg-12" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
+                <iframe id="herdsman_list" src="<?= SITE_URL . 'farm-herdsmans/index/'.$farm->id ?>" width="100%" frameborder="0" scrolling="no" onload="resizeIframe(this);"></iframe>
             </div>
         </div>
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">โค</h3>
+                <h3 class="panel-title">โค <?=$this->Html->link('<span class="label label-success"><i class="glyphicon glyphicon-plus"></i> เพิ่ม</span>','javascript:void();',['escape'=>false,'data-toggle'=>'modal', 'data-target'=>'#addcow'])?></h3>
             </div>
             <div class="panel-body">
-                <iframe id="cow_list" src="<?= SITE_URL . 'farm-cows' ?>" class="col-lg-12" frameborder="0" scrolling="no" onload="resizeIframe(this)"></iframe>
+                <iframe id="cow_list" src="<?= SITE_URL . 'farm-cows' ?>" frameborder="0" scrolling="no" onload="resizeIframe(this)" width="100%"></iframe>
             </div>
         </div>
     </div>
@@ -184,7 +179,7 @@
                 <?= $this->Form->hidden('farm_id', ['value' => $farm->id]) ?>
                 <div class="form-group">
                     <label for="recipient-name" class="control-label">ผู้เลี้ยงโค:</label>
-                    <?= $this->Form->select('herdsman_id', $herdsmans, ['empty' => 'เลือกผู้เลี้ยง..', 'class' => 'form-control', 'id' => 'herdsman_id']) ?>
+                    <?= $this->Form->select('herdsman_id', $herdsmans, ['class' => 'form-control', 'id' => 'herdsman_id']) ?>
                 </div>
                 <div class="form-group">
                     <label for="message-text" class="control-label">รายละเอียดอื่น ๆ:</label>
@@ -235,6 +230,10 @@ if ($farm->latitude != null && $farm->latitude != '' && $farm->longitude != null
             position: {lat: defaultLat, lng: defaultLong}
         });
 
+    }
+    
+    function resizeIframe(obj) {
+        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
     }
     
     function reloadHerdsmanFrame(){
