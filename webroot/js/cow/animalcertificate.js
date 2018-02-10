@@ -1,4 +1,4 @@
-function exportPDF(datacow, datafath, datamoth, datamove) {
+function exportPDF(datacow, datafath, datamoth, datamove, datatreat) {
     if (datacow[0]['gender'] === 'M') {
         datacow[0]['gender'] = 'ผู้'
     } else {
@@ -8,7 +8,7 @@ function exportPDF(datacow, datafath, datamoth, datamove) {
     if (datacow[0]['origins'] === 'IN') {
         datacow[0]['origins'] = 'สัตว์ในประเทศ'
     } else {
-        datacow[0]['origins'] = 'สัตว์นำเข้าจากประเทศ'
+        datacow[0]['origins'] = 'สัตว์นำเข้าจากต่างประเทศ'
     }
 
     var sprdatecow = datacow[0]['birthday'].split('T');
@@ -99,12 +99,12 @@ function exportPDF(datacow, datafath, datamoth, datamove) {
     headerRow3.push({text: 'หมายเหตุ', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
 
     data_detail3.push(headerRow3);
-    
+
     for (var i = 0; i < 10; i++) {
         var firstRow3 = [];
         if (i < datamove.length) {
             var sprdate = datamove[i]['movement_date'].split('T');
-            firstRow3.push({text: i+1, alignment: 'center'});
+            firstRow3.push({text: i + 1, alignment: 'center'});
             firstRow3.push({text: datamove[i]['departure'], alignment: 'center'});
             firstRow3.push({text: datamove[i]['destination'], alignment: 'center'});
             firstRow3.push({text: sprdate[0], alignment: 'center'});
@@ -123,7 +123,7 @@ function exportPDF(datacow, datafath, datamoth, datamove) {
         data_detail3.push(firstRow3);
     }
 
-// ตาราง ประวัติการรักษา  ////////////////////
+// ตาราง ประวัติการรักษา  ////////////////////datatreat
     var data_detail4 = [];
     var headerRow4 = [];
 // set header
@@ -135,15 +135,27 @@ function exportPDF(datacow, datafath, datamoth, datamove) {
     headerRow4.push({text: 'หมายเหตุ', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
 
     data_detail4.push(headerRow4);
-    
-    for (var i = 1; i <= 10; i++) {
+
+    for (var i = 0; i < 10; i++) {
         var firstRow4 = [];
-        firstRow4.push({text: i, alignment: 'center', fontSize: 12, bold: true});
-        firstRow4.push({text: ''});
-        firstRow4.push({text: ''});
-        firstRow4.push({text: ''});
-        firstRow4.push({text: ''});
-        firstRow4.push({text: ''});
+        if (i < datatreat.length) {
+            var sprdatetreat = datatreat[i]['treatment_date'].split('T');
+            datatreat[i]['birthday'] = sprdatetreat[0];
+            firstRow4.push({text: i, alignment: 'center', fontSize: 12, bold: true});
+            firstRow4.push({text: datatreat[i]['birthday'], alignment: 'center'});
+            firstRow4.push({text: datatreat[i]['disease'], alignment: 'center'});
+            firstRow4.push({text: datatreat[i]['drug_used'], alignment: 'center'});
+            firstRow4.push({text: datatreat[i]['conservator'], alignment: 'center'});
+            firstRow4.push({text: datatreat[i]['description'], alignment: 'center'});
+        } else {
+            firstRow4.push({text: '-', alignment: 'center'});
+            firstRow4.push({text: '-', alignment: 'center'});
+            firstRow4.push({text: '-', alignment: 'center'});
+            firstRow4.push({text: '-', alignment: 'center'});
+            firstRow4.push({text: '-', alignment: 'center'});
+            firstRow4.push({text: '-', alignment: 'center'});
+        }
+
 
         data_detail4.push(firstRow4);
     }
@@ -259,7 +271,7 @@ function exportPDF(datacow, datafath, datamoth, datamove) {
     headerRow6.push({text: 'เจ้าหน้าที่', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
 
     data_detail6.push(headerRow6);
-    
+
     for (var i = 1; i <= 10; i++) {
         var firstRow6 = [];
         if (i === 1) {
@@ -317,18 +329,18 @@ function exportPDF(datacow, datafath, datamoth, datamove) {
                             , {text: '    ' + datacow[0]['birthday'] + '      ', decoration: 'underline', decorationStyle: 'dashed'}
 
                             , {text: '\n\n พ่อพันธุ์ชื่อ '}
-                            , {text: '    ' +( datafath.length === 0 ?' - ':datafath[0]['cow_breed']['name']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + (datafath.length === 0 ? ' - ' : datafath[0]['cow_breed']['name']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' หมายเลขทะเบียนโค '}
-                            , {text: '    ' + ( datafath.length === 0 ?' - ':datafath[0]['code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + (datafath.length === 0 ? ' - ' : datafath[0]['code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' พันธุ์ '}
-                            , {text: '    ' + ( datafath.length === 0 ?' - ': datafath[0]['grade']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + (datafath.length === 0 ? ' - ' : datafath[0]['grade']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
 
                             , {text: '\n\n แม่พันธุ์ชื่อ '}
-                            , {text: '    ' + ( datamoth.length === 0 ?' - ':datamoth[0]['cow_breed']['name']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + (datamoth.length === 0 ? ' - ' : datamoth[0]['cow_breed']['name']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' หมายเลขทะเบียนโค '}
-                            , {text: '    ' + ( datamoth.length === 0 ?' - ':datamoth[0]['code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + (datamoth.length === 0 ? ' - ' : datamoth[0]['code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' พันธุ์ '}
-                            , {text: '    ' + ( datamoth.length === 0 ?' - ':datamoth[0]['grade']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + (datamoth.length === 0 ? ' - ' : datamoth[0]['grade']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
 
                             , {text: '\n\n สถานภาพสัตว์ '}
                             , {text: '    ' + datacow[0]['origins'] + '       ', decoration: 'underline', decorationStyle: 'dashed'}

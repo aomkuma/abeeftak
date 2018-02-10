@@ -25,6 +25,8 @@ class ReportsController extends AppController {
     public $GivebirthRecords = null;
     public $MovementRecords = null;
     public $CowBreeds = null;
+    public $TreatmentRecords = null;
+    
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
@@ -36,6 +38,7 @@ class ReportsController extends AppController {
         $this->BreedingRecords = TableRegistry::get('BreedingRecords');
         $this->GivebirthRecords = TableRegistry::get('GivebirthRecords');
         $this->MovementRecords = TableRegistry::get('MovementRecords');
+        $this->TreatmentRecords = TableRegistry::get('TreatmentRecords');
     }
 
     /**
@@ -383,17 +386,23 @@ class ReportsController extends AppController {
         $movementRecord = $this->MovementRecords->find('all', [
             'conditions' => ['cow_id' => $cowR[0]['id']]
         ]);
+        
+        $treatmentRecord = $this->TreatmentRecords->find('all', [
+            'conditions' => ['cow_id' => $cowR[0]['id']]
+        ]);
 
         $moveR = $movementRecord->toArray();
         $jsondatamoveR = json_encode($moveR);
-        $this->set(compact('$jsondatamoveR'));
+        
+        $TreatR = $treatmentRecord->toArray();
+        $jsondataTreatR = json_encode($TreatR);
         
         $cowFath = $cowFather->toArray();
         $jsondataFath = json_encode($cowFath);
         $cowMoth = $cowMother->toArray();
         $jsondataMoth = json_encode($cowMoth);
         
-        $this->set(compact('jsondatacow','jsondataFath','jsondataMoth','jsondatamoveR'));
+        $this->set(compact('jsondatacow','jsondataFath','jsondataMoth','jsondatamoveR','jsondataTreatR'));
     }
 
 }
