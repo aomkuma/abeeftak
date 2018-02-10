@@ -59,6 +59,7 @@ class RolesController extends AppController {
      */
     public function add() {
         $role = $this->Roles->newEntity();
+        $getname = $this->request->session()->read('Auth.User');
         if ($this->request->is('post')) {
 
             ////////////section role////////////
@@ -67,8 +68,8 @@ class RolesController extends AppController {
             $role->name = $this->request->getData('name');
             $role->isactive = $this->request->getData('isactive');
             $role->description = $this->request->getData('description');
-            $role->createdby = 'uan';
-            $role->updatedby = 'uan';
+            $role->createdby = $getname['firstname'].' '.$getname['lastname'];
+            $role->updatedby = '';
             $this->Roles->save($role);
 
             ///////////section role access ////////////
@@ -109,6 +110,7 @@ class RolesController extends AppController {
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null) {
+        $getname = $this->request->session()->read('Auth.User');
         $role = $this->Roles->get($id, [
             'contain' => []
         ]);
@@ -128,6 +130,7 @@ class RolesController extends AppController {
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $role = $this->Roles->patchEntity($role, $this->request->getData());
+            $role['updatedby'] = $getname['firstname'].' '.$getname['lastname'];
             $this->Roles->save($role);
             
             
