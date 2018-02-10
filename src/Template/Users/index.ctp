@@ -1,11 +1,11 @@
-<div class="page-header col-lg-8 col-md-8 col-sm-8 col-lg-offset-2">
+<div class="page-header col-lg-8 col-md-8 col-sm-8 col-lg-offset-2 col-md-offset-2">
     <h3>ผู้ใช้ระบบ</h3>
     
 </div>
 
 <div class="form-group row">
     <?= $this->Form->create('Post', ['horizontal' => true, 'url' => '/users/searchuser']); ?>
-    <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2 col-md-offset-2">
 
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
            
@@ -33,7 +33,7 @@
 </div>
 <div class="form-group row">
 
-    <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2 col-md-offset-2">
 
         <table class="table table-bordered table-striped ">
             <thead>

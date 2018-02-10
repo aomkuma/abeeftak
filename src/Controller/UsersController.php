@@ -190,7 +190,7 @@ class UsersController extends AppController {
                 //debug($rolePermissions);
                 $this->request->session()->write('rolePermissions', $rolePermissions);
                 $this->Flash->success(__('Login สำเร็จ'));
-                return $this->redirect(['controller' => 'users', 'action' => 'index']);
+                return $this->redirect(['controller' => 'home', 'action' => 'index']);
             } else {
                 $this->Flash->error(__('Invalid username or password, try again'));
                 return $this->redirect(['controller' => 'users', 'action' => 'login']);

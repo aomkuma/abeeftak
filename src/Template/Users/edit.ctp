@@ -5,7 +5,7 @@
 
     
 <div class="form-group row">
-    <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4" style="box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3)" >
+    <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4" style="box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3)" >
         <div class="row">
             <div class="col-md-12">
                 <h2 class="font-th-prompt400">แก้ไขข้อมูลสมาชิก</h2>
