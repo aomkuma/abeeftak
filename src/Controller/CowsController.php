@@ -215,13 +215,13 @@ class CowsController extends AppController
             $cow = $this->Cows->get($Cow['id'], [
                 'contain' => []
             ]);
-            $cow->createdby = 'aaa';
+            $cow->createdby =  $this->request->session()->read('Auth.User.firstname');
         }else{
             $cow = $this->Cows->newEntity();
             $cow->code = $this->genCode();//'TAK6000001';
             $cow->cow_breed_id = $cow_id;
 
-            $cow->updatedby = 'bbb';
+            $cow->updatedby = $this->request->session()->read('Auth.User.firstname');
         }
         $cow->breed_level = $Cow['breed_level'];
         $cow->grade = $Cow['grade'];
@@ -278,12 +278,12 @@ class CowsController extends AppController
         if(empty($weans['id'])){
             $Wean = $this->GrowthRecords->newEntity();
             $Wean->type = 'W';
-            $Wean->createdby = 'aaa';
+            $Wean->createdby = $this->request->session()->read('Auth.User.firstname');
             $Wean->cow_id = $cow_id;
         }else{
             $Wean = $this->GrowthRecords->get($weans['id']);
             $Wean->updated = date('Y-m-d H:i:s');
-            $Wean->updatedby = 'bbb';
+            $Wean->updatedby = $this->request->session()->read('Auth.User.firstname');
         }
 
         $Wean->weight = $weans['weight'];
@@ -322,13 +322,13 @@ class CowsController extends AppController
         if(empty($fertilizes['id'])){
             $Fertilize = $this->GrowthRecords->newEntity();
             $Fertilize->type = 'F';
-            $Fertilize->createdby = 'aaa';
+            $Fertilize->createdby = $this->request->session()->read('Auth.User.firstname');
             $Fertilize->cow_id = $cow_id;
             $action_type='ADD';
         }else{
             $Fertilize = $this->GrowthRecords->get($fertilizes['id']);
             $Fertilize->updated = date('Y-m-d H:i:s');
-            $Fertilize->updatedby = 'bbb';
+            $Fertilize->updatedby = $this->request->session()->read('Auth.User.firstname');
         }
 
         $Fertilize->record_date = date('Y-m-d', strtotime($fertilizes['record_date']));
@@ -386,13 +386,13 @@ class CowsController extends AppController
         // exit;
         if(empty($objUpdate['id'])){
             $entity = $this->BreedingRecords->newEntity();
-            $entity->createdby = 'aaa';
+            $entity->createdby = $this->request->session()->read('Auth.User.firstname');
             $entity->cow_id = $cow_id;
             $action_type='ADD';
         }else{
             $entity = $this->BreedingRecords->get($objUpdate['id']);
             $entity->updated = date('Y-m-d H:i:s');
-            $entity->updatedby = 'bbb';
+            $entity->updatedby = $this->request->session()->read('Auth.User.firstname');
         }
 
         // print_r($objUpdate);
@@ -444,13 +444,13 @@ class CowsController extends AppController
         // exit;
         if(empty($objUpdate['id'])){
             $entity = $this->GivebirthRecords->newEntity();
-            $entity->createdby = 'aaa';
+            $entity->createdby = $this->request->session()->read('Auth.User.firstname');
             $entity->cow_id = $cow_id;
             $action_type='ADD';
         }else{
             $entity = $this->GivebirthRecords->get($objUpdate['id']);
             $entity->updated = date('Y-m-d H:i:s');
-            $entity->updatedby = 'bbb';
+            $entity->updatedby = $this->request->session()->read('Auth.User.firstname');
         }
 
         // print_r($objUpdate);
@@ -504,13 +504,13 @@ class CowsController extends AppController
         // exit;
         if(empty($objUpdate['id'])){
             $entity = $this->MovementRecords->newEntity();
-            $entity->createdby = 'aaa';
+            $entity->createdby = $this->request->session()->read('Auth.User.firstname');
             $entity->cow_id = $cow_id;
             $action_type='ADD';
         }else{
             $entity = $this->MovementRecords->get($objUpdate['id']);
             $entity->updated = date('Y-m-d H:i:s');
-            $entity->updatedby = 'bbb';
+            $entity->updatedby = $this->request->session()->read('Auth.User.firstname');
         }
 
         // print_r($objUpdate);
@@ -564,13 +564,13 @@ class CowsController extends AppController
         // exit;
         if(empty($objUpdate['id'])){
             $entity = $this->TreatmentRecords->newEntity();
-            $entity->createdby = 'aaa';
+            $entity->createdby = $this->request->session()->read('Auth.User.firstname');
             $entity->cow_id = $cow_id;
             $action_type='ADD';
         }else{
             $entity = $this->TreatmentRecords->get($objUpdate['id']);
             $entity->updated = date('Y-m-d H:i:s');
-            $entity->updatedby = 'bbb';
+            $entity->updatedby = $this->request->session()->read('Auth.User.firstname');
         }
 
         // print_r($objUpdate);
