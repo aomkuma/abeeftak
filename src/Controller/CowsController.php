@@ -624,9 +624,9 @@ class CowsController extends AppController
         $short_desc = $obj['uploadObj']['short_desc'];
         $cow_id = $obj['uploadObj']['cow_id'];
 
-        $WWW_ROOT = WWW_ROOT;
-        $WWW_ROOT = str_replace('\\','/', $WWW_ROOT);
-        $img_path = 'domains/amctak.com/public_html/webroot/upload/img/';//'upload/img/';//$WWW_ROOT . 'upload/img/';
+        // $WWW_ROOT = WWW_ROOT;
+        // $WWW_ROOT = str_replace('\\','/', $WWW_ROOT);
+        $img_path = WWW_ROOT.'upload/img/';//'upload/img/';//$WWW_ROOT . 
         // echo $WWW_ROOT . 'upload/img/' . $file['name'];
         // exit;
         if(move_uploaded_file($file['tmp_name'], $img_path . $file['name'])){
