@@ -215,13 +215,13 @@ class CowsController extends AppController
             $cow = $this->Cows->get($Cow['id'], [
                 'contain' => []
             ]);
-            $cow->createdby =  $this->request->session()->read('Auth.User.firstname');
+            $cow->updatedby =  $this->request->session()->read('Auth.User.firstname');
         }else{
             $cow = $this->Cows->newEntity();
             $cow->code = $this->genCode();//'TAK6000001';
             $cow->cow_breed_id = $cow_id;
 
-            $cow->updatedby = $this->request->session()->read('Auth.User.firstname');
+            $cow->createdby = $this->request->session()->read('Auth.User.firstname');
         }
         $cow->breed_level = $Cow['breed_level'];
         $cow->grade = $Cow['grade'];
