@@ -201,11 +201,12 @@ class CowsController extends AppController
         if(empty($CowBreed['id'])){
             $CowBreeds = $this->CowBreeds->newEntity();
             $CowBreeds->createdby = 'aaa';
+            $CowBreeds->name = $CowBreed['name'];
         }else{
             $CowBreeds = $this->CowBreeds->get($CowBreed['id']);
             $CowBreeds->updatedby = 'bbb';
+            $CowBreeds->name = $CowBreed['name'];
         }
-        $CowBreeds->name = $CowBreed['name'];
         
         $this->CowBreeds->save($CowBreeds);
         $cow_id = $CowBreeds->id;
@@ -224,14 +225,14 @@ class CowsController extends AppController
         }
         $cow->breed_level = $Cow['breed_level'];
         $cow->grade = $Cow['grade'];
-        $cow->birthday = $Cow['birthday'];
+        $cow->birthday = date('Y-m-d', strtotime($Cow['birthday']));
         $cow->gender = $Cow['gender'];
         $cow->isbreeder = $Cow['isbreeder'];
         $cow->breeding = $Cow['breeding'];
         $cow->father_code = $Cow['father_code'];
         $cow->mother_code = $Cow['mother_code'];
         $cow->origins = $Cow['origins'];
-        $cow->import_date = $Cow['import_date'];
+        $cow->import_date = date('Y-m-d', strtotime($Cow['import_date']));
         
         if($this->Cows->save($cow)){
             $result['DATA']['ID'] = $cow->id;
@@ -240,6 +241,8 @@ class CowsController extends AppController
             $result = 'fail to update';
         }
 
+        ob_end_clean();
+        ob_end_flush();
         $this->response->body(json_encode($result));
         $this->response->statusCode(200);
         $this->response->type('application/json');
@@ -328,7 +331,7 @@ class CowsController extends AppController
             $Fertilize->updatedby = 'bbb';
         }
 
-        $Fertilize->record_date = $fertilizes['record_date'];
+        $Fertilize->record_date = date('Y-m-d', strtotime($fertilizes['record_date']));
         $Fertilize->age = $fertilizes['age'];
         $Fertilize->food_type = $fertilizes['food_type'];
         $Fertilize->total_eating = $fertilizes['total_eating'];
@@ -393,7 +396,7 @@ class CowsController extends AppController
         }
 
         // print_r($objUpdate);
-        $entity->breeding_date = $objUpdate['breeding_date'];
+        $entity->breeding_date = date('Y-m-d', strtotime($objUpdate['breeding_date']));
         $entity->mother_code = $objUpdate['mother_code'];
         
         if($this->BreedingRecords->save($entity)){
@@ -451,7 +454,7 @@ class CowsController extends AppController
         }
 
         // print_r($objUpdate);
-        $entity->breeding_date = $objUpdate['breeding_date'];
+        $entity->breeding_date = date('Y-m-d', strtotime($objUpdate['breeding_date']));
         $entity->father_code = $objUpdate['father_code'];
         $entity->authorities = $objUpdate['authorities'];
         $entity->breeding_status = $objUpdate['breeding_status'];
@@ -513,7 +516,7 @@ class CowsController extends AppController
         // print_r($objUpdate);
         $entity->departure = $objUpdate['departure'];
         $entity->destination = $objUpdate['destination'];
-        $entity->movement_date = $objUpdate['movement_date'];
+        $entity->movement_date = date('Y-m-d', strtotime($objUpdate['movement_date']));
         $entity->description = $objUpdate['description'];
         
         if($this->MovementRecords->save($entity)){
@@ -571,7 +574,7 @@ class CowsController extends AppController
         }
 
         // print_r($objUpdate);
-        $entity->treatment_date = $objUpdate['treatment_date'];
+        $entity->treatment_date = date('Y-m-d', strtotime($objUpdate['treatment_date']));
         $entity->disease = $objUpdate['disease'];
         $entity->drug_used = $objUpdate['drug_used'];
         $entity->conservator = $objUpdate['conservator'];
@@ -623,7 +626,7 @@ class CowsController extends AppController
 
         $WWW_ROOT = WWW_ROOT;
         $WWW_ROOT = str_replace('\\','/', $WWW_ROOT);
-        $img_path = 'upload/img/';//$WWW_ROOT . 'upload/img/';
+        $img_path = 'domains/amctak.com/public_html/webroot/upload/img/';//'upload/img/';//$WWW_ROOT . 'upload/img/';
         // echo $WWW_ROOT . 'upload/img/' . $file['name'];
         // exit;
         if(move_uploaded_file($file['tmp_name'], $img_path . $file['name'])){
