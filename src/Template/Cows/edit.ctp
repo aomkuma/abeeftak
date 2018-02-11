@@ -7,6 +7,9 @@
 <script>var cows_id = '<?= $id ?>';</script>
 
 <div ng-app="abeef" ng-controller="CowUpdateController">
+	<div class="alert alert-success" id="success-alert" style="display: none;">
+	  <strong>{{SaveResult}}สำเร็จ!</strong>
+	</div>
 	<uib-tabset active="activeJustified" justified="true">
 	    <uib-tab index="0" heading="ข้อมูลโค">
 	    	<br>
@@ -528,9 +531,9 @@
 	    		</table>
 	    	</div>
 	    </uib-tab>
-	    <uib-tab index="7" heading="ประวัติการฉีดวัคซีน">
+	    <!--<uib-tab index="7" heading="ประวัติการฉีดวัคซีน">
 	    	Long Labeled Justified content
-	    </uib-tab>
+	    </uib-tab>-->
 	    <uib-tab index="8" heading="ประวัติการรักษา">
 	    	<br>
 	    	<form name="treatment" novalidate ng-show="TreatmentUpdate">

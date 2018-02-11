@@ -113,7 +113,15 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
             }else if(obj.id == null){
                 window.location.href = urlGlobal + '/cows/edit/' + result.data.DATA.ID;
             }
+            showAlert('บันทึก');
         });
+    }
+
+    function showAlert(SaveResult){
+        $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#success-alert").slideUp(500);
+            $scope.SaveResult = SaveResult;
+        });   
     }
 
     $scope.saveWean = function(service, action, obj, cow_id){
@@ -125,6 +133,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
                 if($scope.Wean.id == null){
                     $scope.Wean.id = result.data.DATA.ID;
                 }
+                showAlert('บันทึก');
             }
         });
     }
@@ -142,6 +151,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
                 }
                 $scope.Fertilize = {'id':null,'record_date':null,'age':null,'food_type':null,'total_eating':null,'weight':null,'chest':null,'height':null,'length':null,'growth_stat':null};
                 $scope.FertilizeUpdate = false;
+                showAlert('บันทึก');
             }
         });
     }
@@ -186,6 +196,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
                 }
                 $scope.Breeder = {'id':null,'breeding_date':null,'mother_code':null};
                 $scope.BreederUpdate = false;
+                showAlert('บันทึก');
             }
         });
     }
@@ -230,6 +241,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
                 }
                 $scope.Givebirth = {'id':null,'breeding_date':null,'father_code':null, 'authorities':null, 'breeding_status':null};
                 $scope.GivebirthUpdate = false;
+                showAlert('บันทึก');
             }
         });
     }
@@ -274,6 +286,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
                 }
                 $scope.Movement = {'id':null,'movement_date':null,'departure':null, 'destination':null, 'description':null};
                 $scope.MovementUpdate = false;
+                showAlert('บันทึก');
             }
         });
     }
@@ -318,6 +331,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
                 }
                 $scope.Treatment = {'id':null,'treatment_date':null,'disease':null, 'drug_used':null, 'conservator':null};
                 $scope.TreatmentUpdate = false;
+                showAlert('บันทึก');
             }
         });
     }
@@ -461,6 +475,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     $scope.GivebirthUpdate = false;
     $scope.MovementUpdate = false;
     $scope.TreatmentUpdate = false;
+    $scope.SaveResult = 'บันทึก';
     $scope.BreedLevelList = [{'id':1,'name':'1'},{'id':2,'name':'2'},{'id':3,'name':'3'},{'id':4,'name':'4'}];
     $scope.GradeList = [
                 {'id':'1','name':'ชาโลเล่ย์'}
