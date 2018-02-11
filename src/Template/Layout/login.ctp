@@ -1,9 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
-
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +9,7 @@
 
         <title>Login Admin </title>
         <!-- Bootstrap Core CSS -->
-        <?= $this->Html->css('/startbootstrap/vendor/bootstrap/css/bootstrap.min.css') ?>
+        <?= $this->Html->css('/startbootstrap/vendor/bootstrap/css/bootstrap.css') ?>
 
         <!-- MetisMenu CSS -->
 
@@ -45,20 +42,11 @@
         <!-- Metis Menu Plugin JavaScript -->
         <?= $this->Html->script('/startbootstrap/vendor/metisMenu/metisMenu.min.js') ?>
         <?= $this->Html->script('jquery.validate.min.js') ?>
-
-
     </head>
-
     <body>
-
         <div id="wrapper" >
-
-
-
             <?= $this->Flash->render() ?>
             <?= $this->fetch('content') ?>
-
-            <!-- /#page-wrapper -->
         </div>
         <script>
 
@@ -90,5 +78,4 @@
             });
         </script>
     </body>
-
 </html>

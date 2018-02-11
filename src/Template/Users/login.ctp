@@ -16,7 +16,7 @@
             
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
-                    <h3 style="text-align: center" class="panel-title">LOGIN</h3>
+                    <h3 style="text-align: center" class="panel-title">เข้าสู่ระบบ</h3>
                 </div>
                 <div class="panel-body">
                     <?= $this->Form->create('login', ['id' => 'login', 'novalidate' => true, 'class' => 'g-py-15']) ?>
@@ -29,7 +29,7 @@
                         </div>
 
                         <!-- Change this to a button or input when using this as a form -->
-                        <button class="btn btn-lg btn-success btn-block">Login</button>                            </fieldset>
+                        <button class="btn btn-lg btn-success btn-block">ตกลง</button>                            </fieldset>
                         <?= $this->Form->end() ?>
                 </div>
             </div>
