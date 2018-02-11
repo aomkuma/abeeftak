@@ -347,12 +347,7 @@ class ReportsController extends AppController {
             'conditions' => ['Cows.code' => $cowR[0]['mother_code']],
             'contain' => ['CowBreeds']
         ]);
-        
-//        $breedAI = $this->Cows->find('all', [
-//            'conditions' => ['Cows.id' => $id, 'Cows.breeding' => 'AI'],
-//            'contain' => ['GivebirthRecords']
-//        ]);
-
+       
         $gbR = $givebirthRecord->toArray();
         $jsondatagbR = json_encode($gbR);
 
@@ -364,13 +359,8 @@ class ReportsController extends AppController {
         $jsondataFath = json_encode($cowFath);
         $cowMoth = $cowMother->toArray();
         $jsondataMoth = json_encode($cowMoth);
-        
-//        $$breedAItoarr = $breedAI->toArray();
-//        $jsondatabreedAI = json_encode($$breedAItoarr);
 
-        $this->set(compact('jsondatacow', 'jsondatagrowth', 'jsondatagrowthW', 'jsondatagbR', 'jsondataFath', 'jsondataMoth'
-//                ,'jsondatabreedAI'
-                ));
+        $this->set(compact('jsondatacow', 'jsondatagrowth', 'jsondatagrowthW', 'jsondatagbR', 'jsondataFath', 'jsondataMoth'));
     }
 
     public function animalcertificate($id = null) {
@@ -402,6 +392,11 @@ class ReportsController extends AppController {
             'conditions' => ['cow_id' => $cowR[0]['id']]
             , 'order' => ['treatment_date ASC']
         ]);
+        
+//        $breedAI = $this->Cows->find('all', [
+//            'conditions' => ['Cows.id' => $id],
+//            'contain' => ['GivebirthRecords']
+//        ]);
 
         $moveR = $movementRecord->toArray();
         $jsondatamoveR = json_encode($moveR);
@@ -413,8 +408,14 @@ class ReportsController extends AppController {
         $jsondataFath = json_encode($cowFath);
         $cowMoth = $cowMother->toArray();
         $jsondataMoth = json_encode($cowMoth);
+        
+//        $breedAItoarr = $breedAI->toArray();
+//        $jsondatabreedAI = json_encode($breedAItoarr);
 
-        $this->set(compact('jsondatacow', 'jsondataFath', 'jsondataMoth', 'jsondatamoveR', 'jsondataTreatR'));
+//        pr($breedAItoarr);
+        $this->set(compact('jsondatacow', 'jsondataFath', 'jsondataMoth', 'jsondatamoveR', 'jsondataTreatR'
+//                ,'jsondatabreedAI'
+                ));
     }
 
 }
