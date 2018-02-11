@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <?= $this->Form->create('cow', ['novalidate' => true, 'id' => 'cowfrm', 'class' => '','url'=>['action'=>'addcow',$farm_id]]) ?>
+        <?= $this->Form->create('cow', ['novalidate' => true, 'id' => 'cowfrm', 'class' => '', 'url' => ['action' => 'addcow', $farm_id]]) ?>
         <?= $this->Form->hidden('farm_id', ['value' => $farm_id]) ?>
         <div class="form-group col-md-8 col-xs-9 col-md-offset-1">
             <?= $this->Form->select('cow_id', $cows, ['class' => 'form-control', 'id' => 'cow_id']) ?>
@@ -8,7 +8,7 @@
         <div class="form-group col-md-2 col-xs-3">
             <button type="submit" class="btn btn-primary btn-block">เพิ่ม</button>
         </div>
-        
+
         <?= $this->Form->end() ?>
     </div>
 </div>
@@ -23,7 +23,7 @@
                 <th></th>
             </tr>
         </thead>
-        <?php $count =1;?>
+        <?php $count = 1; ?>
         <?php foreach ($farmCows as $item): ?>
             <tr>
                 <td><?= h($count) ?></td>
@@ -35,7 +35,7 @@
 
             <?php $count++; ?>
         <?php endforeach; ?>
-        <?php if (is_null($farmCows) || sizeof($farmCows)==0) { ?>
+        <?php if (is_null($farmCows) || sizeof($farmCows) == 0) { ?>
             <tr>
                 <td colspan="4"  class="text-center text-danger">
                     ยังไม่มีโค
@@ -45,3 +45,43 @@
 
     </table>
 </div>
+<script>
+    $(document).ready(function () {
+        Validation.initValidation();
+    });
+
+    var Validation = function () {
+        return {
+            //Validation
+            initValidation: function () {
+                $("#cowfrm").validate({
+                    rules:
+                            {
+                                cow_id:
+                                        {
+                                            required: true
+                                        }
+
+                            },
+
+                    // Messages for form validation
+                    messages:
+                            {
+                                cow_id:
+                                        {
+                                            required: ''
+                                        }
+
+                            },
+
+                    // Do not change code below
+                    errorPlacement: function (error, element)
+                    {
+                        error.insertAfter(element.parent());
+                    }
+                });
+            }
+
+        };
+    }();
+</script>

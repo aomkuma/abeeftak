@@ -19,7 +19,7 @@
                     </div>
                 </div>
             </div>
-            <a href="#">
+            <a href="<?=SITE_URL.'herdsmans'?>">
                 <div class="panel-footer">
                     <span class="pull-left">ดูข้อมูล</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <a href="#">
+            <a href="<?=SITE_URL.'farms'?>">
                 <div class="panel-footer">
                     <span class="pull-left">ดูข้อมูล</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -64,7 +64,7 @@
                     </div>
                 </div>
             </div>
-            <a href="#">
+            <a href="<?=SITE_URL.'cows'?>">
                 <div class="panel-footer">
                     <span class="pull-left">ดูข้อมูล</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -134,10 +134,10 @@
             element: 'morris-donut-chart',
             data: [{
                     label: "เพศผู้",
-                    value: 12
+                    value: <?=$cowmamt?>
                 }, {
                     label: "เพศเมีย",
-                    value: 30
+                    value: <?=$cowfamt?>
                 }],
             resize: true
         });

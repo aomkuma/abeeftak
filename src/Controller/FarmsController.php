@@ -153,6 +153,7 @@ class FarmsController extends AppController {
             }
             $province = $this->findProvinceByName($data['address']['province_id']);
             $farm->address->province_id = $province->id;
+            $farm->createdby = $this->request->session()->read('Auth.User.firstname');
             if ($this->Farms->save($farm)) {
                 $this->Flash->success(__('The farm has been saved.'));
 
@@ -199,8 +200,7 @@ class FarmsController extends AppController {
             }
             $province = $this->findProvinceByName($data['address']['province_id']);
             $farm->address->province_id = $province->id;
-            $farm->updated = Time::now();
-            $farm->updatedby = 'Default';
+            $farm->updatedby = $this->request->session()->read('Auth.User.firstname');
 
             if ($this->Farms->save($farm)) {
                 $this->Flash->success(__('The farm has been saved.'));

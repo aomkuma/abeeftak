@@ -41,3 +41,43 @@
         <?php } ?>
     </table>
 </div>
+<script>
+    $(document).ready(function () {
+        Validation.initValidation();
+    });
+
+    var Validation = function () {
+        return {
+            //Validation
+            initValidation: function () {
+                $("#herdsmanfrm").validate({
+                    rules:
+                            {
+                                herdsman_id:
+                                        {
+                                            required: true
+                                        }
+
+                            },
+
+                    // Messages for form validation
+                    messages:
+                            {
+                                herdsman_id:
+                                        {
+                                            required: ''
+                                        }
+
+                            },
+
+                    // Do not change code below
+                    errorPlacement: function (error, element)
+                    {
+                        error.insertAfter(element.parent());
+                    }
+                });
+            }
+
+        };
+    }();
+</script>
