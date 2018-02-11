@@ -191,13 +191,17 @@ class HerdsmansController extends AppController {
         $herdsman = $this->Herdsmans->get($id, [
             'contain' => []
         ]);
+        $herdsman->registerdate = $herdsman->registerdate->toDateString();
+        
+        $herdsman->birthday = $herdsman->birthday->toDateString();
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
             $getname = $this->request->session()->read('Auth.User');
             ///// address /////
             
             $province = $this->findProvinceByName($this->request->getData('province_id'));
             
-            if($province->id = null){
+            if($province->id == null){
                 $this->Flash->error(__('The herdsman could not be saved. Please, try again.'));
                 return $this->redirect(['action' => 'add']);
             }
