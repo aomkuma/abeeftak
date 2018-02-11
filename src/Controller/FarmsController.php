@@ -231,6 +231,20 @@ class FarmsController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null) {
+       
+        //start check permission
+        $Permissions = $this->request->session()->read('rolePermissions');
+        if (in_array('farms', $Permissions['controller'])) {
+            $actionArr = $Permissions['actions']['farms'];
+            
+            if (!in_array('delete', $actionArr)) {
+                return $this->redirect(['controller' => 'users', 'action' => 'displaypermission']);
+            }
+        }
+        //end check
+      
+        
+
         $this->request->allowMethod(['post', 'delete']);
         $farm = $this->Farms->get($id);
         if ($this->Farms->delete($farm)) {
