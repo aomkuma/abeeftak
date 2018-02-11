@@ -8,7 +8,6 @@
         <meta name="author" content="">
 
         <title>ABEFF TAK</title>
-
         <!-- Bootstrap Core CSS -->
         <?= $this->Html->css('/startbootstrap/vendor/bootstrap/css/bootstrap.css') ?>
 
@@ -43,18 +42,21 @@
         <!-- Metis Menu Plugin JavaScript -->
         <?= $this->Html->script('/startbootstrap/vendor/metisMenu/metisMenu.min.js') ?>
 
-        
+        <script>
+            var urlGlobal = '<?=SITE_URL?>';
+        </script>
 
         <!-- Custom Theme JavaScript -->
         <?= $this->Html->script('/startbootstrap/dist/js/sb-admin-2.js') ?>
-        
-        <?=$this->Html->script('jquery.validate.min.js')?>
+
+        <?= $this->Html->script('jquery.validate.min.js') ?>
         <?= $this->Html->script('angular-scripts/node_modules/angular/angular.min.js') ?>
         <?= $this->Html->script('angular-scripts/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js') ?>
         <?= $this->Html->script('angular-scripts/node_modules/angular-animate/angular-animate.min.js') ?>
         <?= $this->Html->script('angular-scripts/node_modules/angular-cookies/angular-cookies.min.js') ?>
         <?= $this->Html->script('angular-scripts/node_modules/ng-file-upload/ng-file-upload-shim.min.js') ?>
         <?= $this->Html->script('angular-scripts/node_modules/ng-file-upload/ng-file-upload.min.js') ?>
+        <script src="../../../webroot/js/angular-scripts/abeef-main.js" type="text/javascript"></script>
         <?= $this->Html->script('angular-scripts/abeef-main.js') ?>
         <?= $this->Html->script('angular-scripts/service-factory/HttpService.js') ?>
         <?= $this->Html->script('angular-scripts/controllers/CowUpdateController.js') ?>
@@ -62,13 +64,15 @@
         <?= $this->Html->script('angular-scripts/node_modules/pdfmake/build/vfs_fonts.js') ?>
         <?= $this->Html->script('angular-scripts/node_modules/pdfmake/build/build/vfs_fonts.js') ?>
 
+
+
     </head>
     <body>
         <div id="wrapper" style="background-color: #FFFFFF;">
             <?= $this->element('Layout/nav') ?>
             <div class="container margin-top-20">
                 <?= $this->Flash->render() ?>
-                
+
                 <?= $this->fetch('content') ?>
             </div>
             <!-- /#page-wrapper -->

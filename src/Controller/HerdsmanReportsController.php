@@ -22,7 +22,7 @@ class HerdsmanReportsController extends AppController {
      */
     public function index() {
         $grades = ['1' => 'ระดับ 1', '2' => 'ระดับ 2', '3' => 'ระดับ 3', '4' => 'ระดับ 4', '5' => 'ระดับ 5'];
-        $titles = ['mr'=>'นาย','miss'=>'นางสาว','mrs'=>'นาง'];
+        $titles = ['mr'=>'นาย','miss'=>'นางสาว','mrs'=>'นาง','ms'=>'นาง'];
         $issearch = false;
         $isexport = false;
         $jsondata = null;
