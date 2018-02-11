@@ -256,7 +256,7 @@ function exportPDF(datacow, datafath, datamoth, datamove, datatreat) {
 
     //////////
 
-    // ตาราง ประวัติการผสมเทียม  ////////////////////
+    // ตาราง ประวัติการผสมเทียม  ////////////////////dataAI
     var data_detail6 = [];
     var headerRow6 = [];
 // set header
@@ -272,26 +272,28 @@ function exportPDF(datacow, datafath, datamoth, datamove, datatreat) {
 
     data_detail6.push(headerRow6);
 
-    for (var i = 1; i <= 10; i++) {
+    for (var i = 0; i < 10; i++) {
         var firstRow6 = [];
-        if (i === 1) {
-            firstRow6.push({text: i, alignment: 'center', fontSize: 12, bold: true});
-            firstRow6.push({text: ''});
-            firstRow6.push({text: ''});
-            firstRow6.push({text: ''});
-            firstRow6.push({text: ''});
-            firstRow6.push({text: ''});
-            firstRow6.push({text: ''});
-            firstRow6.push({text: ''});
+        if (i < 10) {
+//            var sprdateai = dataAI[i]['givebirth_record']['breeding_date'].split('T');
+//            dataAI[i]['givebirth_record']['breeding_date'] = sprdateai[0];
+            firstRow6.push({text: i+1, alignment: 'center', fontSize: 12, bold: true});
+            firstRow6.push({text: '', alignment: 'center'});
+            firstRow6.push({text: '', alignment: 'center'});
+            firstRow6.push({text: '', alignment: 'center'});
+            firstRow6.push({text: '', alignment: 'center'});
+            firstRow6.push({text: '', alignment: 'center'});
+            firstRow6.push({text: '', alignment: 'center'});
+            firstRow6.push({text: '', alignment: 'center'});
         } else {
-            firstRow6.push({text: i, alignment: 'center', fontSize: 12, bold: true});
-            firstRow6.push({text: ''});
-            firstRow6.push({text: ''});
-            firstRow6.push({text: ''});
-            firstRow6.push({text: ''});
-            firstRow6.push({text: ''});
-            firstRow6.push({text: ''});
-            firstRow6.push({text: ''});
+            firstRow6.push({text: i+1, alignment: 'center', fontSize: 12, bold: true});
+            firstRow6.push({text: '-', alignment: 'center'});
+            firstRow6.push({text: '-', alignment: 'center'});
+            firstRow6.push({text: '-', alignment: 'center'});
+            firstRow6.push({text: '-', alignment: 'center'});
+            firstRow6.push({text: '-', alignment: 'center'});
+            firstRow6.push({text: '-', alignment: 'center'});
+            firstRow6.push({text: '-', alignment: 'center'});
         }
 
 

@@ -26,7 +26,6 @@ class ReportsController extends AppController {
     public $MovementRecords = null;
     public $CowBreeds = null;
     public $TreatmentRecords = null;
-    
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
@@ -51,7 +50,7 @@ class ReportsController extends AppController {
     }
 
     public function cowqtyreport() {
-      
+
 
 
 
@@ -158,7 +157,7 @@ class ReportsController extends AppController {
         ;
 
         $results4 = $connection->execute($query4)->fetchAll('assoc');
-          $query5 = "select m.district "
+        $query5 = "select m.district "
                 . "as amphur, IF(s.amt IS null, '0', s.amt) as cnt "
                 . "FROM "
                 . "(select district  "
@@ -233,7 +232,6 @@ class ReportsController extends AppController {
 //        debug($results1);
 //        debug($results2);
 //        debug($results3);
-
 //        
         $summaryjs1 = json_encode($results1);
         $summaryjs2 = json_encode($results2);
@@ -243,29 +241,25 @@ class ReportsController extends AppController {
         $summaryjs6 = json_encode($results6);
         $summaryjs7 = json_encode($results7);
         $summaryjs8 = json_encode($results8);
-        $this->set(compact('summaryjs1','summaryjs2','summaryjs3','summaryjs4','summaryjs5','summaryjs6','summaryjs7','summaryjs8'));
+        $this->set(compact('summaryjs1', 'summaryjs2', 'summaryjs3', 'summaryjs4', 'summaryjs5', 'summaryjs6', 'summaryjs7', 'summaryjs8'));
 //        }
     }
-    
+
     public function cowcard($id = null) {
-        
+
         $cow = $this->Cows->get($id, [
             'contain' => []
         ]);
-        
+
         if ($cow->gender == 'M') {
-            
-            return $this->redirect('/reports/cowmale/'.$cow->id);
-            
+
+            return $this->redirect('/reports/cowmale/' . $cow->id);
         } else {
-            
-            return $this->redirect('/reports/cowfemale/'.$cow->id);
-            
+
+            return $this->redirect('/reports/cowfemale/' . $cow->id);
         }
-        
-        
     }
-    
+
     public function cowmale($id = null) {
 
 
@@ -276,24 +270,28 @@ class ReportsController extends AppController {
 
         $cowR = $cowmale->toArray();
         $jsondatacow = json_encode($cowR);
-        
+
         $growthRecord = $this->GrowthRecords->find('all', [
-            'conditions' => ['type' => 'F', 'cow_id' => $cowR[0]['id']], array('limit' => 5)
+            'conditions' => ['type' => 'F', 'cow_id' => $cowR[0]['id']]
+            , ['order' => 'record_date ASC']
+            , 'limit' => 5
         ]);
 
         $growthRecordW = $this->GrowthRecords->find('all', [
             'conditions' => ['type' => 'W', 'cow_id' => $cowR[0]['id']]
+            , 'order' => ['record_date ASC']
         ]);
 
         $breedRecord = $this->BreedingRecords->find('all', [
             'conditions' => ['cow_id' => $cowR[0]['id']]
+            , 'order' => ['breeding_date ASC']
         ]);
-        
+
         $cowFather = $this->Cows->find('all', [
             'conditions' => ['Cows.code' => $cowR[0]['father_code']],
             'contain' => ['CowBreeds']
         ]);
-        
+
         $cowMother = $this->Cows->find('all', [
             'conditions' => ['Cows.code' => $cowR[0]['mother_code']],
             'contain' => ['CowBreeds']
@@ -301,7 +299,7 @@ class ReportsController extends AppController {
 
         $breedR = $breedRecord->toArray();
         $jsondataBreed = json_encode($breedR);
-        
+
         $growthR = $growthRecord->toArray();
         $jsondatagrowth = json_encode($growthR);
         $growthW = $growthRecordW->toArray();
@@ -311,45 +309,48 @@ class ReportsController extends AppController {
         $cowMoth = $cowMother->toArray();
         $jsondataMoth = json_encode($cowMoth);
 
-        $this->set(compact('jsondatacow', 'jsondatagrowth', 'jsondatagrowthW', 'jsondataBreed','jsondataFath','jsondataMoth'));
-
+        $this->set(compact('jsondatacow', 'jsondatagrowth', 'jsondatagrowthW', 'jsondataBreed', 'jsondataFath', 'jsondataMoth'));
     }
 
     public function cowfemale($id = null) {
-        
+
         $cowfemale = $this->Cows->find('all', [
             'conditions' => ['Cows.id' => $id],
             'contain' => ['CowBreeds']
         ]);
-        
+
         $cowR = $cowfemale->toArray();
         $jsondatacow = json_encode($cowR);
 
         $growthRecord = $this->GrowthRecords->find('all', [
-            'conditions' => ['type' => 'F', 'cow_id' => $cowR[0]['id']], array('limit' => 5)
+            'conditions' => ['type' => 'F', 'cow_id' => $cowR[0]['id']]
+            , 'order' => ['record_date ASC']
+            , 'limit' => 5
         ]);
 
         $growthRecordW = $this->GrowthRecords->find('all', [
             'conditions' => ['type' => 'W', 'cow_id' => $cowR[0]['id']]
+            , 'order' => ['record_date ASC']
         ]);
-        
+
         $givebirthRecord = $this->GivebirthRecords->find('all', [
             'conditions' => ['cow_id' => $cowR[0]['id']]
+            , 'order' => ['breeding_date ASC']
         ]);
-        
+
         $cowFather = $this->Cows->find('all', [
             'conditions' => ['Cows.code' => $cowR[0]['father_code']],
             'contain' => ['CowBreeds']
         ]);
-        
+
         $cowMother = $this->Cows->find('all', [
             'conditions' => ['Cows.code' => $cowR[0]['mother_code']],
             'contain' => ['CowBreeds']
         ]);
-
+       
         $gbR = $givebirthRecord->toArray();
         $jsondatagbR = json_encode($gbR);
-        
+
         $growthR = $growthRecord->toArray();
         $jsondatagrowth = json_encode($growthR);
         $growthW = $growthRecordW->toArray();
@@ -359,50 +360,62 @@ class ReportsController extends AppController {
         $cowMoth = $cowMother->toArray();
         $jsondataMoth = json_encode($cowMoth);
 
-        $this->set(compact('jsondatacow', 'jsondatagrowth', 'jsondatagrowthW', 'jsondatagbR','jsondataFath','jsondataMoth'));
-        
+        $this->set(compact('jsondatacow', 'jsondatagrowth', 'jsondatagrowthW', 'jsondatagbR', 'jsondataFath', 'jsondataMoth'));
     }
-    
+
     public function animalcertificate($id = null) {
-        
+
         $cow = $this->Cows->find('all', [
             'conditions' => ['Cows.id' => $id],
             'contain' => ['CowBreeds']
         ]);
-        
+
         $cowR = $cow->toArray();
         $jsondatacow = json_encode($cowR);
-        
+
         $cowFather = $this->Cows->find('all', [
             'conditions' => ['Cows.code' => $cowR[0]['father_code']],
             'contain' => ['CowBreeds']
         ]);
-        
+
         $cowMother = $this->Cows->find('all', [
             'conditions' => ['Cows.code' => $cowR[0]['mother_code']],
             'contain' => ['CowBreeds']
         ]);
-        
+
         $movementRecord = $this->MovementRecords->find('all', [
             'conditions' => ['cow_id' => $cowR[0]['id']]
+            , 'order' => ['movement_date ASC']
         ]);
-        
+
         $treatmentRecord = $this->TreatmentRecords->find('all', [
             'conditions' => ['cow_id' => $cowR[0]['id']]
+            , 'order' => ['treatment_date ASC']
         ]);
+        
+//        $breedAI = $this->Cows->find('all', [
+//            'conditions' => ['Cows.id' => $id],
+//            'contain' => ['GivebirthRecords']
+//        ]);
 
         $moveR = $movementRecord->toArray();
         $jsondatamoveR = json_encode($moveR);
-        
+
         $TreatR = $treatmentRecord->toArray();
         $jsondataTreatR = json_encode($TreatR);
-        
+
         $cowFath = $cowFather->toArray();
         $jsondataFath = json_encode($cowFath);
         $cowMoth = $cowMother->toArray();
         $jsondataMoth = json_encode($cowMoth);
         
-        $this->set(compact('jsondatacow','jsondataFath','jsondataMoth','jsondatamoveR','jsondataTreatR'));
+//        $breedAItoarr = $breedAI->toArray();
+//        $jsondatabreedAI = json_encode($breedAItoarr);
+
+//        pr($breedAItoarr);
+        $this->set(compact('jsondatacow', 'jsondataFath', 'jsondataMoth', 'jsondatamoveR', 'jsondataTreatR'
+//                ,'jsondatabreedAI'
+                ));
     }
 
 }
