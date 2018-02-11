@@ -644,7 +644,7 @@ class CowsController extends AppController
                 $cow_images = $this->CowImages->newEntity();
                 $cow_images->cow_id = $cow_id;
                 $cow_images->image_id = $img_id;
-                $images->cow_images = $this->request->session()->read('Auth.User.firstname');
+                $cow_images->updatedby = $this->request->session()->read('Auth.User.firstname');
                 $this->CowImages->save($cow_images);
 
                 $obj = $this->CowImages->get($cow_images->id, [
