@@ -5,7 +5,7 @@
 </div>
 <div class="row">
     <div class="col-md-6">
-        <div class="panel panel-green">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 รายงานส่วนของผู้เลี้ยงโค
             </div>
@@ -24,7 +24,7 @@
         <!-- /.col-lg-4 -->
     </div>
     <div class="col-md-6">
-        <div class="panel panel-green">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 รายงานส่วนของฟาร์ม
             </div>
@@ -42,7 +42,7 @@
         <!-- /.col-lg-4 -->
     </div>
     <div class="col-md-6">
-        <div class="panel panel-green">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 รายงานส่วนของโค
             </div>
@@ -60,7 +60,7 @@
         <!-- /.col-lg-4 -->
     </div>
     <div class="col-md-6">
-        <div class="panel panel-green">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 รายงานอื่น ๆ
             </div>
