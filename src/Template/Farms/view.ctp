@@ -104,7 +104,7 @@
     <div class="col-lg-5">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">ผู้เลี้ยงโค <?=$this->Html->link('<span class="label label-success"><i class="glyphicon glyphicon-plus"></i> เพิ่ม</span>','javascript:void();',['escape'=>false,'data-toggle'=>'modal', 'data-target'=>'#addHerdsman'])?></h3>
+                <h3 class="panel-title">ผู้เลี้ยงโค</h3>
                 
             </div>
             <div class="panel-body">
@@ -114,10 +114,10 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">โค <?=$this->Html->link('<span class="label label-success"><i class="glyphicon glyphicon-plus"></i> เพิ่ม</span>','javascript:void();',['escape'=>false,'data-toggle'=>'modal', 'data-target'=>'#addcow'])?></h3>
+                <h3 class="panel-title">โค </h3>
             </div>
             <div class="panel-body">
-                <iframe id="cow_list" src="<?= SITE_URL . 'farm-cows' ?>" frameborder="0" scrolling="no" onload="resizeIframe(this)" width="100%"></iframe>
+                <iframe id="cow_list" src="<?= SITE_URL . 'farm-cows/index/'.$farm->id ?>" frameborder="0" scrolling="no" onload="resizeIframe(this)" width="100%"></iframe>
             </div>
         </div>
     </div>
@@ -248,7 +248,7 @@ if ($farm->latitude != null && $farm->latitude != '' && $farm->longitude != null
         
     }
 
-
+    
     $("#cowfrm").submit(function (event) {
         //alert('hi');
         var urlAddCow = url+'farmcows/addcow/';
@@ -288,7 +288,7 @@ if ($farm->latitude != null && $farm->latitude != '' && $farm->longitude != null
             document.getElementById("herdsmanfrm").reset();
         });
     });
-
+   
 
 
 

@@ -15,6 +15,8 @@ use Cake\ORM\Entity;
  * @property string $createdby
  * @property \Cake\I18n\FrozenTime $updated
  * @property string $updatedby
+ * @property string $isactive
+ * @property \Cake\I18n\FrozenTime $moveddate
  *
  * @property \App\Model\Entity\Farm $farm
  * @property \App\Model\Entity\Cow $cow
@@ -40,6 +42,8 @@ class FarmCow extends Entity
         'createdby' => true,
         'updated' => true,
         'updatedby' => true,
+        'isactive' => true,
+        'moveddate' => true,
         'farm' => true,
         'cow' => true
     ];
