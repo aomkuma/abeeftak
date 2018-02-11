@@ -91,7 +91,7 @@ class ReportsController extends AppController {
                 . "(select district  "
                 . ",count(*) as amt "
                 . "from "
-                . ' Farm_Cows fc'
+                . ' Farm_cows fc'
                 . ' join cows c on fc.cow_id = c.id'
                 . ' join farms f on fc.farm_id = f.id'
                 . ' join addresses xx on f.address_id = xx.id '
@@ -109,7 +109,7 @@ class ReportsController extends AppController {
                 . "(select district  "
                 . ",count(*) as amt "
                 . "from "
-                . ' Farm_Cows fc'
+                . ' Farm_cows fc'
                 . ' join cows c on fc.cow_id = c.id'
                 . ' join farms f on fc.farm_id = f.id'
                 . ' join addresses xx on f.address_id = xx.id '
@@ -127,7 +127,7 @@ class ReportsController extends AppController {
                 . "(select district  "
                 . ",count(*) as amt "
                 . "from "
-                . ' Farm_Cows fc'
+                . ' Farm_cows fc'
                 . ' join cows c on fc.cow_id = c.id'
                 . ' join farms f on fc.farm_id = f.id'
                 . ' join addresses xx on f.address_id = xx.id '
@@ -145,7 +145,7 @@ class ReportsController extends AppController {
                 . "(select district  "
                 . ",count(*) as amt "
                 . "from "
-                . ' Farm_Cows fc'
+                . ' Farm_cows fc'
                 . ' join cows c on fc.cow_id = c.id'
                 . ' join farms f on fc.farm_id = f.id'
                 . ' join addresses xx on f.address_id = xx.id '
@@ -163,7 +163,7 @@ class ReportsController extends AppController {
                 . "(select district  "
                 . ",count(*) as amt "
                 . "from "
-                . ' Farm_Cows fc'
+                . ' Farm_cows fc'
                 . ' join cows c on fc.cow_id = c.id'
                 . ' join farms f on fc.farm_id = f.id'
                 . ' join addresses xx on f.address_id = xx.id '
@@ -181,7 +181,7 @@ class ReportsController extends AppController {
                 . "(select district  "
                 . ",count(*) as amt "
                 . "from "
-                . ' Farm_Cows fc'
+                . ' Farm_cows fc'
                 . ' join cows c on fc.cow_id = c.id'
                 . ' join farms f on fc.farm_id = f.id'
                 . ' join addresses xx on f.address_id = xx.id '
@@ -199,7 +199,7 @@ class ReportsController extends AppController {
                 . "(select district  "
                 . ",count(*) as amt "
                 . "from "
-                . ' Farm_Cows fc'
+                . ' Farm_cows fc'
                 . ' join cows c on fc.cow_id = c.id'
                 . ' join farms f on fc.farm_id = f.id'
                 . ' join addresses xx on f.address_id = xx.id '
@@ -217,7 +217,7 @@ class ReportsController extends AppController {
                 . "(select district  "
                 . ",count(*) as amt "
                 . "from "
-                . ' Farm_Cows fc'
+                . ' Farm_cows fc'
                 . ' join cows c on fc.cow_id = c.id'
                 . ' join farms f on fc.farm_id = f.id'
                 . ' join addresses xx on f.address_id = xx.id '

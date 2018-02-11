@@ -17,5 +17,5 @@ define('BT_ADDUSER', '<button type="button" class="btn btn-info btn-block"><i cl
 define('PAGE_LIMIT', 20);
 
 
-define('SITE_URL', 'http://localhost/abeeftak/');
+define('SITE_URL', $_SERVER['REQUEST_SCHEME'].'://127.0.0.1/Git/abeeftak/');
 

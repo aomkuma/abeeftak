@@ -18,7 +18,7 @@
         <li><?= $this->Html->link('โค', ['controller' => 'Cows','action'=>'index']) ?></li>
         <li><?= $this->Html->link('ฟาร์ม', ['controller' => 'farms']) ?></li>
         
-        <li><?= $this->Html->link('รายงาน', ['controller' => 'Reports']) ?></li>
+        <li><?= $this->Html->link('รายงาน', ['controller' => 'Reports','action'=>'index']) ?></li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-gears fa-fw"></i> ตั้งค่าระบบ <i class="fa fa-caret-down"></i>
