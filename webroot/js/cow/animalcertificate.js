@@ -368,11 +368,11 @@ function exportPDF(datacow, datafath, datamoth, datamove, datatreat) {
 
                     {text: [
                             {text: '\n\n ออกให้ ณ วันที่ '}
-                            , {text: '   วัว   ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '   1   ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' เดือน '}
-                            , {text: '    ' + datacow[0]['cow_breed']['name'] + '       ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '  01  ' , decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' ปี '}
-                            , {text: '    ' + datacow[0]['grade'] + '       ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '  2561  ', decoration: 'underline', decorationStyle: 'dashed'}
 
 
                             , {text: '\n\n ลงชื่อ____________________________ผู้ตรวจสอบ '}
