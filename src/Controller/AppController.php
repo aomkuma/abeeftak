@@ -118,7 +118,7 @@ class AppController extends Controller {
                 
                 $actionArr = $Permissions['actions'][$control];
 
-                if($action=='displaypermission'){
+                if($action=='displaypermission' || $action =='logout'){
                     $this->Auth->allow();
                 }
                 else if (in_array($action, $actionArr)) {
