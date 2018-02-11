@@ -624,9 +624,9 @@ class CowsController extends AppController
         $short_desc = $obj['uploadObj']['short_desc'];
         $cow_id = $obj['uploadObj']['cow_id'];
 
-        // $WWW_ROOT = WWW_ROOT;
-        // $WWW_ROOT = str_replace('\\','/', $WWW_ROOT);
-        $img_path = WWW_ROOT.'upload/img/';//'upload/img/';//$WWW_ROOT . 
+        $WWW_ROOT = WWW_ROOT;
+        $WWW_ROOT = str_replace('\\','/', $WWW_ROOT);
+        $img_path = 'upload/img/';//'upload/img/';//$WWW_ROOT . 
         // echo $WWW_ROOT . 'upload/img/' . $file['name'];
         // exit;
         if(move_uploaded_file($file['tmp_name'], $img_path . $file['name'])){
@@ -636,6 +636,7 @@ class CowsController extends AppController
             $images->type = 'cows';
             $images->path = $img_path;
             $images->short_desc = $short_desc;
+            $images->createdby = $this->request->session()->read('Auth.User.firstname');
             if($this->Images->save($images)){
                 $img_id = $images->id;
                 $result['DATA']['ImgID'] = $img_id;
@@ -643,6 +644,7 @@ class CowsController extends AppController
                 $cow_images = $this->CowImages->newEntity();
                 $cow_images->cow_id = $cow_id;
                 $cow_images->image_id = $img_id;
+                $images->cow_images = $this->request->session()->read('Auth.User.firstname');
                 $this->CowImages->save($cow_images);
 
                 $obj = $this->CowImages->get($cow_images->id, [
