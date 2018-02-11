@@ -141,7 +141,7 @@ function exportPDF(datacow, datafath, datamoth, datamove, datatreat) {
         if (i < datatreat.length) {
             var sprdatetreat = datatreat[i]['treatment_date'].split('T');
             datatreat[i]['birthday'] = sprdatetreat[0];
-            firstRow4.push({text: i, alignment: 'center', fontSize: 12, bold: true});
+            firstRow4.push({text: i+1, alignment: 'center', fontSize: 12, bold: true});
             firstRow4.push({text: datatreat[i]['birthday'], alignment: 'center'});
             firstRow4.push({text: datatreat[i]['disease'], alignment: 'center'});
             firstRow4.push({text: datatreat[i]['drug_used'], alignment: 'center'});
@@ -322,7 +322,7 @@ function exportPDF(datacow, datafath, datamoth, datamove, datatreat) {
                             , {text: '\n\n ชนิดสัตว์ '}
                             , {text: '   วัว   ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' ชื่อ '}
-                            , {text: '    ' + datacow[0]['cow_breed']['name'] + '       ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + (datacow[0]['cow_breed']['name']=== 0 ? ' - ' : datacow[0]['cow_breed']['name']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' พันธุ์ '}
                             , {text: '    ' + datacow[0]['grade'] + '       ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' เพศ '}

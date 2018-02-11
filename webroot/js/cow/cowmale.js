@@ -28,13 +28,53 @@ function exportPDF(datacow, datagrowth, datagrowthW, dataBreed, datafath, datamo
     for (var i = 0; i < 5; i++) {
         var firstRow = [];
         if (i < datagrowth.length) {
-            var sprdate = datagrowth[i]['record_date'].split('T');
-            firstRow.push({text: sprdate[0], alignment: 'center'});
-            firstRow.push({text: datagrowth[i]['age'], alignment: 'center'});
-            firstRow.push({text: datagrowth[i]['weight'], alignment: 'center'});
-            firstRow.push({text: datagrowth[i]['growth_stat'], alignment: 'center'});
-            firstRow.push({text: datagrowth[i]['height'], alignment: 'center'});
-            firstRow.push({text: datagrowth[i]['chest'], alignment: 'center'});
+            if (datagrowth[i]['record_date'] !== null) {
+                var sprdate = datagrowth[i]['record_date'].split('T');
+                firstRow.push({text: sprdate[0], alignment: 'center'});
+            } else {
+                firstRow.push({text: '-', alignment: 'center'});
+            }
+
+            if (datagrowth[i]['age'] !== null) {
+
+                firstRow.push({text: datagrowth[i]['age'], alignment: 'center'});
+
+            } else {
+                firstRow.push({text: '-', alignment: 'center'});
+            }
+
+            if (datagrowth[i]['weight'] !== null) {
+
+                firstRow.push({text: datagrowth[i]['weight'], alignment: 'center'});
+
+            } else {
+                firstRow.push({text: '-', alignment: 'center'});
+            }
+
+            if (datagrowth[i]['growth_stat'] !== null) {
+
+                firstRow.push({text: datagrowth[i]['growth_stat'], alignment: 'center'});
+
+            } else {
+                firstRow.push({text: '-', alignment: 'center'});
+            }
+
+            if (datagrowth[i]['height'] !== null) {
+
+                firstRow.push({text: datagrowth[i]['height'], alignment: 'center'});
+
+            } else {
+                firstRow.push({text: '-', alignment: 'center'});
+            }
+
+            if (datagrowth[i]['chest'] !== null) {
+
+                firstRow.push({text: datagrowth[i]['chest'], alignment: 'center'});
+
+            } else {
+                firstRow.push({text: '-', alignment: 'center'});
+            }
+
         } else {
             firstRow.push({text: '-', alignment: 'center'});
             firstRow.push({text: '-', alignment: 'center'});
@@ -68,12 +108,38 @@ function exportPDF(datacow, datagrowth, datagrowthW, dataBreed, datafath, datamo
     for (var i = 0; i < 10; i++) {
         var firstRow2 = [];
         if (i < datagrowth.length) {
-            var sprdate = datagrowth[i]['record_date'].split('T');
-            firstRow2.push({text: sprdate[0], alignment: 'center'});
-            firstRow2.push({text: datagrowth[i]['age'], alignment: 'center'});
-            firstRow2.push({text: datagrowth[i]['weight'], alignment: 'center'});
-            firstRow2.push({text: datagrowth[i]['total_eating'], alignment: 'center'});
-            firstRow2.push({text: datagrowth[i]['growth_stat'], alignment: 'center'});
+
+            if (datagrowth[i]['record_date'] !== null) {
+                var sprdate = datagrowth[i]['record_date'].split('T');
+                firstRow2.push({text: sprdate[0], alignment: 'center'});
+            } else {
+                firstRow2.push({text: '-', alignment: 'center'});
+            }
+
+            if (datagrowth[i]['age'] !== null) {
+                firstRow2.push({text: datagrowth[i]['age'], alignment: 'center'});
+            } else {
+                firstRow2.push({text: '-', alignment: 'center'});
+            }
+
+            if (datagrowth[i]['weight'] !== null) {
+                firstRow2.push({text: datagrowth[i]['weight'], alignment: 'center'});
+            } else {
+                firstRow2.push({text: '-', alignment: 'center'});
+            }
+
+            if (datagrowth[i]['total_eating'] !== null) {
+                firstRow2.push({text: datagrowth[i]['total_eating'], alignment: 'center'});
+            } else {
+                firstRow2.push({text: '-', alignment: 'center'});
+            }
+
+            if (datagrowth[i]['growth_stat'] !== null) {
+                firstRow2.push({text: datagrowth[i]['growth_stat'], alignment: 'center'});
+            } else {
+                firstRow2.push({text: '-', alignment: 'center'});
+            }
+
             firstRow2.push({text: ''});
         } else {
             firstRow2.push({text: '-', alignment: 'center'});
@@ -105,14 +171,44 @@ function exportPDF(datacow, datagrowth, datagrowthW, dataBreed, datafath, datamo
     for (var i = 0; i < 5; i++) {
         var firstRow3 = [];
         if (i < dataBreed.length) {
-            var sprdate = dataBreed[row_index3]['breeding_date'].split('T');
-            firstRow3.push({text: sprdate[0], alignment: 'center'});
-            firstRow3.push({text: dataBreed[row_index3]['mother_code'], alignment: 'center'});
+
+            if (dataBreed[row_index3]['breeding_date'] !== null) {
+                var sprdate = dataBreed[row_index3]['breeding_date'].split('T');
+                firstRow3.push({text: sprdate[0], alignment: 'center'});
+
+            } else {
+                firstRow3.push({text: '-', alignment: 'center'});
+            }
+
+            if (dataBreed[row_index3]['mother_code'] !== null) {
+                firstRow3.push({text: dataBreed[row_index3]['mother_code'], alignment: 'center'});
+            } else {
+                firstRow3.push({text: '-', alignment: 'center'});
+            }
+
             firstRow3.push('');
+
             row_index3++;
-            var sprdate2 = dataBreed[row_index3]['breeding_date'].split('T');
-            firstRow3.push({text: sprdate2[0], alignment: 'center'});
-            firstRow3.push({text: dataBreed[row_index3]['mother_code'], alignment: 'center'});
+
+            if (row_index3 < dataBreed.length) {
+                if (dataBreed[row_index3]['breeding_date'] !== null) {
+                    var sprdate2 = dataBreed[row_index3]['breeding_date'].split('T');
+                    firstRow3.push({text: sprdate2[0], alignment: 'center'});
+
+                } else {
+                    firstRow3.push({text: '-', alignment: 'center'});
+                }
+
+                if (dataBreed[row_index3]['mother_code'] !== null) {
+                    firstRow3.push({text: dataBreed[row_index3]['mother_code'], alignment: 'center'});
+                } else {
+                    firstRow3.push({text: '-', alignment: 'center'});
+                }
+            } else {
+                firstRow3.push({text: '-', alignment: 'center'});
+                firstRow3.push({text: '-', alignment: 'center'});
+            }
+
             firstRow3.push('');
 
             row_index3++;
@@ -141,24 +237,24 @@ function exportPDF(datacow, datagrowth, datagrowthW, dataBreed, datafath, datamo
                 columns: [
 
                     {text: [
-                            {text: 'บัตรประจำตัวพ่อโค\n\n', style: 'header', alignment: 'center', margin: [0, 10, 0, 0]},
+                            {text: 'บัตรประจำตัวแม่โค\n\n', style: 'header', alignment: 'center', margin: [0, 10, 0, 0]},
 
                             {text: ' หมายเลขทะเบียนโค '}
                             , {text: '    ' + datacow[0]['code'] + '      ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' พันธุ์ '}
                             , {text: '    ' + datacow[0]['grade'] + '       ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' ชื่อ '}
-                            , {text: '    ' + datacow[0]['cow_breed']['name'] + '       ', decoration: 'underline', decorationStyle: 'dashed'},
+                            , {text: '    ' + (datacow[0]['cow_breed']['name']=== 0 ? ' - ' : datacow[0]['cow_breed']['name']) + '       ', decoration: 'underline', decorationStyle: 'dashed'},
                             {text: '\n\n วันเกิด  '}
                             , {text: '    ' + datacow[0]['birthday'] + '      ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' น้ำหนักแรกเกิด '}
-                            , {text: '    ' + datagrowthW[0]['weight'] + '       ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + (datagrowthW.length === 0 ? ' - ' : datagrowthW[0]['weight']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' กิโลกรัม '}
                             , {text: '\n\n น้ำหนักหย่านม '}
-                            , {text: '    ' + datagrowthW[0]['weight1'] + '       ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + (datagrowthW.length === 0 ? ' - ' : datagrowthW[0]['weight1']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' กิโลกรัม '}
                             , {text: ' อัตรการเจริญเติบโต '}
-                            , {text: '    ' + datagrowthW[0]['growth_stat'] + '       ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + (datagrowthW.length === 0 ? ' - ' : datagrowthW[0]['growth_stat']) + '       ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: ' กิโลกรัม '}
 
                         ], margin: [60, 0, 0, 0]},
@@ -178,22 +274,22 @@ function exportPDF(datacow, datagrowth, datagrowthW, dataBreed, datafath, datamo
                     {text: [
                             {text: ' \n\n\n ', alignment: 'center'},
                             {text: '     รหัสปู่  '}
-                            , {text: '    ' + ( datafath.length === 0 ?' - ':datafath[0]['father_code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + (datafath.length === 0 ? ' - ' : datafath[0]['father_code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: '\n รหัส พ่อโค '}
-                            , {text: '     ' + datacow[0]['father_code'] + '', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '     ' + (datacow[0]['father_code'] === null ? ' - ' : datacow[0]['father_code']) + '', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: '\n รหัสย่า ', alignment: 'center'}
-                            , {text: '    ' + ( datafath.length === 0 ?' - ':datafath[0]['mother_code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + (datafath.length === 0 ? ' - ' : datafath[0]['mother_code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
 
 
                         ], margin: [60, 0, 0, 0]},
                     {text: [
                             {text: ' \n\n\n ', alignment: 'center'},
                             {text: '     รหัสปู่  '}
-                            , {text: '    ' + ( datamoth.length === 0 ?' - ':datamoth[0]['father_code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + (datamoth.length === 0 ? ' - ' : datamoth[0]['father_code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: '\n      รหัส แม่โค '}
-                            , {text: '     ' + datacow[0]['mother_code'] + '', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '     ' + (datacow[0]['mother_code'] === null ? ' - ' : datacow[0]['mother_code']) + '', decoration: 'underline', decorationStyle: 'dashed'}
                             , {text: '\n รหัสย่า ', alignment: 'center'}
-                            , {text: '    ' + ( datamoth.length === 0 ?' - ':datamoth[0]['mother_code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + (datamoth.length === 0 ? ' - ' : datamoth[0]['mother_code']) + '      ', decoration: 'underline', decorationStyle: 'dashed'}
 
 
                         ], margin: [30, 0, 0, 0]}
@@ -204,7 +300,7 @@ function exportPDF(datacow, datagrowth, datagrowthW, dataBreed, datafath, datamo
                     {text: [
                             {text: ' \n\n\n '},
                             {text: 'ลักษณะรูปพรรณ '}
-                            , {text: '    ' + datacow[0]['description'] + '    ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '    ' + (datacow[0]['description']=== null ? ' - ' :datacow[0]['description']) + '    ', decoration: 'underline', decorationStyle: 'dashed'}
 
                         ], margin: [60, 0, 0, 0]}
                 ], pageBreak: 'after'

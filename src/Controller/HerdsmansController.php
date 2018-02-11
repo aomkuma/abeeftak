@@ -109,7 +109,7 @@ class HerdsmansController extends AppController {
 
         $herdsman = $this->Herdsmans->newEntity();
         if ($this->request->is('post')) {
-
+            $getname = $this->request->session()->read('Auth.User');
             $address = $this->Addresses->newEntity();
 //            $this->Herdsmans->find('all', array('order' => 'Herdsmans.code ASC'))
             $pro_name = $this->request->getData('province_id');
@@ -128,10 +128,9 @@ class HerdsmansController extends AppController {
             $address->district = $this->request->getData('district');
             $address->province_id = $province[0]['id'];
             $address->postalcode = $this->request->getData('postalcode');
-            $address->address_line = 'yy';
-            $address->description = 'uu';
-            $address->createdby = 'ii';
-            $address->updatedby = 'oo';
+            $address->address_line = $this->request->getData('address_line');
+            $address->createdby = $getname['firstname'].' '.$getname['lastname'];
+            $address->updatedby = $getname['firstname'].' '.$getname['lastname'];
 
             if ($this->Addresses->save($address)) {
 
@@ -156,9 +155,8 @@ class HerdsmansController extends AppController {
                     $herdsman->grade = $this->request->getData('grade');
                     $herdsman->address_id = $address->id;
                     $herdsman->image_id = $image->id;
-                    $herdsman->description = 'uio';
-                    $herdsman->createdby = 'ii';
-                    $herdsman->updatedby = 'uu';
+                    $herdsman->createdby = $getname['firstname'].' '.$getname['lastname'];;
+                    $herdsman->updatedby = $getname['firstname'].' '.$getname['lastname'];;
                     $herdsman->isactive = 'Y';
 
                     if ($this->Herdsmans->save($herdsman)) {
@@ -177,7 +175,7 @@ class HerdsmansController extends AppController {
         }
         $addresses = $this->Herdsmans->Addresses->find('list', ['limit' => 200]);
         $grade = ['1' => 'General', '2' => 'Standard', '3' => 'Gold', '4' => 'Premium', '5' => 'Platinum'];
-        $title = ['mr' => 'นาย', 'mrs' => 'นาง', 'ms' => 'นางสาว', 'other' => 'อื่นๆ'];
+        $title = ['นาย' => 'นาย', 'นาง' => 'นาง', 'นางสาว' => 'นางสาว'];
         $this->set(compact('herdsman', 'addresses', 'grade', 'title'));
         $this->set('_serialize', ['herdsman']);
     }
@@ -194,7 +192,7 @@ class HerdsmansController extends AppController {
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-
+            $getname = $this->request->session()->read('Auth.User');
             ///// address /////
             
             $province = $this->findProvinceByName($this->request->getData('province_id'));
@@ -213,10 +211,8 @@ class HerdsmansController extends AppController {
             $address->district = $this->request->getData('district');
             $address->province_id = $province->id;
             $address->postalcode = $this->request->getData('postalcode');
-            $address->address_line = 'yy';
-            $address->description = 'uu';
-            $address->createdby = 'ii';
-            $address->updatedby = 'oo';
+            $address->address_line = $this->request->getData('address_line');
+            $address->updatedby = $getname['firstname'].' '.$getname['lastname'];
 
             $this->Addresses->save($address);
 
@@ -230,8 +226,6 @@ class HerdsmansController extends AppController {
                 $delfile = $image->path;
                 $file = new File(WWW_ROOT . $delfile, false, 0777);
                 $file->delete();
-
-                $extimg = substr(strtolower(strrchr($filenameimg, '.')), 1);
 
                 $uploadpath = 'upload/img/';
 
@@ -247,7 +241,7 @@ class HerdsmansController extends AppController {
             ///// herdsmans /////
 
             $herdsman = $this->Herdsmans->patchEntity($herdsman, $this->request->getData());
-            $herdsman->updatedby = 'uu';
+            $herdsman->updatedby = $getname['firstname'].' '.$getname['lastname'];;
             if ($this->Herdsmans->save($herdsman)) {
                 $this->Flash->success(__('The herdsman has been saved.'));
 
@@ -264,7 +258,7 @@ class HerdsmansController extends AppController {
         $image = $this->Images->get($herdsman->image_id);
         $imgpath = $image->path;
         $grade = ['1' => 'General', '2' => 'Standard', '3' => 'Gold', '4' => 'Premium', '5' => 'Platinum'];
-        $title = ['mr' => 'นาย', 'mrs' => 'นาง', 'ms' => 'นางสาว', 'other' => 'อื่นๆ'];
+        $title = ['นาย' => 'นาย', 'นาง' => 'นาง', 'นางสาว' => 'นางสาว'];
         $this->set(compact('herdsman', 'address', 'grade', 'title', 'imgpath'));
         $this->set('_serialize', ['herdsman']);
     }
