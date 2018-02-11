@@ -443,9 +443,9 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
             if(result.status != 200 || result.data.STATUS == 'ERROR'){
                 alert(result.errorMsg);
             }else{
-                $scope.fileimg = null;
+                $scope.fileimg = '';
                 $scope.short_desc = null;
-                $scope.ImageList.push(result.data.DATA.obj);
+                $scope.getCows('cows','loaddata',{cows_id : cows_id});
                 console.log('sad');
             }
         });
