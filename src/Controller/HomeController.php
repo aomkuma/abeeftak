@@ -19,9 +19,21 @@ class HomeController extends AppController {
      */
     public function index() {
         $CowsModel = TableRegistry::get('Cows');
-        $query = $CowsModel->find('all');
-        $cowamt = $query->count();
-        $this->set('cowamt',$cowamt);
+        //F
+        $query = $CowsModel->find('all')
+                ->where(['Cows.gender'=>'F']);
+        $cow_f_amt = $query->count();
+        
+        //F
+        $query = $CowsModel->find('all')
+                ->where(['Cows.gender'=>'M']);
+        $cow_m_amt = $query->count();
+        
+        
+        
+        $this->set('cowfamt',$cow_f_amt);
+        $this->set('cowmamt',$cow_m_amt);
+        $this->set('cowamt',$cow_f_amt+$cow_m_amt);
         
         $FarmsModel = TableRegistry::get('Farms');
         $query = $FarmsModel->find('all');

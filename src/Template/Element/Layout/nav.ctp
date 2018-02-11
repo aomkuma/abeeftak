@@ -1,5 +1,5 @@
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+<nav class="navbar navbar-abeef navbar-static-top" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -12,6 +12,7 @@
     <!-- /.navbar-header -->
 
     <ul class="nav navbar-top-links navbar-right">
+       
         <li><?= $this->Html->link('แผงควบคุม', ['controller' => 'home']) ?></li>
         <li><?= $this->Html->link('ผู้เลี้ยงโค', ['controller' => 'herdsmans']) ?></li>
         <li><?= $this->Html->link('โค', ['controller' => 'Cows','action'=>'index']) ?></li>

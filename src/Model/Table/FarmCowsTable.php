@@ -39,14 +39,7 @@ class FarmCowsTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp', [
-            'events' => [
-                'Model.beforeSave' => [
-                    'created' => 'new',
-                    'updated' => 'always',
-                ]
-            ]
-        ]);
+        $this->addBehavior('Timestamp');
 
         $this->belongsTo('Farms', [
             'foreignKey' => 'farm_id',
@@ -77,15 +70,27 @@ class FarmCowsTable extends Table
 
         $validator
             ->scalar('description')
+            ->maxLength('description', 255)
             ->allowEmpty('description');
 
         $validator
             ->scalar('createdby')
+            ->maxLength('createdby', 150)
             ->allowEmpty('createdby');
 
         $validator
             ->scalar('updatedby')
+            ->maxLength('updatedby', 150)
             ->allowEmpty('updatedby');
+
+        $validator
+            ->scalar('isactive')
+            ->requirePresence('isactive', 'create')
+            ->notEmpty('isactive');
+
+        $validator
+            ->dateTime('moveddate')
+            ->allowEmpty('moveddate');
 
         return $validator;
     }

@@ -53,7 +53,7 @@
     </head>
     <body>
         <div id="wrapper" style="background-color: #FFFFFF;">
-
+            <?= $this->Flash->render() ?>
             <?= $this->fetch('content') ?>
         </div>
         <!-- /#wrapper -->

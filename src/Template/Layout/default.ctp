@@ -10,7 +10,7 @@
         <title>ABEFF TAK</title>
 
         <!-- Bootstrap Core CSS -->
-        <?= $this->Html->css('/startbootstrap/vendor/bootstrap/css/bootstrap.min.css') ?>
+        <?= $this->Html->css('/startbootstrap/vendor/bootstrap/css/bootstrap.css') ?>
 
         <!-- MetisMenu CSS -->
         <?= $this->Html->css('/startbootstrap/vendor/metisMenu/metisMenu.min.css') ?>

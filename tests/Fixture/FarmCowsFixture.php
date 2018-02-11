@@ -26,6 +26,8 @@ class FarmCowsFixture extends TestFixture
         'createdby' => ['type' => 'string', 'length' => 150, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'updated' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'updatedby' => ['type' => 'string', 'length' => 150, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'isactive' => ['type' => 'string', 'length' => null, 'null' => false, 'default' => 'Y', 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'moveddate' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
@@ -43,15 +45,17 @@ class FarmCowsFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => '21ee8c3a-8828-479f-9e11-0efb6d9666d3',
-            'farm_id' => '88b4547a-b1e4-4f9f-a2b9-bb4d66a89019',
-            'cow_id' => '1fcac2ce-1469-466b-b815-fdad98aa6cd3',
+            'id' => '8c1456e8-826b-46ec-9c2e-c6bdac1aa55f',
+            'farm_id' => '9c8e9de4-f912-41e6-a964-ec6d947f887e',
+            'cow_id' => 'ecb8f524-dde7-4713-a796-c863f632cfd6',
             'seq' => 1,
             'description' => 'Lorem ipsum dolor sit amet',
-            'created' => '2018-01-22 15:54:52',
+            'created' => '2018-02-11 09:13:41',
             'createdby' => 'Lorem ipsum dolor sit amet',
-            'updated' => '2018-01-22 15:54:52',
-            'updatedby' => 'Lorem ipsum dolor sit amet'
+            'updated' => '2018-02-11 09:13:41',
+            'updatedby' => 'Lorem ipsum dolor sit amet',
+            'isactive' => 'Lorem ipsum dolor sit amet',
+            'moveddate' => '2018-02-11 09:13:41'
         ],
     ];
 }
