@@ -23,12 +23,14 @@ class HerdsmansController extends AppController {
     public $Addresses = null;
     public $Images = null;
     public $Provinces = null;
+    public $Runnings = null;
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
         $this->Addresses = TableRegistry::get('Addresses');
         $this->Images = TableRegistry::get('Images');
         $this->Provinces = TableRegistry::get('Provinces');
+        $this->Runnings = TableRegistry::get('Runnings');
     }
 
     /**
@@ -39,47 +41,42 @@ class HerdsmansController extends AppController {
     public function index() {
         $this->paginate = [
             'contain' => ['Addresses']
-        ];        
-              
+        ];
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $this->request->session()->delete('whereherdsman');
             $searchfrom = $this->request->getData('searchfrom');
             $search = $this->request->getData('search');
-            
+
             $whereherdsman = [];
-            
-            if($searchfrom == 1){
-                
+
+            if ($searchfrom == 1) {
+
                 array_push($whereherdsman, ['Herdsmans.code' => $search]);
-                
-            } else if($searchfrom == 2){
-                
-                $arrSearch = explode ( " ", $search );
-                
-                array_push($whereherdsman, ['Herdsmans.firstname' => $arrSearch[0], 'Herdsmans.lastname' =>  $arrSearch[1]]);
-                
-            } else if($searchfrom == 3){
-                
+            } else if ($searchfrom == 2) {
+
+                $arrSearch = explode(" ", $search);
+
+                array_push($whereherdsman, ['Herdsmans.firstname' => $arrSearch[0], 'Herdsmans.lastname' => $arrSearch[1]]);
+            } else if ($searchfrom == 3) {
+
                 array_push($whereherdsman, ['Herdsmans.idcard' => $search]);
-                
             } else {
-                
+
                 $fromdate = $this->request->getData('fromdate');
                 $todate = $this->request->getData('todate');
-                
+
                 array_push($whereherdsman, ['Herdsmans.registerdate >=' => $fromdate, 'Herdsmans.registerdate <=' => $todate]);
-                
             }
-            
-            $this->request->session()->write('whereherdsman', $whereherdsman);                  
-            
+
+            $this->request->session()->write('whereherdsman', $whereherdsman);
         }
-        
+
         $herdsmans = $this->paginate($this->Herdsmans->find('all', array('order' => 'Herdsmans.code ASC'))
-                ->where($this->request->session()->read('whereherdsman')), array('limit' => PAGE_LIMIT));
-                  
-        $searchfrom = ['1' => 'รหัสผู้เลี้ยงโค' ,'2' => 'ชื่อ-นามสกุล', '3' => 'รหัสประจำตัวประชาชน', '4' => 'วันที่ขึ้นทะเบียน'];
-        $this->set(compact('herdsmans','searchfrom'));
+                        ->where($this->request->session()->read('whereherdsman')), array('limit' => PAGE_LIMIT));
+
+        $searchfrom = ['1' => 'รหัสผู้เลี้ยงโค', '2' => 'ชื่อ-นามสกุล', '3' => 'รหัสประจำตัวประชาชน', '4' => 'วันที่ขึ้นทะเบียน'];
+        $this->set(compact('herdsmans', 'searchfrom'));
         $this->set('_serialize', ['herdsmans']);
     }
 
@@ -93,11 +90,10 @@ class HerdsmansController extends AppController {
     public function view($id = null) {
         $herdsman = $this->Herdsmans->get($id, [
             'contain' => ['Addresses']
-            
         ]);
 
         $this->set('herdsman', $herdsman, 'address');
-        $this->set('_serialize', ['herdsman','address']);
+        $this->set('_serialize', ['herdsman', 'address']);
     }
 
     /**
@@ -116,11 +112,11 @@ class HerdsmansController extends AppController {
             $provinceQuery = $this->Provinces->find('all', ['conditions' => ['Provinces.province_name' => $pro_name]]);
             $province = $provinceQuery->toArray();
 //            pr($provinceQuery);
-            if($province == null){
+            if ($province == null) {
                 $this->Flash->error(__('The herdsman could not be saved. Please, try again.'));
                 return $this->redirect(['action' => 'add']);
             }
-            
+
             $address->houseno = $this->request->getData('houseno');
             $address->villageno = $this->request->getData('villageno');
             $address->villagename = $this->request->getData('villagename');
@@ -129,8 +125,8 @@ class HerdsmansController extends AppController {
             $address->province_id = $province[0]['id'];
             $address->postalcode = $this->request->getData('postalcode');
             $address->address_line = $this->request->getData('address_line');
-            $address->createdby = $getname['firstname'].' '.$getname['lastname'];
-            $address->updatedby = $getname['firstname'].' '.$getname['lastname'];
+            $address->createdby = $getname['firstname'] . ' ' . $getname['lastname'];
+            $address->updatedby = $getname['firstname'] . ' ' . $getname['lastname'];
 
             if ($this->Addresses->save($address)) {
 
@@ -151,17 +147,19 @@ class HerdsmansController extends AppController {
                     move_uploaded_file($this->request->data['image']['tmp_name'], $uploadfileimg);
 
                     $herdsman = $this->Herdsmans->patchEntity($herdsman, $this->request->getData());
-                    $herdsman->code = '55556';
+                    $herdsman->code = $this->genCode(); //'00001';
                     $herdsman->grade = $this->request->getData('grade');
+                    if ($this->request->getData('email') == '') {
+                        $herdsman->email = null;
+                    }
                     $herdsman->address_id = $address->id;
                     $herdsman->image_id = $image->id;
-                    $herdsman->createdby = $getname['firstname'].' '.$getname['lastname'];;
-                    $herdsman->updatedby = $getname['firstname'].' '.$getname['lastname'];;
+                    $herdsman->createdby = $getname['firstname'] . ' ' . $getname['lastname'];
+                    $herdsman->updatedby = $getname['firstname'] . ' ' . $getname['lastname'];
                     $herdsman->isactive = 'Y';
-
                     if ($this->Herdsmans->save($herdsman)) {
                         $this->Flash->success(__('The herdsman has been saved.'));
-                        
+
                         return $this->redirect(['action' => 'index']);
                     }
                     $this->Images->delete($image);
@@ -192,16 +190,16 @@ class HerdsmansController extends AppController {
             'contain' => []
         ]);
         $herdsman->registerdate = $herdsman->registerdate->toDateString();
-        
+
         $herdsman->birthday = $herdsman->birthday->toDateString();
-        
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $getname = $this->request->session()->read('Auth.User');
             ///// address /////
-            
+
             $province = $this->findProvinceByName($this->request->getData('province_id'));
-            
-            if($province->id == null){
+
+            if ($province->id == null) {
                 $this->Flash->error(__('The herdsman could not be saved. Please, try again.'));
                 return $this->redirect(['action' => 'add']);
             }
@@ -216,7 +214,7 @@ class HerdsmansController extends AppController {
             $address->province_id = $province->id;
             $address->postalcode = $this->request->getData('postalcode');
             $address->address_line = $this->request->getData('address_line');
-            $address->updatedby = $getname['firstname'].' '.$getname['lastname'];
+            $address->updatedby = $getname['firstname'] . ' ' . $getname['lastname'];
 
             $this->Addresses->save($address);
 
@@ -245,7 +243,8 @@ class HerdsmansController extends AppController {
             ///// herdsmans /////
 
             $herdsman = $this->Herdsmans->patchEntity($herdsman, $this->request->getData());
-            $herdsman->updatedby = $getname['firstname'].' '.$getname['lastname'];;
+            $herdsman->updatedby = $getname['firstname'] . ' ' . $getname['lastname'];
+            ;
             if ($this->Herdsmans->save($herdsman)) {
                 $this->Flash->success(__('The herdsman has been saved.'));
 
@@ -253,12 +252,12 @@ class HerdsmansController extends AppController {
             }
             $this->Flash->error(__('The herdsman could not be saved. Please, try again.'));
         }
-        
+
         $address = $this->Addresses->get($herdsman->address_id);
-        
+
         $province = $this->findProvinceById($address->province_id);
         $address->province_id = $province['province_name'];
-        
+
         $image = $this->Images->get($herdsman->image_id);
         $imgpath = $image->path;
         $grade = ['1' => 'General', '2' => 'Standard', '3' => 'Gold', '4' => 'Premium', '5' => 'Platinum'];
@@ -295,7 +294,7 @@ class HerdsmansController extends AppController {
 
         return $this->redirect(['action' => 'index']);
     }
-    
+
     private function findProvinceByName($name = null) {
         if (is_null($name)) {
             return null;
@@ -306,7 +305,7 @@ class HerdsmansController extends AppController {
         //$this->log($name,'debug');
         return $data->first();
     }
-    
+
     private function findProvinceById($id = null) {
         if (is_null($id)) {
             return null;
@@ -316,6 +315,43 @@ class HerdsmansController extends AppController {
         //$this->log($data->first(),'debug');
         //$this->log($name,'debug');
         return $data;
+    }
+
+    private function genCode() {
+        $this->autoRender = false;
+        $running = $this->Runnings->find('all')->where(['running_type' => 'HERDSMAN']);
+
+        $runningtoArr = $running->toArray();
+        if (sizeof($runningtoArr) == 0) {
+            $running = $this->Runnings->newEntity();
+            $running->id = 'herdsman';
+            $running->running_code = 'TAK';
+            $running->running_no = 1;
+            $code = '00001';
+            $running->runnubg_date = '2018-01-01';
+            $running->running_type = 'HERDSMAN';
+            $this->Runnings->save($running);
+            
+        } else {
+            $running_no = $runningtoArr[0]['running_no'] + 1;
+            $sprrunnngnum = strlen($running_no);
+
+            $zeroplussize = 5 - $sprrunnngnum;
+
+            $zeroplus = '';
+            for ($i = 0; $i < $zeroplussize; $i++) {
+                $zeroplus = $zeroplus . '0';
+            }
+
+            $code = $zeroplus . $running_no;
+            $runningtoArr[0]['running_code'] = 'TAK';
+            $runningtoArr[0]['running_no'] = $running_no;
+            $this->Runnings->save($runningtoArr[0]);
+        }
+
+        
+
+        return $code;
     }
 
 }
