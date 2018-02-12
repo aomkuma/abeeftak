@@ -141,10 +141,12 @@
                 }],
             resize: true
         });
-
-        Morris.Bar({
-            element: 'morris-bar-chart',
-            data: [{
+        var jsonData = '<?=$stat?>';
+        jsonData = JSON.parse(jsonData);
+        
+        var arr = $.map(jsonData, function(el) { return el; });
+        console.log(arr);
+        var _temp = [{
                     y: 'ม.ค.',
                     a: 100
                 }, {
@@ -180,9 +182,14 @@
                 }, {
                     y: 'ธ.ค.',
                     a: 100
-                }],
-            xkey: 'y',
-            ykeys: ['a'],
+                }];
+        console.log(_temp);
+        
+        Morris.Bar({
+            element: 'morris-bar-chart',
+            data: arr,
+            xkey: 'name',
+            ykeys: ['amt'],
             labels: ['จำนวน'],
             hideHover: 'auto',
             resize: true
