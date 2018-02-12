@@ -10,7 +10,7 @@
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 " >
         <div class="col-lg-9 col-md-9 col-sm-9 " >
-            <?= $this->Html->link('<button type="button" class="btn btn-info btn-block"><i class="glyphicon glyphicon-plus"></i> ข้อมูลผู้ใช้งาน</button>', ['controller' => 'users', 'action' => 'index'], ['escape' => false]) ?>
+            <?= $this->Html->link('<button type="button" class="btn btn-info btn-block"> ข้อมูลผู้ใช้งาน</button>', ['controller' => 'users', 'action' => 'index'], ['escape' => false]) ?>
         </div>
     </div>
 </div>

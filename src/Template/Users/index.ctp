@@ -14,7 +14,7 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 
-            <?= $this->Html->link('<button type="button" class="btn btn-info btn-block"><i class="glyphicon glyphicon-plus"></i> เพิ่มประเภทผู้ใช้งาน</button>', ['action' => 'index', 'controller' => 'roles'], ['escape' => false]) ?>
+            <?= $this->Html->link('<button type="button" class="btn btn-info btn-block"> ข้อมูลประเภทผู้ใช้งาน</button>', ['action' => 'index', 'controller' => 'roles'], ['escape' => false]) ?>
 
         </div>
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
