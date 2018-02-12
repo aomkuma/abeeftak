@@ -32,8 +32,8 @@
 </script>
 
 <div class="row">
-    <div class="col-md-12">
-        <h1 class="font-th-prompt400">ผู้เลี้ยงโค</h1>
+    <div class="col-lg-12">
+        <h1 class="page-header font-th-prompt400">ผู้เลี้ยงโค</h1>
     </div>
 </div>
 

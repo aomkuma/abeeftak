@@ -4,8 +4,10 @@
  * @var \App\Model\Entity\Cow[]|\Cake\Collection\CollectionInterface $cows
  */
 ?>
-<div class="page-header">
-    <h3>ข้อมูลโค</h3>
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header font-th-prompt400">โค</h1>
+    </div>
 </div>
 <!--    <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
