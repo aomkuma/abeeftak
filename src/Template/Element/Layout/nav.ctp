@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.html">ABEEF TAK</a>
+        <?=$this->Html->link('ABEEF TAK การบริหารจัดการข้อมูลโค',['controller'=>'home'],['class'=>'navbar-brand font-th-prompt400'])?>
     </div>
     <!-- /.navbar-header -->
 
@@ -24,7 +24,7 @@
                 <i class="fa fa-gears fa-fw"></i> ตั้งค่าระบบ <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><?= $this->Html->link('<i class="fa fa-group fa-fw"></i> ผู้ใช้งานระบบ', ['controller' => 'Users'], ['escape' => false]) ?></li>
+                <li><?= $this->Html->link('<i class="fa fa-group fa-fw"></i> ผู้ใช้งานระบบ', ['controller' => 'users'], ['escape' => false]) ?></li>
                 <li><?= $this->Html->link('<i class="glyphicon glyphicon-grain fa-fw"></i> พันธุ์หญ้า', ['controller' => 'grasses'], ['escape' => false]) ?></li>
             </ul>
         </li>
