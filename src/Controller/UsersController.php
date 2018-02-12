@@ -105,7 +105,7 @@ class UsersController extends AppController {
                 $user['createdby'] = $getname['firstname'].' '.$getname['lastname'];
 
                 if ($this->Users->save($user)) {
-                    $this->Flash->success(__('บันทึกข้อมูลสำเร็จ'));
+                    $this->Flash->success(__('บันทึกข้อมูลเรียบร้อย'));
 
                     return $this->redirect(['action' => 'index']);
                 }
@@ -134,17 +134,32 @@ class UsersController extends AppController {
             $user = $this->Users->patchEntity($user, $this->request->getData());
              $user['updatedby'] = $getname['firstname'].' '.$getname['lastname'];
             if ($this->Users->save($user)) {
-                // $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('บันทึกข้อมูลเรียบร้อย'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            // $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            $this->Flash->error(__('ไม่สามารถบันทึกข้อมูลได้ กรุณาติดต่อผู้ดูแลระบบ'));
         }
+        
+        //start check permission
+        $Permissions = $this->request->session()->read('rolePermissions');
+        $isadmin = false;
+        if (in_array('users', $Permissions['controller'])) {
+            $actionArr = $Permissions['actions']['users'];
+            
+            if (in_array('add', $actionArr)) {
+                $isadmin = true;
+            }
+        }
+        //end check
+        
+        
         $roles = $this->Users->Roles->find('list', ['limit' => 200]);
         $this->set(compact('user', 'roles'));
         $this->set('_serialize', ['user']);
         $title = ['นาย' => 'นาย', 'นาง' => 'นาง', 'นางสาว' => 'นางสาว'];
         $this->set('title', $title);
+        $this->set('isadmin',$isadmin);
     }
 
     /**
@@ -158,7 +173,7 @@ class UsersController extends AppController {
          $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
-             $this->Flash->success(__('The user has been deleted.'));
+             $this->Flash->success(__('ลบข้อมูลเรียบร้อย'));
         } else {
              $this->Flash->error(__('The user could not be deleted. Please, try again.'));
         }
