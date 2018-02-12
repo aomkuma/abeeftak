@@ -63,7 +63,7 @@
 
                         <td><?= h($user->email) ?></td>
 
-                        <td style="text-align: center"><?= $user->has('role') ? $this->Html->link($user->role->name, ['controller' => 'Roles', 'action' => 'view', $user->role->id]) : '' ?></td>
+                        <td style="text-align: center"><?= $user->role->name ?></td>
                         <td><?= h($user->position) ?></td>
 
 

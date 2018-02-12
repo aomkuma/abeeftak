@@ -42,26 +42,27 @@ class HerdsmansController extends AppController {
         $this->paginate = [
             'contain' => ['Addresses']
         ];
-
+        $whereherdsman=[];
+        $this->request->session()->write('whereherdsman', $whereherdsman);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $this->request->session()->delete('whereherdsman');
             $searchfrom = $this->request->getData('searchfrom');
             $search = $this->request->getData('search');
-
+          
             $whereherdsman = [];
 
             if ($searchfrom == 1) {
-                $search1 = "'%'" . $this->request->getData('search') . "'%'";
+                $search1 = '%' . $this->request->getData('search') . '%';
                 array_push($whereherdsman, ['Herdsmans.code LIKE' => $search1]);
             } else if ($searchfrom == 2) {
 
                 $arrSearch = explode(" ", $search);
-                $name = "'%'" . $arrSearch[0] . "'%'";
-           //     $lastname = "'%'" . $arrSearch[1] . "'%'";
+                $name = '%' . $arrSearch[0] . '%';
+                //     $lastname = "'%'" . $arrSearch[1] . "'%'";
                 array_push($whereherdsman, ['Herdsmans.firstname LIKE' => $name]);
             } else if ($searchfrom == 3) {
-                $search1 = "'%'" . $this->request->getData('search') . "'%'";
-                array_push($whereherdsman, ['Herdsmans.idcard' => $search1]);
+                $search1 = '%' . $this->request->getData('search') . '%';
+                array_push($whereherdsman, ['Herdsmans.idcard LIKE' => $search1]);
             } else {
 
                 $fromdate = $this->request->getData('fromdate');
@@ -72,6 +73,7 @@ class HerdsmansController extends AppController {
 
             $this->request->session()->write('whereherdsman', $whereherdsman);
         }
+        
 
         $herdsmans = $this->paginate($this->Herdsmans->find('all', array('order' => 'Herdsmans.code ASC'))
                         ->where($this->request->session()->read('whereherdsman')), array('limit' => PAGE_LIMIT));
