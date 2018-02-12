@@ -56,13 +56,13 @@ class FarmsFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 'b2970f88-eb37-4ae5-9cec-afc019eba8b8',
+            'id' => 'a3f5cf2b-b52e-4995-828b-bd0368c515c4',
             'name' => 'Lorem ipsum dolor sit amet',
             'level' => 'Lorem ipsum dolor sit amet',
             'type' => 'Lorem ipsum dolor sit amet',
-            'address_id' => 'fc9cd35b-34a5-430c-8706-a3ae0e9709a9',
+            'address_id' => '22c7588a-1f14-408f-b6ba-ddedef5cbdbd',
             'description' => 'Lorem ipsum dolor sit amet',
-            'location_image' => 'deaa17c0-3647-476a-931c-87cc469e82c5',
+            'location_image' => '8e5c910a-117e-4290-bf56-18e5d5ea883c',
             'latitude' => 1.5,
             'longitude' => 1.5,
             'hasstable' => 'Lorem ipsum dolor sit amet',
@@ -74,9 +74,9 @@ class FarmsFixture extends TestFixture
             'grass_species' => 'Lorem ipsum dolor sit amet',
             'water_body' => 'Lorem ipsum dolor sit amet',
             'dung_destroy' => 'Lorem ipsum dolor sit amet',
-            'created' => '2018-02-03 11:36:24',
+            'created' => '2018-02-12 07:52:40',
             'createdby' => 'Lorem ipsum dolor sit amet',
-            'updated' => '2018-02-03 11:36:24',
+            'updated' => '2018-02-12 07:52:40',
             'updatedby' => 'Lorem ipsum dolor sit amet'
         ],
     ];
