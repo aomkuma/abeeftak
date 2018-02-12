@@ -597,6 +597,25 @@ class CowsController extends AppController {
         return $this->response;
     }
 
+    public function autocomplete() {
+        $this->autoRender = false;
+        $obj = $this->request->getData();
+        $keyword = $obj['keyword'];
+        $masterType = $obj['masterType'];
+
+        if($masterType == 'FATHERCODE'){
+            $data = $this->Cows->find('all')->where(['code LIKE' => '%'.$keyword.'%', 'gender'=>'M']);
+        }else if($masterType == 'MOTHERCODE'){
+            $data = $this->Cows->find('all')->where(['code LIKE' => '%'.$keyword.'%', 'gender'=>'F']);
+        }
+        $data = $data->toArray();
+        $this->response->body(json_encode($data));
+        $this->response->statusCode(200);
+        $this->response->type('application/json');
+
+        return $this->response;
+    }
+
     public function uploadImage() {
         $this->autoRender = false;
 
@@ -684,5 +703,7 @@ class CowsController extends AppController {
         //debug($json);
         return $ownerhis;
     }
+
+
 
 }

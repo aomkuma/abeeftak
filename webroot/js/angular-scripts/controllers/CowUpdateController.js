@@ -1,65 +1,100 @@
 angular.module('abeef').controller('CowUpdateController', function($scope, $q, $cookies, $filter, $uibModal, HttpService) {
 	//console.log('Hello !');
-    
-    $scope.exportToPDF = function(data) {
-        var data_detail = [];
-        var headerRow = [];
-        // set header
-        //headerRow.push('ห้องประชุม');
-        headerRow.push({text: 'ห้องประชุม', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-        headerRow.push({text: 'พื้นที่', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});  
-        headerRow.push({text: 'จำนวนครั้งที่ใช้งาน', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-        headerRow.push({text: 'ปี', style: 'tableHeader', /*rowSpan: 2,*/ alignment: 'center', fontSize: 12, bold: true});
-        data_detail.push(headerRow);
-        
-        // set detail
-        var row_index = 1;
-        data.forEach(function(sourceRow) {
-          var dataRow = [];
-          dataRow.push(sourceRow.record_date);
-          dataRow.push(sourceRow.age);
-          dataRow.push({text: sourceRow.food_type, alignment: 'center'});
-          dataRow.push({text: sourceRow.total_eating, alignment: 'center'});
-          data_detail.push(dataRow);
-          row_index++;
-        });
+    $scope.ShowAutocompleteObj = ['ShowAutocompleteFATHERCODE', 'ShowAutocompleteMOTHERCODE'];
+    $scope.autocompleteUserResult = [];
+        $scope.autoComplete = function (keyword, masterType)
+        {
+            $scope.force_autocomplete = 'Y';
+            if(keyword != '' || $scope.force_autocomplete == 'Y')
+            {   
+                $params = {'keyword' : keyword
+                            ,'masterType' : masterType
+                        };
+                var autoresult = HttpService.clientRequest('cows', 'autocomplete', $params).then(function(result)
+                {
+                    $scope.force_autocomplete = "";
+                    if(result.status == 200)
+                    {
+                        var loop = result.data.length;
+                        if(loop > 0)
+                        {
+                            for(var i = 0; i < loop; i++){
+                                //console.log(result.data[i]);
+                                $scope.autocompleteUserResult.push(result.data[i]);
+                            }
+                            return $scope.autocompleteUserResult;
+                        }else{
+                            return null;
+                        }
+                    }else
+                    {
+                        AppFunction.warningDialog(result.statusText);
+                    }
+                    
+                });
 
-        //return ;
-        pdfMake.fonts = {
-            SriSuriwongse: {
+                return autoresult;
+            }else
+            {
+                deferred = $q.defer();
+                console.log('asdasd');
+                $scope.autocompleteUserResult = [];
+                deferred.resolve( [] ); 
                 
-                normal: 'SRISURYWONGSE.ttf'
-                ,bold: 'SRISURYWONGSE-Bold.ttf'
+                return deferred.promise;
             }
         };
-        
-        var dd = {
-            content: [
-                {text: 'สรุปการใช้ห้องประชุมประจำปี ', style: 'header', alignment:'center',margin: [0,10,0,0]},
-                {
-                     table: {
-                        headerRows: 1,
-                        widths: [170,150,100,50],
-                        body: data_detail
-                    }
-                },
-                {text: 'สรุปการใช้ห้องประชุมประจำปี ', style: 'header', alignment:'center',margin: [0,10,0,0]}
-            ],
-            styles: {
-                header: {
-                    bold: true,
-                    fontSize: 18
+
+        $scope.checkAutocomplete = function(str, masterType, minlength, form, event){
+            console.log(str, masterType);
+            if(event.which == 27){  // Press ESC button
+                $scope.autocompleteUserResult = [];
+                eval('$scope.ShowAutocomplete' + masterType + ' = false;');
+            }
+            else if(event.which == 40){ // Press Down button check & focus radio button
+                textboxes = $("#" + form + " :input");
+                if($scope.radioAutoIndex == undefined || $scope.radioAutoIndex == null){
+                    $scope.radioAutoIndex = 0;
                 }
-            },
-            defaultStyle: {
-                fontSize: 12,
-                font:'SriSuriwongse'
+                textboxes[0].focus();
+                $(textboxes[0]).prop('checked', true);
+                $scope.radioAutoIndex++;
+            }
+            else if(str.length >= minlength || event.which == 113){ // Press enter or string length equal min-length
+                $scope.clearAutocomplete();
+                $scope.autocompleteUserResult = [];
+                $scope.autoComplete(str, masterType);
+                eval('$scope.ShowAutocomplete' + masterType + ' = true;');
+            }
+            else{   // Hide autocomplete
+                eval('$scope.ShowAutocomplete' + masterType + ' = false;');
+            }
+        };
+
+        $scope.setAutocompleteValue = function(obj ,value, masterType, focusParent){
+            // console.log('$scope.' + obj + ' = "' + value.code + '";');
+            eval('$scope.' + obj + ' = "' + value.code + '";');
+            $scope.autocompleteUserResult = [];
+            eval('$scope.ShowAutocomplete' + masterType + ' = false;');
+            $('#' + focusParent).focus();
+            if(masterType == 'COMPANYCODE'){
+                $scope.setCompany(value);
             }
         }
 
-         pdfMake.createPdf(dd).download('summary_room.pdf');
-         
-    }
+        $scope.closeAutocomplete = function(masterType){
+            $scope.autocompleteUserResult = [];
+            eval('$scope.ShowAutocomplete' + masterType + ' = false;');
+        }
+
+        $scope.clearAutocomplete = function(){
+            var loop = $scope.ShowAutocompleteObj.length;
+            for(var i = 0; i < loop; i++){
+                if($scope.ShowAutocompleteObj[i] !== ''){
+                    eval('$scope.' + $scope.ShowAutocompleteObj[i] + ' = false;');
+                }
+            }
+        }
 
     $scope.getCows = function(service, action, obj)
     {

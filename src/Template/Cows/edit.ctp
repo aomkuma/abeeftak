@@ -7,7 +7,7 @@
 <script>var cows_id = '<?= $id ?>';</script>
 
 <div ng-app="abeef" ng-controller="CowUpdateController">
-	<div class="alert alert-success" id="success-alert" style="display: none;">
+	<div class="alert alert-success text-center" id="success-alert" style="display: none;">
 	  <strong>{{SaveResult}}สำเร็จ!</strong>
 	</div>
 	<uib-tabset active="activeJustified" justified="true">
@@ -93,7 +93,33 @@
 					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-lg-offset-2  col-md-offset-2">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : cow_info.father_code.$valid,'has-error' : cow_info.father_code.$invalid}">
 							<label>พ่อพันธุ์ :</label>
-							<input type="text" name="father_code" ng-model="Cows.father_code" class="form-control" ng-required="Cows.breeding == 'NM'">
+							<div class="div-autocomplete">
+								<div class="div-autocomplete-table" ng-show="ShowAutocompleteFATHERCODE" id="autocomplete_father_code">
+									<table id="mstrTable" class="table table-hover table-striped">
+										<caption ng-click="closeAutocomplete('FATHERCODE')">Close (X)</caption>
+										<tr>
+											<th></th>
+											<th>รหัสโค</th>
+										</tr>
+										<tbody>
+											<tr ng-repeat="item in autocompleteUserResult">
+												<td>
+													<input type="radio" name="radio_auto" ng-model="radio_auto" value="{{item}}" ng-keyup="setAutocompleteValueByEnter('Cows.father_code', item, 'FATHERCODE', 'father_code', $event)" 
+													ng-dblclick="setAutocompleteValue('Cows.father_code', item, 'FATHERCODE', 'father_code')">
+												</td>
+												<td class="point-select">
+													<a ng-click="setAutocompleteValue('Cows.father_code', item, 'FATHERCODE', 'father_code')">{{item.code}}</a>
+												</td>
+												<!--<td>{{item.name}}</td>-->
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<input type="text"
+								name="father_code" id="father_code" class="form-control"
+								ng-model="Cows.father_code" ng-keyup="checkAutocomplete(Cows.father_code, 'FATHERCODE', 1, 'autocomplete_father_code', $event)" ng-required="Cows.breeding == 'NM'" />
+							</div>
+							<!--<input type="text" name="father_code" ng-model="Cows.father_code" class="form-control" ng-required="Cows.breeding == 'NM'">-->
 							<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="cow_info.father_code.$invalid"></span> 
 							<span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="cow_info.father_code.$valid"></span>
 						</div>
@@ -101,7 +127,33 @@
 					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : cow_info.mother_code.$valid,'has-error' : cow_info.mother_code.$invalid}">
 							<label>แม่พันธุ์ :</label>
-							<input type="text" name="mother_code" ng-model="Cows.mother_code" class="form-control" ng-required="Cows.breeding == 'NM'">
+							<div class="div-autocomplete">
+								<div class="div-autocomplete-table" ng-show="ShowAutocompleteMOTHERCODE" id="autocomplete_mother_code">
+									<table id="mstrTable" class="table table-hover table-striped">
+										<caption ng-click="closeAutocomplete('MOTHERCODE')">Close (X)</caption>
+										<tr>
+											<th></th>
+											<th>รหัสโค</th>
+										</tr>
+										<tbody>
+											<tr ng-repeat="item in autocompleteUserResult">
+												<td>
+													<input type="radio" name="radio_auto" ng-model="radio_auto" value="{{item}}" ng-keyup="setAutocompleteValueByEnter('Cows.mother_code', item, 'MOTHERCODE', 'mother_code', $event)" 
+													ng-dblclick="setAutocompleteValue('Cows.mother_code', item, 'MOTHERCODE', 'mother_code')">
+												</td>
+												<td class="point-select">
+													<a ng-click="setAutocompleteValue('Cows.mother_code', item, 'MOTHERCODE', 'mother_code')">{{item.code}}</a>
+												</td>
+												<!--<td>{{item.name}}</td>-->
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<input type="text"
+								name="mother_code" id="mother_code" class="form-control"
+								ng-model="Cows.mother_code" ng-keyup="checkAutocomplete(Cows.mother_code, 'MOTHERCODE', 1, 'autocomplete_mother_code', $event)" ng-required="Cows.breeding == 'NM'" />
+							</div>
+							<!--<input type="text" name="mother_code" ng-model="Cows.mother_code" class="form-control" ng-required="Cows.breeding == 'NM'">-->
 							<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="cow_info.mother_code.$invalid"></span> 
 							<span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="cow_info.mother_code.$valid"></span>
 						</div>
@@ -680,5 +732,20 @@
 	}
 	.nav-link {
 		height: 60px;
+	}
+	div.div-autocomplete {
+	    position: relative;
+	}
+	div.div-autocomplete-table {
+		background-color: #FFF;
+		width: 100%;
+	    position: absolute;
+	    top: 2.5em;
+	    left: 0;
+	    z-index: 999999999;
+	    border: dashed 1px #ccc;
+	}
+	.point-select{
+		cursor: pointer;
 	}
 </style>
