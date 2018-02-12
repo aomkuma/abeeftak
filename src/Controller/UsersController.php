@@ -187,6 +187,12 @@ class UsersController extends AppController {
         if ((!is_null($this->request->session()->read('Auth.User')))) {
             return $this->redirect(['controller' => 'users', 'action' => 'index']);
         }
+        
+        
+        if($_SERVER['REQUEST_SCHEME'] =='http'){
+            return $this->redirect('https://' . env('SERVER_NAME') . $this->request->here);
+        }
+        
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {
