@@ -51,16 +51,17 @@ class HerdsmansController extends AppController {
             $whereherdsman = [];
 
             if ($searchfrom == 1) {
-
-                array_push($whereherdsman, ['Herdsmans.code' => $search]);
+                $search1 = "'%'" . $this->request->getData('search') . "'%'";
+                array_push($whereherdsman, ['Herdsmans.code LIKE' => $search1]);
             } else if ($searchfrom == 2) {
 
                 $arrSearch = explode(" ", $search);
-
-                array_push($whereherdsman, ['Herdsmans.firstname' => $arrSearch[0], 'Herdsmans.lastname' => $arrSearch[1]]);
+                $name = "'%'" . $arrSearch[0] . "'%'";
+                $lastname = "'%'" . $arrSearch[1] . "'%'";
+                array_push($whereherdsman, ['Herdsmans.firstname LIKE' => $name, 'Herdsmans.lastname LIKE' => $lastname]);
             } else if ($searchfrom == 3) {
-
-                array_push($whereherdsman, ['Herdsmans.idcard' => $search]);
+                $search1 = "'%'" . $this->request->getData('search') . "'%'";
+                array_push($whereherdsman, ['Herdsmans.idcard' => $search1]);
             } else {
 
                 $fromdate = $this->request->getData('fromdate');
@@ -331,7 +332,6 @@ class HerdsmansController extends AppController {
             $running->runnubg_date = '2018-01-01';
             $running->running_type = 'HERDSMAN';
             $this->Runnings->save($running);
-            
         } else {
             $running_no = $runningtoArr[0]['running_no'] + 1;
             $sprrunnngnum = strlen($running_no);
@@ -349,7 +349,7 @@ class HerdsmansController extends AppController {
             $this->Runnings->save($runningtoArr[0]);
         }
 
-        
+
 
         return $code;
     }
