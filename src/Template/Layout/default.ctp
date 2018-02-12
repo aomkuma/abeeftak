@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>ABEFF TAK</title>
+        <title>ABEEF TAK การบริหารจัดการข้อมูลโค</title>
         <!-- Bootstrap Core CSS -->
         <?= $this->Html->css('/startbootstrap/vendor/bootstrap/css/bootstrap.css') ?>
 

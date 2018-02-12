@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Login Admin </title>
+        <title>Login Admin ABEEF TAK การบริหารจัดการข้อมูลโค</title>
         <!-- Bootstrap Core CSS -->
         <?= $this->Html->css('/startbootstrap/vendor/bootstrap/css/bootstrap.css') ?>
 
