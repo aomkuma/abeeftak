@@ -82,7 +82,7 @@
         <!-- /.panel -->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-bar-chart-o fa-fw"></i> จำนวนโคที่เพิ่มแต่ละเดือนประจำปี 2561
+                <i class="fa fa-bar-chart-o fa-fw"></i> จำนวนโคที่เกิดแต่ละเดือนประจำปี 2561
                 <div class="pull-right">
 
                 </div>
@@ -145,45 +145,7 @@
         jsonData = JSON.parse(jsonData);
         
         var arr = $.map(jsonData, function(el) { return el; });
-        console.log(arr);
-        var _temp = [{
-                    y: 'ม.ค.',
-                    a: 100
-                }, {
-                    y: 'ก.พ.',
-                    a: 75
-                }, {
-                    y: 'มี.ค.',
-                    a: 50
-                }, {
-                    y: 'เม.ย.',
-                    a: 75
-                }, {
-                    y: 'พ.ค.',
-                    a: 50
-                }, {
-                    y: 'มิ.ย.',
-                    a: 75
-                }, {
-                    y: 'ก.ค.',
-                    a: 100
-                }, {
-                    y: 'ส.ค.',
-                    a: 100
-                }, {
-                    y: 'ก.ย.',
-                    a: 100
-                }, {
-                    y: 'ต.ค.',
-                    a: 100
-                }, {
-                    y: 'พ.ย.',
-                    a: 100
-                }, {
-                    y: 'ธ.ค.',
-                    a: 100
-                }];
-        console.log(_temp);
+        
         
         Morris.Bar({
             element: 'morris-bar-chart',
