@@ -11,6 +11,10 @@
     exportPDF(jsondatacow,jsondatagrowth,jsondatagrowthW,jsondataBreed,jsondataFath,jsondataMoth);
     
     console.log(jsondatacow,jsondatagrowth,jsondatagrowthW,jsondataBreed,jsondataFath,jsondataMoth);
+    setTimeout(function () {
+
+        window.close();
+    }, 1000);
 </script>
 
 <div class="container">

@@ -174,8 +174,8 @@ function exportPDF(datacow, datagrowth, datagrowthW, datagbR, datafath, datamoth
     pdfMake.fonts = {
         SriSuriwongse: {
 
-            normal: 'SRISURYWONGSE.ttf'
-            , bold: 'SRISURYWONGSE-Bold.ttf'
+            normal: 'THSarabun.ttf'
+            , bold: 'THSarabun-Bold.ttf'
         }
     };
 

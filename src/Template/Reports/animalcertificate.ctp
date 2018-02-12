@@ -9,6 +9,10 @@
     exportPDF(jsondatacow,jsondataFath,jsondataMoth,jsondatamoveR,jsondataTreatR);
     
     console.log(jsondatacow,jsondataFath,jsondataMoth,jsondatamoveR,jsondataTreatR);
+    setTimeout(function () {
+
+        window.close();
+    }, 1000);
 </script>
 
 <div class="container">

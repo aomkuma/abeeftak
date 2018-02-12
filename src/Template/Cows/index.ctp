@@ -67,10 +67,10 @@
                 <tr>
                     <td class="actions text-center">
                         <?=$this->Html->link(BT_EDIT,['action' => 'edit', $cow->id],['escape'=>false])?>
-                        <?= $this->Form->postLink(BT_DELETE, ['action' => 'delete', $cow->id], ['confirm' => __('Are you sure you want to delete # {0}?', $cow->id),'escape'=>false]) ?>
+                        <?= $this->Form->postLink(BT_DELETE, ['action' => 'delete', $cow->id], ['confirm' => __('คุณต้องการลบโครหัส {0} ใช่หรือไม่?', $cow->code),'escape'=>false]) ?>
                     </td>
-                    <td class="text-center"><?= $this->Html->link('<i class="glyphicon glyphicon-print" style="font-size : 25px;" ></i>', '/reports/cowcard/' . $cow->id, ['escape' => false]); ?></td>
-                    <td class="text-center"><?= $this->Html->link('<i class="glyphicon glyphicon-print" style="font-size : 25px;"></i>', '/reports/animalcertificate/' . $cow->id, ['escape' => false]); ?></td>
+                    <td class="text-center"><?= $this->Html->link('<i class="glyphicon glyphicon-print" style="font-size : 25px;" ></i>', '/reports/cowcard/' . $cow->id, ['escape' => false,'target'=>'_blank']); ?></td>
+                    <td class="text-center"><?= $this->Html->link('<i class="glyphicon glyphicon-print" style="font-size : 25px;"></i>', '/reports/animalcertificate/' . $cow->id, ['escape' => false,'target'=>'_blank']); ?></td>
                     <td><?= h($cow->code) ?></td>
                     <td><?= $cow->cow_breed->name ?></td>
                     <td><?= (h($cow->gender)=='M'?'ผู้':'เมีย') ?></td>
