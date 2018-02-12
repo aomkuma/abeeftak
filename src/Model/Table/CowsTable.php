@@ -10,7 +10,11 @@ use Cake\Validation\Validator;
  * Cows Model
  *
  * @property \App\Model\Table\CowBreedsTable|\Cake\ORM\Association\BelongsTo $CowBreeds
+ * @property \App\Model\Table\BreedingRecordsTable|\Cake\ORM\Association\HasMany $BreedingRecords
  * @property \App\Model\Table\CowImagesTable|\Cake\ORM\Association\HasMany $CowImages
+ * @property |\Cake\ORM\Association\HasMany $FarmCows
+ * @property \App\Model\Table\GivebirthRecordsTable|\Cake\ORM\Association\HasMany $GivebirthRecords
+ * @property \App\Model\Table\GrowthRecordsTable|\Cake\ORM\Association\HasMany $GrowthRecords
  * @property \App\Model\Table\MovementRecordsTable|\Cake\ORM\Association\HasMany $MovementRecords
  * @property \App\Model\Table\TreatmentRecordsTable|\Cake\ORM\Association\HasMany $TreatmentRecords
  *
@@ -54,22 +58,25 @@ class CowsTable extends Table
             'foreignKey' => 'cow_breed_id',
             'joinType' => 'INNER'
         ]);
+        $this->hasMany('BreedingRecords', [
+            'foreignKey' => 'cow_id'
+        ]);
         $this->hasMany('CowImages', [
+            'foreignKey' => 'cow_id'
+        ]);
+        $this->hasMany('FarmCows', [
+            'foreignKey' => 'cow_id'
+        ]);
+        $this->hasMany('GivebirthRecords', [
+            'foreignKey' => 'cow_id'
+        ]);
+        $this->hasMany('GrowthRecords', [
             'foreignKey' => 'cow_id'
         ]);
         $this->hasMany('MovementRecords', [
             'foreignKey' => 'cow_id'
         ]);
         $this->hasMany('TreatmentRecords', [
-            'foreignKey' => 'cow_id'
-        ]);
-        $this->hasMany('GrowthRecords', [
-            'foreignKey' => 'cow_id'
-        ]);
-        $this->hasMany('BreedingRecords', [
-            'foreignKey' => 'cow_id'
-        ]);
-        $this->hasMany('GivebirthRecords', [
             'foreignKey' => 'cow_id'
         ]);
     }
@@ -88,13 +95,20 @@ class CowsTable extends Table
 
         $validator
             ->scalar('code')
+            ->maxLength('code', 10)
             ->requirePresence('code', 'create')
             ->notEmpty('code');
 
         $validator
             ->scalar('grade')
+            ->maxLength('grade', 50)
             ->requirePresence('grade', 'create')
             ->notEmpty('grade');
+
+        $validator
+            ->scalar('breed_level')
+            ->maxLength('breed_level', 35)
+            ->allowEmpty('breed_level');
 
         $validator
             ->date('birthday')
@@ -118,10 +132,12 @@ class CowsTable extends Table
 
         $validator
             ->scalar('father_code')
+            ->maxLength('father_code', 20)
             ->allowEmpty('father_code');
 
         $validator
             ->scalar('mother_code')
+            ->maxLength('mother_code', 20)
             ->allowEmpty('mother_code');
 
         $validator
@@ -135,15 +151,18 @@ class CowsTable extends Table
 
         $validator
             ->scalar('description')
+            ->maxLength('description', 255)
             ->allowEmpty('description');
 
         $validator
             ->scalar('createdby')
+            ->maxLength('createdby', 100)
             ->requirePresence('createdby', 'create')
             ->notEmpty('createdby');
 
         $validator
             ->scalar('updatedby')
+            ->maxLength('updatedby', 100)
             ->allowEmpty('updatedby');
 
         return $validator;
