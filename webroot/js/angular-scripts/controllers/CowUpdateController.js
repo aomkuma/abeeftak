@@ -67,7 +67,8 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     		//console.log(result.data);
     		if(result.status == 200)
     		{
-    			$scope.Cows = result.data;
+                $scope.OwnerRecord = result.data.OwnerRecord;
+    			$scope.Cows = result.data.DATA;
                 $scope.Cows.breed_level = parseInt($scope.Cows.breed_level);
                 $scope.Cows.birthday = convertDate($scope.Cows.birthday);
                 $scope.Cows.import_date = convertDate($scope.Cows.import_date);

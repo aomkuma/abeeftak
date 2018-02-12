@@ -170,8 +170,9 @@ class CowsController extends AppController {
                 => ['Images']
             ]
         ]);
-
-        $this->response->body(json_encode($data));
+        $result['DATA'] = $data;
+        $result['OwnerRecord'] = $this->getCowOwnerRecord($this->request->data('cows_id'));
+        $this->response->body(json_encode($result));
         $this->response->statusCode(200);
         $this->response->type('application/json');
 
@@ -679,8 +680,9 @@ class CowsController extends AppController {
                 ->where(['Cows.id'=>$cow_id]);
         
         $ownerhis = $query->toArray();
-        $json = json_encode($ownerhis);
-        debug($json);
+        // $json = json_encode($ownerhis);
+        //debug($json);
+        return $ownerhis;
     }
 
 }

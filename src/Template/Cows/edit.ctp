@@ -454,7 +454,26 @@
 	    	</div>
 	    </uib-tab>
 	    <uib-tab index="5" heading="ประวัติการเป็นเจ้าของสัตว์">
-	    	
+	    	<div class="row">
+	    		<div class="col-lg-12 table-responsive">
+	    			<table class="table table-striped">
+	    				<thead>
+	    					<tr>
+	    						<th>ฟาร์ม</th>
+	    						<th>ชื่อ - สกุล</th>
+	    						<th>วันที่ครอบครอง</th>
+	    					</tr>
+	    				</thead>
+	    				<tbody>
+	    					<tr ng-repeat="item in OwnerRecord[0].farm_cows">
+	    						<td>{{item.farm.name}}</td>
+	    						<td>{{item.farm.farm_herdsmans[0].herdsman.firstname}} {{item.farm.farm_herdsmans[0].herdsman.lastname}}</td>
+	    						<td>{{item.moveddate == null?'ปัจจุบัน':(item.moveddate | date:'dd/MM/yyyy')}}</td>
+	    					</tr>
+	    				</tbody>
+	    			</table>
+	    		</div>
+	    	</div>
 	    </uib-tab>
 	    <uib-tab index="6" heading="ประวัติการเคลื่อนย้าย">
 	    	<br>
