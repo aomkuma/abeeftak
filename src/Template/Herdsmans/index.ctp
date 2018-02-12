@@ -77,8 +77,10 @@
                 <td ><input type="date" name="fromdate" class="form-control" id="showdate2"></td>
                 <td ><p id="showdate3">ถึง</p></td>
                 <td ><input type="date" name="todate" class="form-control" id="showdate4"></td>
-                <td><?= $this->Form->button('ค้นหา', ['type'=>'submit','class' => 'btn btn-primary', 'id' => 'checkblank']) ?></td>
+                <td><?= $this->Form->button('ค้นหา', ['type' => 'submit', 'class' => 'btn btn-primary', 'id' => 'checkblank']) ?></td>
                 <td><?= $this->Html->link(BT_ADD, ['action' => 'add'], ['escape' => false]) ?></td>
+
+              <td> <?= $this->Html->link('Reset', ['action' => 'index'], ['escape' => false, 'label' => false, 'class' => 'btn btn-primary']) ?></td>
             </tr>
         </table>
         <?= $this->Form->end() ?>

@@ -42,13 +42,13 @@ class HerdsmansController extends AppController {
         $this->paginate = [
             'contain' => ['Addresses']
         ];
-        $whereherdsman=[];
+        $whereherdsman = [];
         $this->request->session()->write('whereherdsman', $whereherdsman);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $this->request->session()->delete('whereherdsman');
             $searchfrom = $this->request->getData('searchfrom');
             $search = $this->request->getData('search');
-          
+
             $whereherdsman = [];
 
             if ($searchfrom == 1) {
@@ -73,11 +73,13 @@ class HerdsmansController extends AppController {
 
             $this->request->session()->write('whereherdsman', $whereherdsman);
         }
-        
+
 
         $herdsmans = $this->paginate($this->Herdsmans->find('all', array('order' => 'Herdsmans.code ASC'))
                         ->where($this->request->session()->read('whereherdsman')), array('limit' => PAGE_LIMIT));
-
+        if (sizeof($herdsmans->toArray() == 0)) {
+            $this->request->session()->delete('whereherdsman');
+        }
         $searchfrom = ['1' => 'รหัสผู้เลี้ยงโค', '2' => 'ชื่อ-นามสกุล', '3' => 'รหัสประจำตัวประชาชน', '4' => 'วันที่ขึ้นทะเบียน'];
         $this->set(compact('herdsmans', 'searchfrom'));
         $this->set('_serialize', ['herdsmans']);
