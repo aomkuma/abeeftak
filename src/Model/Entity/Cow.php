@@ -9,6 +9,7 @@ use Cake\ORM\Entity;
  * @property string $id
  * @property string $code
  * @property string $grade
+ * @property string $breed_level
  * @property \Cake\I18n\FrozenDate $birthday
  * @property string $gender
  * @property string $isbreeder
@@ -28,6 +29,9 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\CowImage[] $cow_images
  * @property \App\Model\Entity\MovementRecord[] $movement_records
  * @property \App\Model\Entity\TreatmentRecord[] $treatment_records
+ * @property \App\Model\Entity\GrowthRecord[] $growth_records
+ * @property \App\Model\Entity\BreedingRecord[] $breeding_records
+ * @property \App\Model\Entity\GivebirthRecord[] $givebirth_records
  */
 class Cow extends Entity
 {
@@ -44,11 +48,11 @@ class Cow extends Entity
     protected $_accessible = [
         'code' => true,
         'grade' => true,
+        'breed_level' => true,
         'birthday' => true,
         'gender' => true,
         'isbreeder' => true,
         'cow_breed_id' => true,
-        'breed_level' => true,
         'breeding' => true,
         'father_code' => true,
         'mother_code' => true,
@@ -62,6 +66,9 @@ class Cow extends Entity
         'cow_breed' => true,
         'cow_images' => true,
         'movement_records' => true,
-        'treatment_records' => true
+        'treatment_records' => true,
+        'growth_records' => true,
+        'breeding_records' => true,
+        'givebirth_records' => true
     ];
 }

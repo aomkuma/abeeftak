@@ -29,7 +29,10 @@ class CowsTableTest extends TestCase
         'app.cow_images',
         'app.images',
         'app.movement_records',
-        'app.treatment_records'
+        'app.treatment_records',
+        'app.growth_records',
+        'app.breeding_records',
+        'app.givebirth_records'
     ];
 
     /**

@@ -20,6 +20,7 @@ class CowsFixture extends TestFixture
         'id' => ['type' => 'uuid', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'code' => ['type' => 'string', 'length' => 10, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'grade' => ['type' => 'string', 'length' => 50, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'breed_level' => ['type' => 'string', 'length' => 35, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'birthday' => ['type' => 'date', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'gender' => ['type' => 'string', 'length' => null, 'null' => false, 'default' => 'F', 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'isbreeder' => ['type' => 'string', 'length' => null, 'null' => false, 'default' => 'Y', 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
@@ -51,22 +52,23 @@ class CowsFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 'bb377b4e-2b9c-471b-bb56-cc2616450a2f',
+            'id' => 'f96a81d7-0e56-4d2e-904a-8857a51ed213',
             'code' => 'Lorem ip',
             'grade' => 'Lorem ipsum dolor sit amet',
-            'birthday' => '2017-12-05',
+            'breed_level' => 'Lorem ipsum dolor sit amet',
+            'birthday' => '2018-02-12',
             'gender' => 'Lorem ipsum dolor sit amet',
             'isbreeder' => 'Lorem ipsum dolor sit amet',
-            'cow_breed_id' => 'd7de165e-de3f-445e-98ef-40956a3e0412',
+            'cow_breed_id' => 'dd1dcdcf-85b6-4e8d-b3bb-6717ba9fdd2c',
             'breeding' => 'Lorem ipsum dolor sit amet',
             'father_code' => 'Lorem ipsum dolor ',
             'mother_code' => 'Lorem ipsum dolor ',
             'origins' => 'Lorem ipsum dolor sit amet',
-            'import_date' => '2017-12-05',
+            'import_date' => '2018-02-12',
             'description' => 'Lorem ipsum dolor sit amet',
-            'created' => '2017-12-05 14:52:14',
+            'created' => '2018-02-12 07:48:39',
             'createdby' => 'Lorem ipsum dolor sit amet',
-            'updated' => '2017-12-05 14:52:14',
+            'updated' => '2018-02-12 07:48:39',
             'updatedby' => 'Lorem ipsum dolor sit amet'
         ],
     ];
