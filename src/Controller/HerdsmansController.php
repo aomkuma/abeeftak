@@ -57,8 +57,8 @@ class HerdsmansController extends AppController {
 
                 $arrSearch = explode(" ", $search);
                 $name = "'%'" . $arrSearch[0] . "'%'";
-                $lastname = "'%'" . $arrSearch[1] . "'%'";
-                array_push($whereherdsman, ['Herdsmans.firstname LIKE' => $name, 'Herdsmans.lastname LIKE' => $lastname]);
+           //     $lastname = "'%'" . $arrSearch[1] . "'%'";
+                array_push($whereherdsman, ['Herdsmans.firstname LIKE' => $name]);
             } else if ($searchfrom == 3) {
                 $search1 = "'%'" . $this->request->getData('search') . "'%'";
                 array_push($whereherdsman, ['Herdsmans.idcard' => $search1]);
