@@ -225,6 +225,9 @@ class CowsController extends AppController {
         $cow->breeding = $Cow['breeding'];
         $cow->father_code = $Cow['father_code'];
         $cow->mother_code = $Cow['mother_code'];
+        $cow->livestock_register = $Cow['livestock_register'];
+        $cow->artificial_father = $Cow['artificial_father'];
+        $cow->artificial_father_breed = $Cow['artificial_father_breed'];
         $cow->origins = $Cow['origins'];
         $cow->import_date = $this->convertDate($Cow['import_date']);
 
@@ -341,7 +344,7 @@ class CowsController extends AppController {
             $Fertilize->updatedby = $this->request->session()->read('Auth.User.firstname');
         }
 
-        $Fertilize->record_date = date('Y-m-d', strtotime($fertilizes['record_date']));
+        $Fertilize->record_date = $this->convertDate($fertilizes['record_date']);
         $Fertilize->age = $fertilizes['age'];
         $Fertilize->food_type = $fertilizes['food_type'];
         $Fertilize->total_eating = $fertilizes['total_eating'];
@@ -352,9 +355,11 @@ class CowsController extends AppController {
         $Fertilize->growth_stat = $fertilizes['growth_stat'];
 
         if ($this->GrowthRecords->save($Fertilize)) {
+            // load list
+            $list = $this->GrowthRecords->find('all')->where(['cow_id' => $cow_id, 'type'=>'F']);
             $result['DATA']['ACTION'] = $action_type;
             $result['DATA']['ID'] = $Fertilize->id;
-            $result['DATA']['obj'] = $Fertilize;
+            $result['DATA']['obj'] = $list;
         } else {
             debug($entity->errors());
             $result = 'fail to update';
@@ -404,13 +409,15 @@ class CowsController extends AppController {
         }
 
         // print_r($objUpdate);
-        $entity->breeding_date = date('Y-m-d', strtotime($objUpdate['breeding_date']));
+        $entity->breeding_date = $this->convertDate($objUpdate['breeding_date']);
         $entity->mother_code = $objUpdate['mother_code'];
 
         if ($this->BreedingRecords->save($entity)) {
+            // load list
+            $list = $this->BreedingRecords->find('all')->where(['cow_id' => $cow_id]);
             $result['DATA']['ACTION'] = $action_type;
             $result['DATA']['ID'] = $entity->id;
-            $result['DATA']['obj'] = $entity;
+            $result['DATA']['obj'] = $list;
         } else {
             debug($entity->errors());
             $result = 'fail to update';
@@ -460,15 +467,18 @@ class CowsController extends AppController {
         }
 
         // print_r($objUpdate);
-        $entity->breeding_date = date('Y-m-d', strtotime($objUpdate['breeding_date']));
+        $entity->breeding_date = $this->convertDate($objUpdate['breeding_date']);
         $entity->father_code = $objUpdate['father_code'];
         $entity->authorities = $objUpdate['authorities'];
         $entity->breeding_status = $objUpdate['breeding_status'];
+        $entity->breeding_type = $objUpdate['breeding_type'];
 
         if ($this->GivebirthRecords->save($entity)) {
+            // load list
+            $list = $this->GivebirthRecords->find('all')->where(['cow_id' => $cow_id]);
             $result['DATA']['ACTION'] = $action_type;
             $result['DATA']['ID'] = $entity->id;
-            $result['DATA']['obj'] = $entity;
+            $result['DATA']['obj'] = $list;
         } else {
             debug($entity->errors());
             $result = 'fail to update';
@@ -520,13 +530,15 @@ class CowsController extends AppController {
         // print_r($objUpdate);
         $entity->departure = $objUpdate['departure'];
         $entity->destination = $objUpdate['destination'];
-        $entity->movement_date = date('Y-m-d', strtotime($objUpdate['movement_date']));
+        $entity->movement_date = $this->convertDate($objUpdate['movement_date']);
         $entity->description = $objUpdate['description'];
 
         if ($this->MovementRecords->save($entity)) {
+            // load list
+            $list = $this->MovementRecords->find('all')->where(['cow_id' => $cow_id]);
             $result['DATA']['ACTION'] = $action_type;
             $result['DATA']['ID'] = $entity->id;
-            $result['DATA']['obj'] = $entity;
+            $result['DATA']['obj'] = $list;
         } else {
             debug($entity->errors());
             $result = 'fail to update';
@@ -576,15 +588,17 @@ class CowsController extends AppController {
         }
 
         // print_r($objUpdate);
-        $entity->treatment_date = date('Y-m-d', strtotime($objUpdate['treatment_date']));
+        $entity->treatment_date = $this->convertDate($objUpdate['treatment_date']);
         $entity->disease = $objUpdate['disease'];
         $entity->drug_used = $objUpdate['drug_used'];
         $entity->conservator = $objUpdate['conservator'];
 
         if ($this->TreatmentRecords->save($entity)) {
+            // load list
+            $list = $this->TreatmentRecords->find('all')->where(['cow_id' => $cow_id]);
             $result['DATA']['ACTION'] = $action_type;
             $result['DATA']['ID'] = $entity->id;
-            $result['DATA']['obj'] = $entity;
+            $result['DATA']['obj'] = $list;
         } else {
             debug($entity->errors());
             $result = 'fail to update';
@@ -701,8 +715,8 @@ class CowsController extends AppController {
         $query = $this->Cows->find()
                 ->select(['Cows.id','Cows.code'])
                 ->contain(['FarmCows'=>[
-                    'fields'=>['FarmCows.id','FarmCows.cow_id','FarmCows.farm_id','FarmCows.isactive','FarmCows.moveddate'],
-                    'sort'=>['FarmCows.isactive'=>'ASC','FarmCows.moveddate'=>'DESC'],
+                    'fields'=>['FarmCows.id','FarmCows.cow_id','FarmCows.farm_id','FarmCows.isactive','FarmCows.moved_in_date','FarmCows.moved_out_date'],
+                    'sort'=>['FarmCows.isactive'=>'ASC','FarmCows.moved_in_date'=>'DESC'],
                     'Farms'=>[
                         'fields'=>['Farms.id','Farms.name'],
                         'FarmHerdsmans'=>[

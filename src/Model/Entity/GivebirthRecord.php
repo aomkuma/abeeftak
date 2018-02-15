@@ -34,6 +34,7 @@ class GivebirthRecord extends Entity
         'father_code' => true,
         'authorities' => true,
         'breeding_status' => true,
+        'breeding_type' => true,
         'created' => true,
         'createdby' => true,
         'updated' => true,

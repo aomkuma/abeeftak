@@ -2,106 +2,116 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
 	//console.log('Hello !');
     $scope.ShowAutocompleteObj = ['ShowAutocompleteFATHERCODE', 'ShowAutocompleteMOTHERCODE'];
     $scope.autocompleteUserResult = [];
-        $scope.autoComplete = function (keyword, masterType)
-        {
-            $scope.force_autocomplete = 'Y';
-            if(keyword != '' || $scope.force_autocomplete == 'Y')
-            {   
-                $params = {'keyword' : keyword
-                            ,'masterType' : masterType
-                        };
-                var autoresult = HttpService.clientRequest('cows', 'autocomplete', $params).then(function(result)
-                {
-                    $scope.force_autocomplete = "";
-                    if(result.status == 200)
-                    {
-                        var loop = result.data.length;
-                        if(loop > 0)
-                        {
-                            for(var i = 0; i < loop; i++){
-                                //console.log(result.data[i]);
-                                $scope.autocompleteUserResult.push(result.data[i]);
-                            }
-                            return $scope.autocompleteUserResult;
-                        }else{
-                            return null;
-                        }
-                    }else
-                    {
-                        AppFunction.warningDialog(result.statusText);
-                    }
-                    
-                });
-
-                return autoresult;
-            }else
+    $scope.autoComplete = function (keyword, masterType)
+    {
+        $scope.autocompleteUserResult = [];
+        $scope.force_autocomplete = 'Y';
+        if(keyword != '' || $scope.force_autocomplete == 'Y')
+        {   
+            $params = {'keyword' : keyword
+                        ,'masterType' : masterType
+                    };
+            var autoresult = HttpService.clientRequest('cows', 'autocomplete', $params).then(function(result)
             {
-                deferred = $q.defer();
-                console.log('asdasd');
-                $scope.autocompleteUserResult = [];
-                deferred.resolve( [] ); 
-                
-                return deferred.promise;
-            }
-        };
-
-        $scope.checkAutocomplete = function(str, masterType, minlength, form, event){
-            console.log(str, masterType);
-            if(event.which == 27){  // Press ESC button
-                $scope.autocompleteUserResult = [];
-                eval('$scope.ShowAutocomplete' + masterType + ' = false;');
-            }
-            else if(event.which == 40){ // Press Down button check & focus radio button
-                textboxes = $("#" + form + " :input");
-                if($scope.radioAutoIndex == undefined || $scope.radioAutoIndex == null){
-                    $scope.radioAutoIndex = 0;
+                $scope.force_autocomplete = "";
+                if(result.status == 200)
+                {
+                    var loop = result.data.length;
+                    if(loop > 0)
+                    {
+                        for(var i = 0; i < loop; i++){
+                            //console.log(result.data[i]);
+                            $scope.autocompleteUserResult.push(result.data[i]);
+                        }
+                        return $scope.autocompleteUserResult;
+                    }else{
+                        return null;
+                    }
+                }else
+                {
+                    AppFunction.warningDialog(result.statusText);
                 }
-                textboxes[0].focus();
-                $(textboxes[0]).prop('checked', true);
-                $scope.radioAutoIndex++;
-            }
-            else if(str.length >= minlength || event.which == 113){ // Press enter or string length equal min-length
-                $scope.clearAutocomplete();
-                $scope.autocompleteUserResult = [];
-                $scope.autoComplete(str, masterType);
-                eval('$scope.ShowAutocomplete' + masterType + ' = true;');
-            }
-            else{   // Hide autocomplete
-                eval('$scope.ShowAutocomplete' + masterType + ' = false;');
-            }
-        };
+                
+            });
 
-        $scope.setAutocompleteValue = function(obj ,value, masterType, focusParent){
-            // console.log('$scope.' + obj + ' = "' + value.code + '";');
+            return autoresult;
+        }else
+        {
+            deferred = $q.defer();
+            console.log('asdasd');
+            $scope.autocompleteUserResult = [];
+            deferred.resolve( [] ); 
+            
+            return deferred.promise;
+        }
+    };
+
+    $scope.checkAutocomplete = function(str, masterType, minlength, form, event){
+        console.log(str, masterType);
+        if(event.which == 27){  // Press ESC button
+            $scope.autocompleteUserResult = [];
+            eval('$scope.ShowAutocomplete' + masterType + ' = false;');
+        }
+        else if(event.which == 40){ // Press Down button check & focus radio button
+            textboxes = $("#" + form + " :input");
+            if($scope.radioAutoIndex == undefined || $scope.radioAutoIndex == null){
+                $scope.radioAutoIndex = 0;
+            }
+            textboxes[0].focus();
+            $(textboxes[0]).prop('checked', true);
+            $scope.radioAutoIndex++;
+        }
+        else if(str.length >= minlength || event.which == 113){ // Press enter or string length equal min-length
+            $scope.clearAutocomplete();
+            $scope.autocompleteUserResult = [];
+            $scope.autoComplete(str, masterType);
+            eval('$scope.ShowAutocomplete' + masterType + ' = true;');
+        }
+        else{   // Hide autocomplete
+            eval('$scope.ShowAutocomplete' + masterType + ' = false;');
+        }
+    };
+
+    $scope.setAutocompleteValue = function(obj ,value, masterType, focusParent){
+        console.log('$scope.' + obj + ' = "' + value.code + '";');
+        eval('$scope.' + obj + ' = "' + value.code + '";');
+        $scope.autocompleteUserResult = [];
+        eval('$scope.ShowAutocomplete' + masterType + ' = false;');
+        $('#' + focusParent).focus();
+    }
+
+    $scope.setAutocompleteValueByEnter = function(obj ,value, masterType, focusParent, event){
+        if(event.which == 13){
             eval('$scope.' + obj + ' = "' + value.code + '";');
             $scope.autocompleteUserResult = [];
             eval('$scope.ShowAutocomplete' + masterType + ' = false;');
+
             $('#' + focusParent).focus();
         }
+    }
 
-        $scope.setAutocompleteValueByEnter = function(obj ,value, masterType, focusParent, event){
-            if(event.which == 13){
-                eval('$scope.' + obj + ' = "' + value.code + '";');
-                $scope.autocompleteUserResult = [];
-                eval('$scope.ShowAutocomplete' + masterType + ' = false;');
+    $scope.closeAutocomplete = function(masterType){
+        $scope.autocompleteUserResult = [];
+        eval('$scope.ShowAutocomplete' + masterType + ' = false;');
+    }
 
-                $('#' + focusParent).focus();
+    $scope.clearAutocomplete = function(){
+        var loop = $scope.ShowAutocompleteObj.length;
+        for(var i = 0; i < loop; i++){
+            if($scope.ShowAutocompleteObj[i] !== ''){
+                eval('$scope.' + $scope.ShowAutocompleteObj[i] + ' = false;');
             }
         }
+    }
 
-        $scope.closeAutocomplete = function(masterType){
-            $scope.autocompleteUserResult = [];
-            eval('$scope.ShowAutocomplete' + masterType + ' = false;');
+    $scope.convertStaticTextDate = function(dateObj){
+        var showDate = '';
+        if(dateObj != null){
+            d = new Date(dateObj);   
+            showDate = padLeft(d.getDate(), 2, '0') + '/' + padLeft(d.getMonth() + 1, 2, '0') + '/' + (d.getFullYear() + 543);
         }
-
-        $scope.clearAutocomplete = function(){
-            var loop = $scope.ShowAutocompleteObj.length;
-            for(var i = 0; i < loop; i++){
-                if($scope.ShowAutocompleteObj[i] !== ''){
-                    eval('$scope.' + $scope.ShowAutocompleteObj[i] + ' = false;');
-                }
-            }
-        }
+        return showDate;
+    }
 
     $scope.getCows = function(service, action, obj)
     {
@@ -151,6 +161,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
         // obj.createdby = '1';
         // obj.code = 'TAK20170002';
         // obj.id = '';
+        showWaiting();
         HttpService.clientRequest(service, action, obj).then(function(result){
             if(result.status != 200){
                 alert(result.errorMsg);
@@ -162,10 +173,19 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     }
 
     function showAlert(SaveResult){
+        $("#waiting-alert").hide();
         $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
             $("#success-alert").slideUp(500);
             $scope.SaveResult = SaveResult;
         });   
+    }
+
+    function showWaiting(){
+        $("#waiting-alert").show();
+        // $("#waiting-alert").fadeTo(2000, 500).slideUp(500, function(){
+        //     $("#waiting-alert").slideUp(500);
+        //     $("#waiting-alert").hide();
+        // });   
     }
 
     $scope.saveWean = function(service, action, obj, cow_id){
@@ -188,11 +208,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
             if(result.status != 200){
                 alert(result.errorMsg);
             }else{
-                
-                if(result.data.DATA.ACTION == 'ADD'){
-                    obj.id = result.data.DATA.ID;
-                    $scope.FertilizeList.push(result.data.DATA.obj);
-                }
+                $scope.FertilizeList = result.data.DATA.obj;
                 $scope.Fertilize = {'id':null,'record_date':null,'age':null,'food_type':null,'total_eating':null,'weight':null,'chest':null,'height':null,'length':null,'growth_stat':null};
                 $scope.FertilizeUpdate = false;
                 showAlert('บันทึก');
@@ -233,11 +249,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
             if(result.status != 200){
                 alert(result.errorMsg);
             }else{
-                
-                if(result.data.DATA.ACTION == 'ADD'){
-                    obj.id = result.data.DATA.ID;
-                    $scope.BreedingList.push(result.data.DATA.obj);
-                }
+                $scope.BreedingList = result.data.DATA.obj;
                 $scope.Breeder = {'id':null,'breeding_date':null,'mother_code':null};
                 $scope.BreederUpdate = false;
                 showAlert('บันทึก');
@@ -278,11 +290,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
             if(result.status != 200){
                 alert(result.errorMsg);
             }else{
-                
-                if(result.data.DATA.ACTION == 'ADD'){
-                    obj.id = result.data.DATA.ID;
-                    $scope.GivebirthList.push(result.data.DATA.obj);
-                }
+                $scope.GivebirthList = result.data.DATA.obj;
                 $scope.Givebirth = {'id':null,'breeding_date':null,'father_code':null, 'authorities':null, 'breeding_status':null};
                 $scope.GivebirthUpdate = false;
                 showAlert('บันทึก');
@@ -323,11 +331,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
             if(result.status != 200){
                 alert(result.errorMsg);
             }else{
-                
-                if(result.data.DATA.ACTION == 'ADD'){
-                    obj.id = result.data.DATA.ID;
-                    $scope.MovementList.push(result.data.DATA.obj);
-                }
+                $scope.MovementList = result.data.DATA.obj;
                 $scope.Movement = {'id':null,'movement_date':null,'departure':null, 'destination':null, 'description':null};
                 $scope.MovementUpdate = false;
                 showAlert('บันทึก');
@@ -368,11 +372,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
             if(result.status != 200){
                 alert(result.errorMsg);
             }else{
-                
-                if(result.data.DATA.ACTION == 'ADD'){
-                    obj.id = result.data.DATA.ID;
-                    $scope.TreatmentList.push(result.data.DATA.obj);
-                }
+                $scope.TreatmentList = result.data.DATA.obj;
                 $scope.Treatment = {'id':null,'treatment_date':null,'disease':null, 'drug_used':null, 'conservator':null};
                 $scope.TreatmentUpdate = false;
                 showAlert('บันทึก');
@@ -410,14 +410,14 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     $scope.editFertilize = function(data){
         data.age = parseInt(data.age);
         data.total_eating = parseInt(data.total_eating);
-        data.record_date = convertDate(data.record_date);
-        $scope.Fertilize = data;
+        $scope.Fertilize = angular.copy(data);
+        $scope.Fertilize.record_date = convertDate($scope.Fertilize.record_date, 'fertilize_record_date');
         $scope.FertilizeUpdate = true;
     }
 
     $scope.addFertilize = function(){
         $scope.Fertilize = {'id':null,'record_date':null,'age':null,'food_type':null,'total_eating':null,'weight':null,'chest':null,'height':null,'length':null,'growth_stat':null};
-        $scope.Fertilize = null;
+        $scope.Fertilize.record_date = convertDate($scope.Fertilize.record_date, 'fertilize_record_date');
         $scope.FertilizeUpdate = true;
     }
 
@@ -427,14 +427,14 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     }
 
     $scope.editBreeder = function(data){
-        data.breeding_date = convertDate(data.breeding_date);
-        $scope.Breeder = data;
+        $scope.Breeder = angular.copy(data);
+        $scope.Breeder.breeding_date = convertDate($scope.Breeder.breeding_date, 'breeding_breeding_date');
         $scope.BreederUpdate = true;
     }
 
     $scope.addBreeder = function(){
         $scope.Breeder = {'id':null,'breeding_date':null,'mother_code':null};
-        $scope.Breeder = null;
+        $scope.Breeder.breeding_date = convertDate($scope.Breeder.breeding_date, 'breeding_breeding_date');
         $scope.BreederUpdate = true;
     }
 
@@ -444,14 +444,15 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     }
 
     $scope.editGivebirth = function(data){
-        data.breeding_date = convertDate(data.breeding_date);
-        $scope.Givebirth = data;
+        // data.breeding_date = convertDate(data.breeding_date);
+        $scope.Givebirth = angular.copy(data);
+        $scope.Givebirth.breeding_date = convertDate($scope.Givebirth.breeding_date, 'givebirth_breeding_date');
         $scope.GivebirthUpdate = true;
     }
 
     $scope.addGivebirth = function(){
-        $scope.Givebirth = {'id':null,'breeding_date':null,'father_code':null, 'authorities':null, 'breeding_status':null};
-        $scope.Givebirth = null;
+        $scope.Givebirth = {'id':null,'breeding_date':null,'father_code':null, 'authorities':null, 'breeding_status':null, 'breeding_type':null};
+        $scope.Givebirth.breeding_date = convertDate($scope.Givebirth.breeding_date, 'givebirth_breeding_date');
         $scope.GivebirthUpdate = true;
     }
 
@@ -461,15 +462,14 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     }
 
     $scope.editMovement = function(data){
-        data.movement_date = convertDate(data.movement_date);
-        $scope.Movement = data;
-        // angular.copy(data, $scope.Movement);
+        $scope.Movement = angular.copy(data);
+        $scope.Movement.movement_date = convertDate($scope.Movement.movement_date, 'movement_date');
         $scope.MovementUpdate = true;
     }
 
     $scope.addMovement = function(){
         $scope.Movement = {'id':null,'movement_date':null,'departure':null, 'destination':null, 'description':null};
-        $scope.Movement = null;
+        $scope.Movement.movement_date = convertDate($scope.Movement.movement_date, 'movement_date');
         $scope.MovementUpdate = true;
     }
 
@@ -479,14 +479,14 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     }
 
     $scope.editTreatment = function(data){
-        data.treatment_date = convertDate(data.treatment_date);
         $scope.Treatment = data;
+        $scope.Treatment.treatment_date = convertDate($scope.Treatment.treatment_date, 'treatment_date');
         $scope.TreatmentUpdate = true;
     }
 
     $scope.addTreatment = function(){
         $scope.Treatment = {'id':null,'treatment_date':null,'disease':null, 'drug_used':null, 'conservator':null};
-        $scope.Treatment = null;
+        $scope.Treatment.treatment_date = convertDate($scope.Treatment.treatment_date, 'treatment_date');
         $scope.TreatmentUpdate = true;
     }
 
@@ -504,7 +504,7 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
                 $scope.fileimg = '';
                 $scope.short_desc = null;
                 $scope.getCows('cows','loaddata',{cows_id : cows_id});
-                console.log('sad');
+                //console.log('sad');
             }
         });
     }
@@ -513,6 +513,10 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     if(cows_id != '')
     {
 	   $scope.getCows('cows','loaddata',{cows_id : cows_id});
+    }else{
+        $scope.Cows = {import_date:null, birthday:null, isbreeder:'N'};
+        $scope.Cows.import_date = convertDate($scope.Cows.import_date, 'import_date');
+        $scope.Cows.birthday = convertDate($scope.Cows.birthday, 'birthday');
     }
     $scope.FertilizeUpdate = false;
     $scope.BreederUpdate = false;
@@ -520,7 +524,8 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     $scope.MovementUpdate = false;
     $scope.TreatmentUpdate = false;
     $scope.SaveResult = 'บันทึก';
-    $scope.BreedLevelList = [{'id':1,'name':'1'},{'id':2,'name':'2'},{'id':3,'name':'3'},{'id':4,'name':'4'}];
+    $scope.BreedLevelList = [{'id':0, 'name':'ตั้งฐาน'},{'id':1,'name':'โคตาก 1'},{'id':2,'name':'ตาก 2'},{'id':3,'name':'พันธุ์ตาก'},{'id':4,'name':'พันธุ์ตากแท้'}];
+    $scope.FoodTypeList = [{'id':'หยาบ', 'name':'หยาบ'},{'id':'ข้น', 'name':'ข้น'},{'id':'TMR', 'name':'TMR'},{'id':'อื่นๆ', 'name':'อื่นๆ'}];
     $scope.GradeList = [
                 {'id':'1','name':'ชาโลเล่ย์'}
                 ,{'id':'2','name':'บรามัน'}
@@ -580,7 +585,6 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     };
 })
 ;
-
 
 function makeSQLDate(dateObj){
     console.log(dateObj);

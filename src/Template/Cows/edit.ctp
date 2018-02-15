@@ -24,6 +24,9 @@
 	<div class="alert alert-success text-center" id="success-alert" style="display: none;">
 	  <strong>{{SaveResult}}สำเร็จ!</strong>
 	</div>
+	<div class="alert alert-info text-center" id="waiting-alert" style="display: none;">
+	  <strong>กรุณารอสักครู่..</strong>
+	</div>
 	<uib-tabset active="activeJustified" justified="true">
 	    <uib-tab index="0" heading="ข้อมูลโค">
 	    	<br>
@@ -31,6 +34,14 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-lg-offset-2  col-md-offset-2">
 						<label class="form-control-static">รหัสโค : {{Cows.code}}</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-lg-offset-2  col-md-offset-2">
+						<div class="form-group has-feedback" >
+							<label>ทะเบียนปศุสัตว์ :</label>
+							<input type="text" name="livestock_register" ng-model="Cows.livestock_register" class="form-control" maxlength="35">
+						</div>
 					</div>
 				</div>
 				<div class="row">
@@ -56,11 +67,9 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-lg-offset-2  col-md-offset-2">
-						<div class="form-group has-feedback" ng-class="{ 'has-success' : cow_info.birthday.$valid,'has-error' : cow_info.birthday.$invalid}">
+						<div class="form-group has-feedback">
 							<label>วัน/เดือน/ปี เกิด :</label> 
-							<input type="text" name="birthday" id="birthday" ng-model="Cows.birthday" class="form-control datepicker" required="true">
-							<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="cow_info.birthday.$invalid"></span> 
-							<span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="cow_info.birthday.$valid"></span>
+							<input type="text" name="birthday" id="birthday" ng-model="Cows.birthday" class="form-control datepicker">
 						</div>
 					</div>
 				</div>
@@ -103,6 +112,22 @@
 						</div>
 					</div>
 				</div>
+				<div class="row" ng-show="Cows.breeding == 'AI'">
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-lg-offset-2  col-md-offset-2">
+                        <div class="form-group has-feedback">
+                            <label>น้ำเชื้อพ่อพันธุ์ :</label>
+                            <input type="text" name="artificial_father" ng-model="Cows.artificial_father" class="form-control"  maxlength="35">
+                            
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                        <div class="form-group has-feedback" >
+                            <label>สายพันธุ์ :</label>
+                            <input type="text" name="artificial_father_breed" ng-model="Cows.artificial_father_breed" class="form-control"  maxlength="35">
+                            
+                        </div>
+                    </div>
+                </div>
 				<div class="row" ng-show="Cows.breeding == 'NM'">
 					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-lg-offset-2  col-md-offset-2">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : cow_info.father_code.$valid,'has-error' : cow_info.father_code.$invalid}">
@@ -205,25 +230,25 @@
 		    	<div class="row">
 		    		<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : wean.weight.$valid,'has-error' : wean.weight.$invalid}">
-							<label>น้ำหนักแรกเกิด :</label>
+							<label>น้ำหนักแรกเกิด (กิโลกรัม) :</label>
 							<input type="number" name="weight" ng-model="Wean.weight" class="form-control" min="0" max="9999.99">
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : wean.chest.$valid,'has-error' : wean.chest.$invalid}">
-							<label>รอบอก :</label>
+							<label>รอบอก (เซนติเมตร) :</label>
 							<input type="number" name="chest" ng-model="Wean.chest" class="form-control" min="0" max="9999.99">
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : wean.height.$valid,'has-error' : wean.height.$invalid}">
-							<label>ความสูง :</label>
+							<label>ความสูง (เซนติเมตร) :</label>
 							<input type="number" name="height" ng-model="Wean.height" class="form-control" min="0" max="9999.99">
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : wean.length.$valid,'has-error' : wean.length.$invalid}">
-							<label>ความยาว :</label>
+							<label>ความยาว (เซนติเมตร) :</label>
 							<input type="number" name="length" ng-model="Wean.length" class="form-control" min="0" max="9999.99">
 						</div>
 					</div>
@@ -232,25 +257,25 @@
 		    	<div class="row">
 		    		<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : wean.weight1.$valid,'has-error' : wean.weight1.$invalid}">
-							<label>น้ำหนักหย่านม :</label>
+							<label>น้ำหนักหย่านม (กิโลกรัม) :</label>
 							<input type="number" name="weight1" ng-model="Wean.weight1" class="form-control" min="0" max="9999.99">
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : wean.chest1.$valid,'has-error' : wean.chest1.$invalid}">
-							<label>รอบอก :</label>
+							<label>รอบอก (เซนติเมตร) :</label>
 							<input type="number" name="chest1" ng-model="Wean.chest1" class="form-control" min="0" max="9999.99">
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : wean.height1.$valid,'has-error' : wean.height1.$invalid}">
-							<label>ความสูง :</label>
+							<label>ความสูง (เซนติเมตร) :</label>
 							<input type="number" name="height1" ng-model="Wean.height1" class="form-control" min="0" max="9999.99">
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : wean.length1.$valid,'has-error' : wean.length1.$invalid}">
-							<label>ความยาว :</label>
+							<label>ความยาว (เซนติเมตร) :</label>
 							<input type="number" name="length1" ng-model="Wean.length1" class="form-control" min="0" max="9999.99"></span>
 						</div>
 					</div>
@@ -277,26 +302,28 @@
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : fertilize.record_date.$valid,'has-error' : fertilize.record_date.$invalid}">
 							<label>วันที่บันทึก :</label>
-							<input type="date" name="record_date" ng-model="Fertilize.record_date" class="form-control" required="true">
+							<input type="text" name="record_date" id="fertilize_record_date" ng-model="Fertilize.record_date" class="form-control" required="true">
 							<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="fertilize.record_date.$invalid"></span> 
 							<span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="fertilize.record_date.$valid"></span>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : fertilize.age.$valid,'has-error' : fertilize.age.$invalid}">
-							<label>อายุ :</label>
+							<label>อายุ  (เดือน) :</label>
 							<input type="number" name="age" ng-model="Fertilize.age" required="true" class="form-control" min="0" max="99" >
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : fertilize.food_type.$valid,'has-error' : fertilize.food_type.$invalid}">
 							<label>ประเภทอาหาร :</label>
-							<input type="text" name="food_type" ng-model="Fertilize.food_type" required="true" class="form-control">
+							<select name="food_type" ng-model="Fertilize.food_type" required="true" class="form-control" ng-options="item.name as item.name  for item in FoodTypeList">
+								<option value="">------- กรุณาเลือก -------</option>
+							</select>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : fertilize.total_eating.$valid,'has-error' : fertilize.total_eating.$invalid}">
-							<label>จำนวนอาหารที่กิน :</label>
+							<label>จำนวนอาหารที่กิน (กิโลกรัม) :</label>
 							<input type="number" name="total_eating" required="true" ng-model="Fertilize.total_eating" class="form-control">
 						</div>
 					</div>
@@ -304,25 +331,25 @@
 				<div class="row">
 		    		<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : fertilize.weight.$valid,'has-error' : fertilize.weight.$invalid}">
-							<label>น้ำหนัก :</label>
+							<label>น้ำหนัก (กิโลกรัม) :</label>
 							<input type="number" name="weight" required="true" ng-model="Fertilize.weight" class="form-control" min="0" max="9999.99">
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : fertilize.chest.$valid,'has-error' : fertilize.chest.$invalid}">
-							<label>รอบอก :</label>
+							<label>รอบอก (เซนติเมตร) :</label>
 							<input type="number" name="chest" required="true" ng-model="Fertilize.chest" class="form-control" min="0" max="9999.99">
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : fertilize.height.$valid,'has-error' : fertilize.height.$invalid}">
-							<label>ความสูง :</label>
+							<label>ความสูง (เซนติเมตร) :</label>
 							<input type="number" name="height" required="true" ng-model="Fertilize.height" class="form-control" min="0" max="9999.99">
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : fertilize.length.$valid,'has-error' : fertilize.length.$invalid}">
-							<label>ความยาว :</label>
+							<label>ความยาว (เซนติเมตร) :</label>
 							<input type="number" name="length" required="true" ng-model="Fertilize.length" class="form-control" min="0" max="9999.99">
 						</div>
 					</div>
@@ -371,7 +398,7 @@
 	    						<button class="btn btn-danger btn-sm" ng-click="deleteFertilize('cows', 'deleteFertilize', data, $index)"><span class="glyphicon glyphicon-trash"></span></button>
 	    					</td>
 	    					<td>{{$index + 1}}</td>
-	    					<td>{{data.record_date | date:'dd/MM/yyyy'}}</td>
+	    					<td>{{convertStaticTextDate(data.record_date)}}</td>
 	    					<td>{{data.age}}</td>
 	    					<td>{{data.food_type}}</td>
 	    					<td>{{data.total_eating}}</td>
@@ -389,10 +416,10 @@
 	    	<br>
 	    	<form name="breeder" novalidate ng-show="BreederUpdate">
 				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-lg-offset-3 col-md-offset-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : breeder.breeding_date.$valid,'has-error' : breeder.breeding_date.$invalid}">
 							<label>วันที่ผสม :</label>
-							<input type="date" name="breeding_date" ng-model="Breeder.breeding_date" class="form-control" required="true">
+							<input type="text" name="breeding_date" id="breeding_breeding_date" ng-model="Breeder.breeding_date" class="form-control" required="true">
 							<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="breeder.breeding_date.$invalid"></span> 
 							<span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="breeder.breeding_date.$valid"></span>
 						</div>
@@ -400,7 +427,31 @@
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : breeder.mother_code.$valid,'has-error' : breeder.mother_code.$invalid}">
 							<label>หมายเลขประจำตัวโคแม่พันธุ์ที่ผสม :</label>
-							<input type="text" name="mother_code" ng-model="Breeder.mother_code" class="form-control" ng-required="true">
+							<div class="div-autocomplete">
+								<div class="div-autocomplete-table" ng-show="ShowAutocompleteMOTHERCODE" id="autocomplete_breeding_mother_code">
+									<table id="mstrTable" class="table table-hover table-striped">
+										<caption ng-click="closeAutocomplete('MOTHERCODE')">Close (X)</caption>
+										<tr>
+											<th></th>
+											<th>รหัสโค</th>
+										</tr>
+										<tbody>
+											<tr ng-repeat="item in autocompleteUserResult">
+												<td>
+													<input type="radio" name="radio_auto" ng-model="radio_auto" value="{{item}}" ng-keyup="setAutocompleteValueByEnter('Breeder.mother_code', item, 'MOTHERCODE', 'breeding_mother_code', $event)" 
+													ng-dblclick="setAutocompleteValue('Breeder.mother_code', item, 'MOTHERCODE', 'breeding_mother_code')">
+												</td>
+												<td class="point-select">
+													<a ng-click="setAutocompleteValue('Breeder.mother_code', item, 'MOTHERCODE', 'breeding_mother_code')">{{item.code}}</a>
+												</td>
+												<!--<td>{{item.name}}</td>-->
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<input type="text" name="mother_code" id="breeding_mother_code" ng-model="Breeder.mother_code" class="form-control" ng-required="true" ng-keyup="checkAutocomplete(Breeder.mother_code, 'MOTHERCODE', 1, 'autocomplete_breeding_mother_code', $event)">
+							</div>
+							<!--<input type="text" name="mother_code" ng-model="Breeder.mother_code" class="form-control" ng-required="true">-->
 							<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="breeder.mother_code.$invalid"></span> 
 							<span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="breeder.mother_code.$valid"></span>
 						</div>
@@ -433,7 +484,7 @@
 	    						<button class="btn btn-danger btn-sm" ng-click="deleteBreeder('cows', 'deleteBreeder', data, $index)"><span class="glyphicon glyphicon-trash"></span></button>
 	    					</td>
 	    					<td>{{$index + 1}}</td>
-	    					<td>{{data.breeding_date | date:'dd/MM/yyyy'}}</td>
+	    					<td>{{convertStaticTextDate(data.breeding_date)}}</td>
 	    					<td>{{data.mother_code}}</td>
 	    				</tr>
 	    			</tbody>
@@ -447,7 +498,7 @@
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : givebirth.breeding_date.$valid,'has-error' : givebirth.breeding_date.$invalid}">
 							<label>วันที่ผสม :</label>
-							<input type="date" name="breeding_date" ng-model="Givebirth.breeding_date" class="form-control" required="true">
+							<input type="text" name="breeding_date" id="givebirth_breeding_date" ng-model="Givebirth.breeding_date" class="form-control" required="true">
 							<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="givebirth.breeding_date.$invalid"></span> 
 							<span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="givebirth.breeding_date.$valid"></span>
 						</div>
@@ -455,7 +506,31 @@
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : givebirth.father_code.$valid,'has-error' : givebirth.father_code.$invalid}">
 							<label>หมายเลขประจำตัวโคพ่อพันธุ์ที่ผสม :</label>
-							<input type="text" name="father_code" ng-model="Givebirth.father_code" class="form-control" ng-required="true">
+							<div class="div-autocomplete">
+								<div class="div-autocomplete-table" ng-show="ShowAutocompleteFATHERCODE" id="autocomplete_givbirth_father_code">
+									<table id="mstrTable" class="table table-hover table-striped">
+										<caption ng-click="closeAutocomplete('FATHERCODE')">Close (X)</caption>
+										<tr>
+											<th></th>
+											<th>รหัสโค</th>
+										</tr>
+										<tbody>
+											<tr ng-repeat="item in autocompleteUserResult">
+												<td>
+													<input type="radio" name="radio_auto" ng-model="radio_auto" value="{{item}}" ng-keyup="setAutocompleteValueByEnter('Givebirth.father_code', item, 'FATHERCODE', 'givbirth_father_code', $event)" 
+													ng-dblclick="setAutocompleteValue('Givebirth.father_code', item, 'FATHERCODE', 'givbirth_father_code')">
+												</td>
+												<td class="point-select">
+													<a ng-click="setAutocompleteValue('Givebirth.father_code', item, 'FATHERCODE', 'givbirth_father_code')">{{item.code}}</a>
+												</td>
+												<!--<td>{{item.name}}</td>-->
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<input type="text" name="father_code" id="givbirth_father_code" ng-model="Givebirth.father_code" class="form-control" ng-required="true" ng-keyup="checkAutocomplete(Givebirth.father_code, 'FATHERCODE', 1, 'autocomplete_givbirth_father_code', $event)">
+							</div>
+							<!--<input type="text" name="father_code" ng-model="Givebirth.father_code" class="form-control" ng-required="true">-->
 							<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="givebirth.father_code.$invalid"></span> 
 							<span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="givebirth.father_code.$valid"></span>
 						</div>
@@ -471,13 +546,25 @@
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : givebirth.breeding_status.$valid,'has-error' : givebirth.breeding_status.$invalid}">
 							<label>สถานะการผสม :</label>
-							<select name="breeding_status" ng-model="Givebirth.breeding_status" class="form-control">
+							<select name="breeding_status" ng-model="Givebirth.breeding_status" class="form-control" required="true">
 								<option value="">กรุณาเลือก ..</option>
 								<option value="Y">ติด</option>
 								<option value="N">ไม่ติด</option>
 							</select>
 							<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="givebirth.breeding_status.$invalid"></span> 
 							<span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="givebirth.breeding_status.$valid"></span>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+						<div class="form-group has-feedback" ng-class="{ 'has-success' : givebirth.breeding_type.$valid,'has-error' : givebirth.breeding_type.$invalid}">
+							<label>ประเภทการผสม :</label>
+							<select name="breeding_type" ng-model="Givebirth.breeding_type" class="form-control" required="true">
+								<option value="">กรุณาเลือก ..</option>
+								<option value="NM">ผสมธรรมชาติ</option>
+								<option value="AI">ผสมเทียม</option>
+							</select>
+							<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="givebirth.breeding_type.$invalid"></span> 
+							<span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="givebirth.breeding_type.$valid"></span>
 						</div>
 					</div>
 				</div>
@@ -501,6 +588,7 @@
 	    					<th>หมายเลขประจำตัวโคพ่อพันธุ์ที่ผสม</th>
 	    					<th>เจ้าหน้าที่ผู้ผสม</th>
 	    					<th>สถานะการผสม</th>
+	    					<th>ประเภทการผสม</th>
 	    				</tr>
 	    			</thead>
 	    			<tbody>
@@ -510,10 +598,11 @@
 	    						<button class="btn btn-danger btn-sm" ng-click="deleteGivebirth('cows', 'deleteGivebirth', data, $index)"><span class="glyphicon glyphicon-trash"></span></button>
 	    					</td>
 	    					<td>{{$index + 1}}</td>
-	    					<td>{{data.breeding_date | date:'dd/MM/yyyy'}}</td>
+	    					<td>{{convertStaticTextDate(data.breeding_date)}}</td>
 	    					<td>{{data.father_code}}</td>
 	    					<td>{{data.authorities}}</td>
 	    					<td>{{data.breeding_status=='Y'?'ติด':'ไม่ติด'}}</td>
+	    					<td>{{data.breeding_type=='NM'?'ผสมธรรมชาติ':'ผสมเทียม'}}</td>
 	    				</tr>
 	    			</tbody>
 	    		</table>
@@ -534,7 +623,7 @@
 	    					<tr ng-repeat="item in OwnerRecord[0].farm_cows">
 	    						<td>{{item.farm.name}}</td>
 	    						<td>{{item.farm.farm_herdsmans[0].herdsman.firstname}} {{item.farm.farm_herdsmans[0].herdsman.lastname}}</td>
-	    						<td>{{item.moveddate == null?'ปัจจุบัน':(item.moveddate | date:'dd/MM/yyyy')}}</td>
+	    						<td>{{item.moved_in_date == null?'ปัจจุบัน':({{convertStaticTextDate(item.moved_in_date)}})}}</td>
 	    					</tr>
 	    				</tbody>
 	    			</table>
@@ -548,7 +637,7 @@
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : movement.movement_date.$valid,'has-error' : movement.movement_date.$invalid}">
 							<label>วันที่เคลื่อนย้าย :</label>
-							<input type="date" name="movement_date" ng-model="Movement.movement_date" class="form-control" required="true">
+							<input type="text" name="movement_date" id="movement_date" ng-model="Movement.movement_date" class="form-control" required="true">
 							<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="movement.movement_date.$invalid"></span> 
 							<span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="movement.movement_date.$valid"></span>
 						</div>
@@ -607,7 +696,7 @@
 	    						<button class="btn btn-danger btn-sm" ng-click="deleteMovement('cows', 'deleteMovement', data, $index)"><span class="glyphicon glyphicon-trash"></span></button>
 	    					</td>
 	    					<!--<td>{{$index + 1}}</td>-->
-	    					<td>{{data.movement_date | date:'dd/MM/yyyy'}}</td>
+	    					<td>{{convertStaticTextDate(data.movement_date)}}</td>
 	    					<td>{{data.departure}}</td>
 	    					<td>{{data.destination}}</td>
 	    					<td>{{data.description}}</td>
@@ -626,7 +715,7 @@
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : treatment.treatment_date.$valid,'has-error' : treatment.treatment_date.$invalid}">
 							<label>วันที่รักษา :</label>
-							<input type="date" name="treatment_date" ng-model="Treatment.treatment_date" class="form-control" required="true">
+							<input type="text" name="treatment_date" id="treatment_date" ng-model="Treatment.treatment_date" class="form-control" required="true">
 							<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="treatment.treatment_date.$invalid"></span> 
 							<span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="treatment.treatment_date.$valid"></span>
 						</div>
@@ -672,7 +761,7 @@
 	    				<tr>
 	    					<th>#</th>
 	    					<th>วันที่รักษา</th>
-	    					<th>โรค</th>
+	    					<th>โรค/การรักษา</th>
 	    					<th>การให้ยา</th>
 	    					<th>ผู้รักษา</th>
 	    				</tr>
@@ -683,7 +772,7 @@
 	    						<button class="btn btn-info btn-sm" ng-click="editTreatment(data)"><span class="glyphicon glyphicon-edit"></span></button> 
 	    						<button class="btn btn-danger btn-sm" ng-click="deleteTreatment('cows', 'deleteTreatment', data, $index)"><span class="glyphicon glyphicon-trash"></span></button>
 	    					</td>
-	    					<td>{{data.treatment_date | date:'dd/MM/yyyy'}}</td>
+	    					<td>{{convertStaticTextDate(data.treatment_date)}}</td>
 	    					<td>{{data.disease}}</td>
 	    					<td>{{data.drug_used}}</td>
 	    					<td>{{data.conservator}}</td>
