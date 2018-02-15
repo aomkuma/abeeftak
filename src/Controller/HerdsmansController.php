@@ -49,26 +49,56 @@ class HerdsmansController extends AppController {
             $searchfrom = $this->request->getData('searchfrom');
             $search = $this->request->getData('search');
 
+            $sprsearch = explode(" ", $search);
+            pr($sprsearch);
             $whereherdsman = [];
 
-            if ($searchfrom == 1) {
-                $search1 = '%' . $this->request->getData('search') . '%';
-                array_push($whereherdsman, ['Herdsmans.code LIKE' => $search1]);
-            } else if ($searchfrom == 2) {
+            if (sizeof($sprsearch) == 1) {
 
-                $arrSearch = explode(" ", $search);
-                $name = '%' . $arrSearch[0] . '%';
-                //     $lastname = "'%'" . $arrSearch[1] . "'%'";
-                array_push($whereherdsman, ['Herdsmans.firstname LIKE' => $name]);
-            } else if ($searchfrom == 3) {
-                $search1 = '%' . $this->request->getData('search') . '%';
-                array_push($whereherdsman, ['Herdsmans.idcard LIKE' => $search1]);
+                if ($searchfrom == 1) {
+                    $search1 = '%' . $this->request->getData('search') . '%';
+                    array_push($whereherdsman, ['Herdsmans.code LIKE' => $search1]);
+                } else if ($searchfrom == 2) {
+
+                    $name = '%' . $sprsearch[0] . '%';
+                    //     $lastname = "'%'" . $arrSearch[1] . "'%'";
+                    array_push($whereherdsman, (array('OR' => array('Herdsmans.firstname LIKE' => $name, 'Herdsmans.lastname LIKE' => $name))));
+                    pr($whereherdsman);
+                } else if ($searchfrom == 3) {
+                    $search1 = '%' . $this->request->getData('search') . '%';
+                    array_push($whereherdsman, ['Herdsmans.idcard LIKE' => $search1]);
+                } else {
+
+                    $fromdate = $this->request->getData('fromdate');
+                    $todate = $this->request->getData('todate');
+
+                    array_push($whereherdsman, ['Herdsmans.registerdate >=' => $fromdate, 'Herdsmans.registerdate <=' => $todate]);
+                }
             } else {
 
-                $fromdate = $this->request->getData('fromdate');
-                $todate = $this->request->getData('todate');
+                if ($searchfrom == 1) {
+                    
+                    $search1 = '%' . $this->request->getData('search') . '%';
+                    array_push($whereherdsman, ['Herdsmans.code LIKE' => $search1]);
+                    
+                } else if ($searchfrom == 2) {
 
-                array_push($whereherdsman, ['Herdsmans.registerdate >=' => $fromdate, 'Herdsmans.registerdate <=' => $todate]);
+                    $name = '%' . $sprsearch[0] . '%';
+                    $lastname = '%' . $sprsearch[1] . '%';
+                    array_push($whereherdsman, ['Herdsmans.firstname LIKE' => $name, 'Herdsmans.lastname LIKE' => $lastname]);
+                    
+                } else if ($searchfrom == 3) {
+                    
+                    $search1 = '%' . $this->request->getData('search') . '%';
+                    array_push($whereherdsman, ['Herdsmans.idcard LIKE' => $search1]);
+                    
+                } else {
+
+                    $fromdate = $this->request->getData('fromdate');
+                    $todate = $this->request->getData('todate');
+
+                    array_push($whereherdsman, ['Herdsmans.registerdate >=' => $fromdate, 'Herdsmans.registerdate <=' => $todate]);
+                }
             }
 
             $this->request->session()->write('whereherdsman', $whereherdsman);
@@ -249,7 +279,11 @@ class HerdsmansController extends AppController {
 
             $herdsman = $this->Herdsmans->patchEntity($herdsman, $this->request->getData());
             $herdsman->updatedby = $getname['firstname'] . ' ' . $getname['lastname'];
-            ;
+            
+            if ($this->request->getData('email') == '') {
+                $herdsman->email = null;
+            }
+            
             if ($this->Herdsmans->save($herdsman)) {
                 $this->Flash->success(__('The herdsman has been saved.'));
 
