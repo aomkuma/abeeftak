@@ -48,7 +48,7 @@ index++;
 
     var dd = {
         content: [
-            {text: 'รายงานสรุปจำนวนวัว ', style: 'header', alignment: 'center'},
+            {text: 'รายงานสรุปจำนวนโค ', style: 'header', alignment: 'center'},
             {
                 table: {
                     headerRows: 1,

@@ -99,7 +99,7 @@ class ReportsController extends AppController {
                 . ' group by district, type) AS s '
                 . 'right join '
                 . 'addresses m '
-                . 'on m.district = s.district'
+                . 'on m.district = s.district group by amphur'
         ;
 
         $results1 = $connection->execute($query1)->fetchAll('assoc');
@@ -117,7 +117,7 @@ class ReportsController extends AppController {
                 . ' group by district, type) AS s '
                 . 'right join '
                 . 'addresses m '
-                . 'on m.district = s.district'
+                . 'on m.district = s.district group by amphur'
         ;
 
         $results2 = $connection->execute($query2)->fetchAll('assoc');
@@ -135,7 +135,7 @@ class ReportsController extends AppController {
                 . ' group by district, type) AS s '
                 . 'right join '
                 . 'addresses m '
-                . 'on m.district = s.district'
+                . 'on m.district = s.district group by amphur'
         ;
 
         $results3 = $connection->execute($query3)->fetchAll('assoc');
@@ -153,7 +153,7 @@ class ReportsController extends AppController {
                 . ' group by district, type) AS s '
                 . 'right join '
                 . 'addresses m '
-                . 'on m.district = s.district'
+                . 'on m.district = s.district group by amphur'
         ;
 
         $results4 = $connection->execute($query4)->fetchAll('assoc');
@@ -171,7 +171,7 @@ class ReportsController extends AppController {
                 . ' group by district, type) AS s '
                 . 'right join '
                 . 'addresses m '
-                . 'on m.district = s.district'
+                . 'on m.district = s.district group by amphur'
         ;
 
         $results5 = $connection->execute($query5)->fetchAll('assoc');
@@ -189,7 +189,7 @@ class ReportsController extends AppController {
                 . ' group by district, type) AS s '
                 . 'right join '
                 . 'addresses m '
-                . 'on m.district = s.district'
+                . 'on m.district = s.district group by amphur'
         ;
 
         $results6 = $connection->execute($query6)->fetchAll('assoc');
@@ -207,7 +207,8 @@ class ReportsController extends AppController {
                 . ' group by district, type) AS s '
                 . 'right join '
                 . 'addresses m '
-                . 'on m.district = s.district'
+                . 'on m.district = s.district group by amphur'
+                
         ;
 
         $results7 = $connection->execute($query7)->fetchAll('assoc');
@@ -225,13 +226,13 @@ class ReportsController extends AppController {
                 . ' group by district, type) AS s '
                 . 'right join '
                 . 'addresses m '
-                . 'on m.district = s.district'
+                . 'on m.district = s.district group by amphur'
+                
         ;
 
         $results8 = $connection->execute($query8)->fetchAll('assoc');
-//        debug($results1);
-//        debug($results2);
-//        debug($results3);
+       
+       
 //        
         $summaryjs1 = json_encode($results1);
         $summaryjs2 = json_encode($results2);
