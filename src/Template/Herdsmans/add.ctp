@@ -39,7 +39,7 @@
 //                return false;
 //            } else {
 
-            if (spg[lastarr] !== 'jpg' && spg[lastarr] !== 'png') {
+            if (spg[lastarr] !== 'jpg' && spg[lastarr] !== 'JPG' && spg[lastarr] !== 'png' && spg[lastarr] !== 'PNG' && spg[lastarr] !== 'jpeg' && spg[lastarr] !== 'JPEG') {
                 alert("กรุณาใส่ประเภทไฟล์ให้ถูกต้อง");
                 $('#image').val = '';
                 $('#image').focus();
