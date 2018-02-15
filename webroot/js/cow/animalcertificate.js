@@ -1,3 +1,13 @@
+function getBase64Image(img) {
+  var canvas = document.createElement("canvas");
+  canvas.width = img.width;
+  canvas.height = img.height;
+  var ctx = canvas.getContext("2d");
+  ctx.drawImage(img, 0, 0);
+  var dataURL = canvas.toDataURL("image/png");
+  return dataURL;//.replace(/^data:image\/(png|jpg);base64,/, "");
+}
+
 function exportPDF(datacow, datafath, datamoth, datamove, datatreat) {
     if (datacow[0]['gender'] === 'M') {
         datacow[0]['gender'] = 'ผู้'
@@ -23,7 +33,7 @@ function exportPDF(datacow, datafath, datamoth, datamove, datatreat) {
     // ตารางรูป //////////////////////////////////
     var data_detail = [];
     var firstRow = [];
-
+    /*
     firstRow.push({text: '', style: 'tableHeader', colSpan: 6, rowSpan: 41, alignment: 'center', fontSize: 12, bold: true});
     firstRow.push({text: ''});
     firstRow.push({text: ''});
@@ -45,6 +55,7 @@ function exportPDF(datacow, datafath, datamoth, datamove, datatreat) {
 
         data_detail.push(firstRow2);
     }
+    */
 
     var firstRow3 = [];
 
@@ -308,7 +319,9 @@ function exportPDF(datacow, datafath, datamoth, datamove, datatreat) {
             , bold: 'THSarabun-Bold.ttf'
         }
     };
-
+    console.log(document.getElementById("imageid"));
+    var imageBase64 = getBase64Image(document.getElementById("imageid"));
+    console.log(imageBase64);
     var dd = {
         content: [
             {text: 'บัตรประจำตัวสัตว์', style: 'header', alignment: 'center', margin: [0, 10, 0, 0]},
@@ -356,6 +369,11 @@ function exportPDF(datacow, datafath, datamoth, datamove, datatreat) {
                 ]
             },
             {
+                image: imageBase64,
+                width: 325,
+                margin: [100, 50, 50, 10]
+            },
+            {
                 table: {
                     headerRows: 1,
                     widths: [45, 45, 45, 45, 45, 45],
@@ -363,6 +381,7 @@ function exportPDF(datacow, datafath, datamoth, datamove, datatreat) {
 
                 }, margin: [100, 0, 0, 0]
             },
+
             {
                 columns: [
 
@@ -384,6 +403,7 @@ function exportPDF(datacow, datafath, datamoth, datamove, datatreat) {
                             , {text: '\n  (                              )     '}
                             , {text: '\n ตำแหน่ง '}
                             , {text: '                                  ', decoration: 'underline', decorationStyle: 'dashed'}
+                            , {text: '\n                                       '}
 
                         ], alignment: 'center'}
 
@@ -456,4 +476,8 @@ function exportPDF(datacow, datafath, datamoth, datamove, datatreat) {
     }
 
     pdfMake.createPdf(dd).download('บัตรประจำตัวสัตว์ รหัสโค' + datacow[0]['code'] + '.pdf');
+    setTimeout(function(){
+        window.close();    
+    }, 2000);
+    
 }
