@@ -31,7 +31,7 @@ class FarmsFixture extends TestFixture
         'total_cow_capacity' => ['type' => 'integer', 'length' => 4, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'hasmeadow' => ['type' => 'string', 'length' => null, 'null' => false, 'default' => 'Y', 'collate' => 'utf8_general_ci', 'comment' => 'แปลงหญ้า', 'precision' => null, 'fixed' => null],
         'total_meadow' => ['type' => 'integer', 'length' => 2, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'total_space' => ['type' => 'integer', 'length' => 4, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'total_space' => ['type' => 'string', 'length' => 100, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'grass_species' => ['type' => 'string', 'length' => 50, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'water_body' => ['type' => 'string', 'length' => 50, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'dung_destroy' => ['type' => 'string', 'length' => 50, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
@@ -56,13 +56,13 @@ class FarmsFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 'a3f5cf2b-b52e-4995-828b-bd0368c515c4',
+            'id' => '3a2252ee-61bf-496e-8bbf-091ac03ee242',
             'name' => 'Lorem ipsum dolor sit amet',
             'level' => 'Lorem ipsum dolor sit amet',
             'type' => 'Lorem ipsum dolor sit amet',
-            'address_id' => '22c7588a-1f14-408f-b6ba-ddedef5cbdbd',
+            'address_id' => '2c9f82ee-40db-4e44-a297-58fd88971ed3',
             'description' => 'Lorem ipsum dolor sit amet',
-            'location_image' => '8e5c910a-117e-4290-bf56-18e5d5ea883c',
+            'location_image' => '4f5cf518-2f17-4114-a74b-3a037252bffb',
             'latitude' => 1.5,
             'longitude' => 1.5,
             'hasstable' => 'Lorem ipsum dolor sit amet',
@@ -70,13 +70,13 @@ class FarmsFixture extends TestFixture
             'total_cow_capacity' => 1,
             'hasmeadow' => 'Lorem ipsum dolor sit amet',
             'total_meadow' => 1,
-            'total_space' => 1,
+            'total_space' => 'Lorem ipsum dolor sit amet',
             'grass_species' => 'Lorem ipsum dolor sit amet',
             'water_body' => 'Lorem ipsum dolor sit amet',
             'dung_destroy' => 'Lorem ipsum dolor sit amet',
-            'created' => '2018-02-12 07:52:40',
+            'created' => '2018-02-13 01:35:58',
             'createdby' => 'Lorem ipsum dolor sit amet',
-            'updated' => '2018-02-12 07:52:40',
+            'updated' => '2018-02-13 01:35:58',
             'updatedby' => 'Lorem ipsum dolor sit amet'
         ],
     ];

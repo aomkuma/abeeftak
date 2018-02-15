@@ -53,8 +53,8 @@ function exportPDF(data, data2) {
     pdfMake.fonts = {
         SriSuriwongse: {
 
-            normal: 'SRISURYWONGSE.ttf'
-            , bold: 'SRISURYWONGSE-Bold.ttf'
+            normal: 'THSarabun.ttf'
+            , bold: 'THSarabun-Bold.ttf'
         }
     };
 

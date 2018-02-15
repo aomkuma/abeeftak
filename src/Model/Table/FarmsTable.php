@@ -10,8 +10,8 @@ use Cake\Validation\Validator;
  * Farms Model
  *
  * @property \App\Model\Table\AddressesTable|\Cake\ORM\Association\BelongsTo $Addresses
- * @property |\Cake\ORM\Association\HasMany $FarmCows
- * @property |\Cake\ORM\Association\HasMany $FarmHerdsmans
+ * @property \App\Model\Table\FarmCowsTable|\Cake\ORM\Association\HasMany $FarmCows
+ * @property \App\Model\Table\FarmHerdsmansTable|\Cake\ORM\Association\HasMany $FarmHerdsmans
  *
  * @method \App\Model\Entity\Farm get($primaryKey, $options = [])
  * @method \App\Model\Entity\Farm newEntity($data = null, array $options = [])
@@ -128,7 +128,8 @@ class FarmsTable extends Table
             ->allowEmpty('total_meadow');
 
         $validator
-            ->integer('total_space')
+            ->scalar('total_space')
+            ->maxLength('total_space', 100)
             ->allowEmpty('total_space');
 
         $validator
