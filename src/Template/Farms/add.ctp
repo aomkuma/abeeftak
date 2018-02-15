@@ -103,7 +103,7 @@
                     <div class="col-md-8">
                         <div class="form-group">
                             <label for="">รายละเอียดอื่น ๆ</label>
-                            <?=$this->Form->textarea('description',['class'=>'form-control','rows'=>'3'])?>
+                            <?= $this->Form->textarea('description', ['class' => 'form-control', 'rows' => '3']) ?>
                         </div>
                     </div>
                 </div>
@@ -199,29 +199,95 @@
     var position;
     var defaultLat = 16.886323;
     var defaultLong = 99.129768;
+    var map, infoWindow;
 
     function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 12,
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 17,
             center: {lat: defaultLat, lng: defaultLong}
         });
 
-        marker = new google.maps.Marker({
-            map: map,
-            draggable: true,
-            animation: google.maps.Animation.DROP,
-            position: {lat: defaultLat, lng: defaultLong}
-        });
-        //console.log(map);
-        //marker.addListener('click', toggleBounce);
-        map.addListener('mouseup', function () {
-            //console.log(marker.getPosition().lat());
-            //alert(marker.getPosition());
-            position = marker.getPosition();
-            document.getElementById('latitude').value = position.lat();
-            document.getElementById('longitude').value = position.lng();
-        });
 
+
+
+        //infoWindow = new google.maps.InfoWindow;
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                defaultLat = position.coords.latitude;
+                defaultLong = position.coords.longitude;
+                var pos = {
+                    lat: defaultLat,
+                    lng: defaultLong
+                };
+
+                //infoWindow.setPosition(pos);
+                //infoWindow.setContent('Location found.');
+                //infoWindow.open(map);
+                map.setCenter(pos);
+
+                document.getElementById('latitude').value = defaultLat;
+                document.getElementById('longitude').value = defaultLong;
+
+                marker = new google.maps.Marker({
+                    map: map,
+                    draggable: true,
+                    animation: google.maps.Animation.DROP,
+                    position: {lat: defaultLat, lng: defaultLong}
+                });
+
+                map.addListener('mousemove', function () {
+                    //console.log(marker.getPosition().lat());
+                    //alert(marker.getPosition());
+                    position = marker.getPosition();
+                    document.getElementById('latitude').value = position.lat();
+                    document.getElementById('longitude').value = position.lng();
+                });
+
+                //markerOnMap(position.coords.latitude,position.coords.longitude);
+            }, function () {
+                handleLocationError(true, infoWindow, map.getCenter());
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+
+
+            marker = new google.maps.Marker({
+                map: map,
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+                position: {lat: defaultLat, lng: defaultLong}
+            });
+
+            //console.log(map);
+            //marker.addListener('click', toggleBounce);
+            map.addListener('mouseup', function () {
+                //console.log(marker.getPosition().lat());
+                //alert(marker.getPosition());
+                position = marker.getPosition();
+                document.getElementById('latitude').value = position.lat();
+                document.getElementById('longitude').value = position.lng();
+            });
+
+        }
+        //end
+
+
+
+
+
+    }
+
+
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                'Error: The Geolocation service failed.' :
+                'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
     }
 
     function toggleBounce() {
