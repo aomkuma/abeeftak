@@ -27,7 +27,8 @@ class FarmCowsFixture extends TestFixture
         'updated' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'updatedby' => ['type' => 'string', 'length' => 150, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'isactive' => ['type' => 'string', 'length' => null, 'null' => false, 'default' => 'Y', 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'moveddate' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
+        'moved_in_date' => ['type' => 'date', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
+        'moved_out_date' => ['type' => 'date', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
@@ -45,17 +46,18 @@ class FarmCowsFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => '8c1456e8-826b-46ec-9c2e-c6bdac1aa55f',
-            'farm_id' => '9c8e9de4-f912-41e6-a964-ec6d947f887e',
-            'cow_id' => 'ecb8f524-dde7-4713-a796-c863f632cfd6',
+            'id' => '97dc1623-22f7-4b88-87f7-0a8b0d0b1675',
+            'farm_id' => 'ad23bfa3-f136-47bb-b53a-76038f11299d',
+            'cow_id' => 'dee8a5a7-21cc-4685-a3b7-73a2a7212583',
             'seq' => 1,
             'description' => 'Lorem ipsum dolor sit amet',
-            'created' => '2018-02-11 09:13:41',
+            'created' => '2018-02-15 13:23:18',
             'createdby' => 'Lorem ipsum dolor sit amet',
-            'updated' => '2018-02-11 09:13:41',
+            'updated' => '2018-02-15 13:23:18',
             'updatedby' => 'Lorem ipsum dolor sit amet',
             'isactive' => 'Lorem ipsum dolor sit amet',
-            'moveddate' => '2018-02-11 09:13:41'
+            'moved_in_date' => '2018-02-15',
+            'moved_out_date' => '2018-02-15'
         ],
     ];
 }

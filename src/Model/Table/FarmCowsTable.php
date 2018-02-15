@@ -96,8 +96,12 @@ class FarmCowsTable extends Table
             ->notEmpty('isactive');
 
         $validator
-            ->dateTime('moveddate')
-            ->allowEmpty('moveddate');
+            ->date('moved_in_date')
+            ->allowEmpty('moved_in_date');
+
+        $validator
+            ->date('moved_out_date')
+            ->allowEmpty('moved_out_date');
 
         return $validator;
     }
