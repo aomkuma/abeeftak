@@ -219,14 +219,14 @@ class CowsController extends AppController {
         }
         $cow->breed_level = $Cow['breed_level'];
         $cow->grade = $Cow['grade'];
-        $cow->birthday = date('Y-m-d', strtotime($Cow['birthday']));
+        $cow->birthday = $this->convertDate($Cow['birthday']);
         $cow->gender = $Cow['gender'];
         $cow->isbreeder = $Cow['isbreeder'];
         $cow->breeding = $Cow['breeding'];
         $cow->father_code = $Cow['father_code'];
         $cow->mother_code = $Cow['mother_code'];
         $cow->origins = $Cow['origins'];
-        $cow->import_date = date('Y-m-d', strtotime($Cow['import_date']));
+        $cow->import_date = $this->convertDate($Cow['import_date']);
 
         if ($this->Cows->save($cow)) {
             $result['DATA']['ID'] = $cow->id;
@@ -242,6 +242,23 @@ class CowsController extends AppController {
         $this->response->type('application/json');
 
         return $this->response;
+    }
+
+    private function convertDate($d){
+        $newDate = null;
+        if(!empty($d)){
+            $datetime = explode(' ', $d);
+            $arr = explode('/', $datetime[0]);
+            $date = str_pad($arr[0], 2, '0', STR_PAD_LEFT);
+            $month = str_pad($arr[1], 2, '0', STR_PAD_LEFT);
+            $year = intval($arr[2]) - 543;
+            if(count($datetime) == 2){
+                $time = ' ' . $datetime[1];
+            }
+            $dateStr = $year . '-' . $month . '-' . $date . $time;
+            $newDate = date('Y-m-d', strtotime($dateStr));
+        }
+        return $newDate;
     }
 
     private function genCode() {
