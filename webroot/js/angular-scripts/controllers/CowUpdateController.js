@@ -77,8 +77,15 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
             $scope.autocompleteUserResult = [];
             eval('$scope.ShowAutocomplete' + masterType + ' = false;');
             $('#' + focusParent).focus();
-            if(masterType == 'COMPANYCODE'){
-                $scope.setCompany(value);
+        }
+
+        $scope.setAutocompleteValueByEnter = function(obj ,value, masterType, focusParent, event){
+            if(event.which == 13){
+                eval('$scope.' + obj + ' = "' + value.code + '";');
+                $scope.autocompleteUserResult = [];
+                eval('$scope.ShowAutocomplete' + masterType + ' = false;');
+
+                $('#' + focusParent).focus();
             }
         }
 
@@ -105,8 +112,9 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
                 $scope.OwnerRecord = result.data.OwnerRecord;
     			$scope.Cows = result.data.DATA;
                 $scope.Cows.breed_level = parseInt($scope.Cows.breed_level);
-                $scope.Cows.birthday = convertDate($scope.Cows.birthday);
-                $scope.Cows.import_date = convertDate($scope.Cows.import_date);
+                
+                $scope.Cows.import_date = convertDate($scope.Cows.import_date, 'import_date');
+                $scope.Cows.birthday = convertDate($scope.Cows.birthday, 'birthday');
                 
                 // Make Wean Object
                 var weanIndex = $filter('FindWean')($scope.Cows.growth_records);
@@ -573,9 +581,6 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
 })
 ;
 
-function convertDate(d){
-    return new Date(d);   
-}
 
 function makeSQLDate(dateObj){
     console.log(dateObj);

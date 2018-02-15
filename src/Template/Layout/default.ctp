@@ -44,6 +44,40 @@
 
         <script>
             var urlGlobal = '<?=SITE_URL?>';
+            function convertDate(dateObj, type){
+                console.log(dateObj, type);
+                
+                var d = null;
+                var showDate = null;
+                //var setDate = null;
+                if(dateObj != null){
+                    d = new Date(dateObj);   
+                    showDate = padLeft(d.getDate(), 2, '0') + '/' + padLeft(d.getMonth() + 1, 2, '0') + '/' + (d.getFullYear() + 543);
+                    $('#' + type).datepicker({
+                                format: 'dd/mm/yyyy',
+                                todayBtn: true,
+                                language: 'th',             //เปลี่ยน label ต่างของ ปฏิทิน ให้เป็น ภาษาไทย   (ต้องใช้ไฟล์ bootstrap-datepicker.th.min.js นี้ด้วย)
+                                thaiyear: true              //Set เป็นปี พ.ศ.
+                            }).datepicker("setDate", "0"); 
+                    
+                }else{
+                    $('#' + type).datepicker({
+                        format: 'dd/mm/yyyy',
+                        todayBtn: true,
+                        language: 'th',             //เปลี่ยน label ต่างของ ปฏิทิน ให้เป็น ภาษาไทย   (ต้องใช้ไฟล์ bootstrap-datepicker.th.min.js นี้ด้วย)
+                        thaiyear: true              //Set เป็นปี พ.ศ.
+                    }).datepicker("setDate", "0");
+                }
+
+                return showDate;
+            }
+
+            function padLeft(num, size, pad_with) {
+                var s = num+"";
+                while (s.length < size) s = pad_with + s;
+                return s;
+            }
+
         </script>
 
         <!-- Custom Theme JavaScript -->
@@ -56,14 +90,17 @@
         <?= $this->Html->script('angular-scripts/node_modules/angular-cookies/angular-cookies.min.js') ?>
         <?= $this->Html->script('angular-scripts/node_modules/ng-file-upload/ng-file-upload-shim.min.js') ?>
         <?= $this->Html->script('angular-scripts/node_modules/ng-file-upload/ng-file-upload.min.js') ?>
-        <script src="../../../webroot/js/angular-scripts/abeef-main.js" type="text/javascript"></script>
         <?= $this->Html->script('angular-scripts/abeef-main.js') ?>
         <?= $this->Html->script('angular-scripts/service-factory/HttpService.js') ?>
         <?= $this->Html->script('angular-scripts/controllers/CowUpdateController.js') ?>
         <?= $this->Html->script('angular-scripts/node_modules/pdfmake/build/pdfmake.min.js') ?>
         <?= $this->Html->script('angular-scripts/node_modules/pdfmake/build/vfs_fonts.js') ?>
         <?= $this->Html->script('angular-scripts/node_modules/pdfmake/build/build/vfs_fonts.js') ?>
-
+        
+        <?= $this->Html->css('bootstrap-3.3.7-dist/css/bootstrap-theme.css', ['rel' => 'stylesheet']) ?>
+        <?= $this->Html->css('css-datepicker/bootstrap-datepicker.css', ['rel' => 'stylesheet']) ?>
+        <?= $this->Html->script('bootstrap-datepicker-custom/dist/js/bootstrap-datepicker-custom.js') ?>
+        <?= $this->Html->script('bootstrap-datepicker-custom/dist/locales/bootstrap-datepicker.th.min.js') ?>
 
 
     </head>

@@ -4,7 +4,21 @@
  * @var \App\Model\Entity\Cow[]|\Cake\Collection\CollectionInterface $cows
  */
 ?>
-<script>var cows_id = '<?= $id ?>';</script>
+<script>
+	var cows_id = '<?= $id ?>';
+	setTimeout(function(){
+
+		// $(document).ready(function () {
+	 //        $('.datepicker').datepicker({
+	 //            format: 'dd/mm/yyyy',
+	 //            todayBtn: true,
+	 //            language: 'th',             //เปลี่ยน label ต่างของ ปฏิทิน ให้เป็น ภาษาไทย   (ต้องใช้ไฟล์ bootstrap-datepicker.th.min.js นี้ด้วย)
+	 //            thaiyear: true              //Set เป็นปี พ.ศ.
+	 //        }).datepicker("setDate", "0");  //กำหนดเป็นวันปัจุบัน
+	 //    });
+	}, 1000);
+	
+</script>
 
 <div ng-app="abeef" ng-controller="CowUpdateController">
 	<div class="alert alert-success text-center" id="success-alert" style="display: none;">
@@ -44,7 +58,7 @@
 					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-lg-offset-2  col-md-offset-2">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : cow_info.birthday.$valid,'has-error' : cow_info.birthday.$invalid}">
 							<label>วัน/เดือน/ปี เกิด :</label> 
-							<input type="date" name="birthday" ng-model="Cows.birthday" class="form-control" required="true">
+							<input type="text" name="birthday" id="birthday" ng-model="Cows.birthday" class="form-control datepicker" required="true">
 							<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="cow_info.birthday.$invalid"></span> 
 							<span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="cow_info.birthday.$valid"></span>
 						</div>
@@ -172,7 +186,7 @@
 					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-lg-offset-2  col-md-offset-2">
 						<div class="form-group has-feedback" ng-class="{ 'has-success' : cow_info.import_date.$valid,'has-error' : cow_info.import_date.$invalid}">
 							<label>วันที่นำเข้า :</label>
-							<input type="date" name="import_date" ng-model="Cows.import_date" class="form-control" ng-required="Cows.origins == 'IM'">
+							<input type="text" name="import_date" id="import_date" ng-model="Cows.import_date" class="form-control datepicker" ng-required="Cows.origins == 'IM'">
 							<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="cow_info.import_date.$invalid"></span> 
 							<span class="glyphicon glyphicon glyphicon-ok form-control-feedback" ng-show="cow_info.import_date.$valid"></span>
 						</div>
