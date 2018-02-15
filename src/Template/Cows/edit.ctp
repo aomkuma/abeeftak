@@ -788,7 +788,7 @@
 					<label class="col-lg-2">
 					รูปภาพ
 					<br>
-					(.png,.jpg,.raw ขนาดไม่เกิน 5 MB)
+					(.png,.jpg ขนาดไม่เกิน 5 MB)
 					</label>
 					<div class="col-lg-8">
 						<div class="row">
@@ -796,7 +796,7 @@
 								<p class="input-group">
 				                  <input type="text" readonly="true" class="form-control" ng-model="fileimg.name" />
 				                  <span class="input-group-btn">
-									<button class="btn btn-default" ngf-select ng-model="fileimg" accept="image/*" ngf-max-size="5MB" ngf-pattern="'.png,.jpg,.raw,.gif'" ngf-model-invalid="invalidMainImgFile">เลือก</button>
+									<button class="btn btn-default" ngf-select ng-model="fileimg" accept="image/*" ngf-max-size="5MB" ngf-pattern="'.png,.jpg'" ngf-model-invalid="invalidMainImgFile">เลือก</button>
 								</span>
 				                </p>
 				                <br>

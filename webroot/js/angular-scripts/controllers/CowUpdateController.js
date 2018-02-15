@@ -1,4 +1,4 @@
-angular.module('abeef').controller('CowUpdateController', function($scope, $q, $cookies, $filter, $uibModal, HttpService) {
+angular.module('abeef').controller('CowUpdateController', function($scope, $q, $cookies, $filter, $uibModal, HttpService, Upload) {
 	//console.log('Hello !');
     $scope.ShowAutocompleteObj = ['ShowAutocompleteFATHERCODE', 'ShowAutocompleteMOTHERCODE'];
     $scope.autocompleteUserResult = [];
@@ -496,17 +496,37 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
     }
 
     $scope.updloadImg = function(img, short_desc, cow_id){
-        var params = {'imageObj' : img , 'short_desc':short_desc, 'cow_id' : cow_id};
-        HttpService.uploadRequest('cows', 'uploadImage', params).then(function(result){
-            if(result.status != 200 || result.data.STATUS == 'ERROR'){
-                alert(result.errorMsg);
-            }else{
-                $scope.fileimg = '';
-                $scope.short_desc = null;
-                $scope.getCows('cows','loaddata',{cows_id : cows_id});
-                //console.log('sad');
-            }
-        });
+        console.log($scope.fileimg);
+        console.log($scope.short_desc);
+        if(img != null){
+            var params = {'imageObj' : img , 'short_desc':short_desc, 'cow_id' : cow_id};
+            //HttpService.uploadRequest('cows', 'uploadImage', params).then(function(result){
+            Upload.upload({
+                url: urlGlobal + '/cows/uploadImage',
+                data: { 'uploadObj' : params }
+            }).then(function (result) {
+                //return {'status':response.status, 'data':response.data};
+                if(result.status != 200 || result.data.STATUS == 'ERROR'){
+                    alert(result.errorMsg);
+                }else{
+                    img = undefined;
+                    $scope.fileimg = undefined;
+                    $scope.short_desc = null;
+                    window.location.href = cow_id;
+                    //$scope.getCows('cows','loaddata',{cows_id : cows_id});
+                    //console.log('sad');
+                }
+            }, function (resp) {
+                console.log('Error status: ' + resp.status);
+            }, function (evt) {
+            });
+                
+            //});
+            
+
+        }else{
+            alert('กรุณาเลือกภาพ');
+        }
     }
 
 	// Loaf all data
@@ -518,6 +538,8 @@ angular.module('abeef').controller('CowUpdateController', function($scope, $q, $
         $scope.Cows.import_date = convertDate($scope.Cows.import_date, 'import_date');
         $scope.Cows.birthday = convertDate($scope.Cows.birthday, 'birthday');
     }
+    $scope.fileimg = null;
+    $scope.short_desc = null;
     $scope.FertilizeUpdate = false;
     $scope.BreederUpdate = false;
     $scope.GivebirthUpdate = false;
