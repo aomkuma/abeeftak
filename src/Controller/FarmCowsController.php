@@ -63,11 +63,20 @@ class FarmCowsController extends AppController {
         $this->autoRender = false;
         if ($this->request->is(['patch', 'post', 'put'])) {
             //$this->FarmCows = TableRegistry::get('FarmCows');
+            $data = $this->request->getData();
+            
+            $q = $this->FarmCows->find()
+                    ->where(['FarmCows.cow_id'=>$data['cow_id'],'FarmCows.isactive'=>'Y']);
+            $_count = $q->count();
+            if($_count >0){
+                $this->Flash->error(__('โคไม่พร้อมใช้งาน'));
+                return $this->redirect(['action' => 'index', $farm_id]);
+            }
             $farmCows = $this->FarmCows->newEntity();
 
 
             //$data = [];
-            $data = $this->request->getData();
+            
             //$postData = $postData['data'];
             //$this->log($postData,'debug');
             //parse_str($postData, $data);
