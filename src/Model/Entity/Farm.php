@@ -28,6 +28,7 @@ use Cake\ORM\Entity;
  * @property string $createdby
  * @property \Cake\I18n\FrozenTime $updated
  * @property string $updatedby
+ * @property string $isapproved
  *
  * @property \App\Model\Entity\Address $address
  * @property \App\Model\Entity\FarmCow[] $farm_cows
@@ -67,6 +68,7 @@ class Farm extends Entity
         'createdby' => true,
         'updated' => true,
         'updatedby' => true,
+        'isapproved' => true,
         'address' => true,
         'farm_cows' => true,
         'farm_herdsmans' => true

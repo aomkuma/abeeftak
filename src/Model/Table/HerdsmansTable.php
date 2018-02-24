@@ -10,8 +10,8 @@ use Cake\Validation\Validator;
  * Herdsmans Model
  *
  * @property \App\Model\Table\AddressesTable|\Cake\ORM\Association\BelongsTo $Addresses
- * @property |\Cake\ORM\Association\BelongsTo $Images
- * @property |\Cake\ORM\Association\HasMany $FarmHerdsmans
+ * @property \App\Model\Table\ImagesTable|\Cake\ORM\Association\BelongsTo $Images
+ * @property \App\Model\Table\FarmHerdsmansTable|\Cake\ORM\Association\HasMany $FarmHerdsmans
  *
  * @method \App\Model\Entity\Herdsman get($primaryKey, $options = [])
  * @method \App\Model\Entity\Herdsman newEntity($data = null, array $options = [])
@@ -22,7 +22,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Herdsman findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
- */class HerdsmansTable extends Table
+ */
+class HerdsmansTable extends Table
 {
 
     /**
@@ -69,43 +70,107 @@ use Cake\Validation\Validator;
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->uuid('id')            ->allowEmpty('id', 'create');
+            ->uuid('id')
+            ->allowEmpty('id', 'create');
+
         $validator
-            ->scalar('code')            ->requirePresence('code', 'create')            ->notEmpty('code');
+            ->scalar('code')
+            ->maxLength('code', 5)
+            ->requirePresence('code', 'create')
+            ->notEmpty('code');
+
         $validator
-            ->scalar('aac_code')            ->allowEmpty('aac_code');
+            ->scalar('aac_code')
+            ->maxLength('aac_code', 7)
+            ->allowEmpty('aac_code');
+
         $validator
-            ->scalar('amc_code')            ->allowEmpty('amc_code');
+            ->scalar('amc_code')
+            ->maxLength('amc_code', 6)
+            ->allowEmpty('amc_code');
+
         $validator
-            ->integer('grade')            ->requirePresence('grade', 'create')            ->notEmpty('grade');
+            ->integer('grade')
+            ->requirePresence('grade', 'create')
+            ->notEmpty('grade');
+
         $validator
-            ->scalar('title')            ->requirePresence('title', 'create')            ->notEmpty('title');
+            ->scalar('title')
+            ->maxLength('title', 10)
+            ->requirePresence('title', 'create')
+            ->notEmpty('title');
+
         $validator
-            ->scalar('firstname')            ->requirePresence('firstname', 'create')            ->notEmpty('firstname');
+            ->scalar('firstname')
+            ->maxLength('firstname', 50)
+            ->requirePresence('firstname', 'create')
+            ->notEmpty('firstname');
+
         $validator
-            ->scalar('lastname')            ->requirePresence('lastname', 'create')            ->notEmpty('lastname');
+            ->scalar('lastname')
+            ->maxLength('lastname', 50)
+            ->requirePresence('lastname', 'create')
+            ->notEmpty('lastname');
+
         $validator
-            ->scalar('idcard')            ->requirePresence('idcard', 'create')            ->notEmpty('idcard');
+            ->scalar('idcard')
+            ->maxLength('idcard', 13)
+            ->requirePresence('idcard', 'create')
+            ->notEmpty('idcard');
+
         $validator
-            ->date('birthday')            ->allowEmpty('birthday');
+            ->date('birthday')
+            ->allowEmpty('birthday');
+
         $validator
-            ->scalar('account_number1')            ->allowEmpty('account_number1');
+            ->scalar('account_number1')
+            ->maxLength('account_number1', 12)
+            ->allowEmpty('account_number1');
+
         $validator
-            ->scalar('account_number2')            ->allowEmpty('account_number2');
+            ->scalar('account_number2')
+            ->maxLength('account_number2', 12)
+            ->allowEmpty('account_number2');
+
         $validator
-            ->date('registerdate')            ->requirePresence('registerdate', 'create')            ->notEmpty('registerdate');
+            ->date('registerdate')
+            ->requirePresence('registerdate', 'create')
+            ->notEmpty('registerdate');
+
         $validator
-            ->scalar('isactive')            ->requirePresence('isactive', 'create')            ->notEmpty('isactive');
+            ->scalar('isactive')
+            ->requirePresence('isactive', 'create')
+            ->notEmpty('isactive');
+
         $validator
-            ->scalar('mobile')            ->allowEmpty('mobile');
+            ->scalar('mobile')
+            ->maxLength('mobile', 50)
+            ->allowEmpty('mobile');
+
         $validator
-            ->email('email')            ->allowEmpty('email');
+            ->email('email')
+            ->allowEmpty('email');
+
         $validator
-            ->scalar('description')            ->allowEmpty('description');
+            ->scalar('description')
+            ->maxLength('description', 255)
+            ->allowEmpty('description');
+
         $validator
-            ->scalar('createdby')            ->requirePresence('createdby', 'create')            ->notEmpty('createdby');
+            ->scalar('createdby')
+            ->maxLength('createdby', 100)
+            ->requirePresence('createdby', 'create')
+            ->notEmpty('createdby');
+
         $validator
-            ->scalar('updatedby')            ->allowEmpty('updatedby');
+            ->scalar('updatedby')
+            ->maxLength('updatedby', 100)
+            ->allowEmpty('updatedby');
+
+        $validator
+            ->scalar('isapproved')
+            ->allowEmpty('isapproved');
+
         return $validator;
     }
 

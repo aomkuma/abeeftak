@@ -40,6 +40,7 @@ class HerdsmansFixture extends TestFixture
         'createdby' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'updated' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'updatedby' => ['type' => 'string', 'length' => 100, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'isapproved' => ['type' => 'string', 'length' => null, 'null' => true, 'default' => 'N', 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
@@ -57,7 +58,7 @@ class HerdsmansFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => '16ff6b83-5e08-4766-a86d-8146f8b2f7ff',
+            'id' => '9ce664e6-a693-4634-b460-e39ed4776a89',
             'code' => 'Lor',
             'aac_code' => 'Lorem',
             'amc_code' => 'Lore',
@@ -66,20 +67,21 @@ class HerdsmansFixture extends TestFixture
             'firstname' => 'Lorem ipsum dolor sit amet',
             'lastname' => 'Lorem ipsum dolor sit amet',
             'idcard' => 'Lorem ipsum',
-            'birthday' => '2018-01-23',
+            'birthday' => '2018-02-24',
             'account_number1' => 'Lorem ipsu',
             'account_number2' => 'Lorem ipsu',
-            'registerdate' => '2018-01-23',
+            'registerdate' => '2018-02-24',
             'isactive' => 'Lorem ipsum dolor sit amet',
-            'address_id' => '500ac77c-aae4-404f-975d-27bc4fb4b94b',
-            'image_id' => '53d6ea80-a9cf-4ee2-9d8f-79f60788b408',
+            'address_id' => 'c1c0d900-f750-4ff2-8203-0831e8d5c409',
+            'image_id' => '1c036deb-fdd0-4269-bb2a-5658d7f28458',
             'mobile' => 'Lorem ipsum dolor sit amet',
             'email' => 'Lorem ipsum dolor sit amet',
             'description' => 'Lorem ipsum dolor sit amet',
-            'created' => '2018-01-23 06:49:38',
+            'created' => '2018-02-24 08:29:06',
             'createdby' => 'Lorem ipsum dolor sit amet',
-            'updated' => '2018-01-23 06:49:38',
-            'updatedby' => 'Lorem ipsum dolor sit amet'
+            'updated' => '2018-02-24 08:29:06',
+            'updatedby' => 'Lorem ipsum dolor sit amet',
+            'isapproved' => 'Lorem ipsum dolor sit amet'
         ],
     ];
 }

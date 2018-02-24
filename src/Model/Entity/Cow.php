@@ -24,14 +24,16 @@ use Cake\ORM\Entity;
  * @property string $createdby
  * @property \Cake\I18n\FrozenTime $updated
  * @property string $updatedby
+ * @property string $isapproved
  *
  * @property \App\Model\Entity\CowBreed $cow_breed
+ * @property \App\Model\Entity\BreedingRecord[] $breeding_records
  * @property \App\Model\Entity\CowImage[] $cow_images
+ * @property \App\Model\Entity\FarmCow[] $farm_cows
+ * @property \App\Model\Entity\GivebirthRecord[] $givebirth_records
+ * @property \App\Model\Entity\GrowthRecord[] $growth_records
  * @property \App\Model\Entity\MovementRecord[] $movement_records
  * @property \App\Model\Entity\TreatmentRecord[] $treatment_records
- * @property \App\Model\Entity\GrowthRecord[] $growth_records
- * @property \App\Model\Entity\BreedingRecord[] $breeding_records
- * @property \App\Model\Entity\GivebirthRecord[] $givebirth_records
  */
 class Cow extends Entity
 {
@@ -51,9 +53,6 @@ class Cow extends Entity
         'breed_level' => true,
         'birthday' => true,
         'gender' => true,
-        'livestock_register' => true,
-        'artificial_father' => true,
-        'artificial_father_breed' => true,
         'isbreeder' => true,
         'cow_breed_id' => true,
         'breeding' => true,
@@ -66,12 +65,14 @@ class Cow extends Entity
         'createdby' => true,
         'updated' => true,
         'updatedby' => true,
+        'isapproved' => true,
         'cow_breed' => true,
-        'cow_images' => true,
-        'movement_records' => true,
-        'treatment_records' => true,
-        'growth_records' => true,
         'breeding_records' => true,
-        'givebirth_records' => true
+        'cow_images' => true,
+        'farm_cows' => true,
+        'givebirth_records' => true,
+        'growth_records' => true,
+        'movement_records' => true,
+        'treatment_records' => true
     ];
 }
