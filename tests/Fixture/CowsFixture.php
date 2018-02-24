@@ -35,6 +35,7 @@ class CowsFixture extends TestFixture
         'createdby' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'updated' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'updatedby' => ['type' => 'string', 'length' => 100, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'isapproved' => ['type' => 'string', 'length' => null, 'null' => true, 'default' => 'N', 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
@@ -52,24 +53,25 @@ class CowsFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => 'f96a81d7-0e56-4d2e-904a-8857a51ed213',
+            'id' => 'dfac583a-99ea-4f8b-a4c3-f03c6f3c5e9d',
             'code' => 'Lorem ip',
             'grade' => 'Lorem ipsum dolor sit amet',
             'breed_level' => 'Lorem ipsum dolor sit amet',
-            'birthday' => '2018-02-12',
+            'birthday' => '2018-02-24',
             'gender' => 'Lorem ipsum dolor sit amet',
             'isbreeder' => 'Lorem ipsum dolor sit amet',
-            'cow_breed_id' => 'dd1dcdcf-85b6-4e8d-b3bb-6717ba9fdd2c',
+            'cow_breed_id' => '49867908-5687-4f53-93d3-dc50080e2146',
             'breeding' => 'Lorem ipsum dolor sit amet',
             'father_code' => 'Lorem ipsum dolor ',
             'mother_code' => 'Lorem ipsum dolor ',
             'origins' => 'Lorem ipsum dolor sit amet',
-            'import_date' => '2018-02-12',
+            'import_date' => '2018-02-24',
             'description' => 'Lorem ipsum dolor sit amet',
-            'created' => '2018-02-12 07:48:39',
+            'created' => '2018-02-24 08:28:51',
             'createdby' => 'Lorem ipsum dolor sit amet',
-            'updated' => '2018-02-12 07:48:39',
-            'updatedby' => 'Lorem ipsum dolor sit amet'
+            'updated' => '2018-02-24 08:28:51',
+            'updatedby' => 'Lorem ipsum dolor sit amet',
+            'isapproved' => 'Lorem ipsum dolor sit amet'
         ],
     ];
 }

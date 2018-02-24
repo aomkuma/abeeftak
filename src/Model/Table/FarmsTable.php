@@ -158,6 +158,10 @@ class FarmsTable extends Table
             ->maxLength('updatedby', 100)
             ->allowEmpty('updatedby');
 
+        $validator
+            ->scalar('isapproved')
+            ->allowEmpty('isapproved');
+
         return $validator;
     }
 

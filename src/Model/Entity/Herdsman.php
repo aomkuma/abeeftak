@@ -29,9 +29,13 @@ use Cake\ORM\Entity;
  * @property string $createdby
  * @property \Cake\I18n\FrozenTime $updated
  * @property string $updatedby
+ * @property string $isapproved
  *
  * @property \App\Model\Entity\Address $address
- */class Herdsman extends Entity
+ * @property \App\Model\Entity\Image $image
+ * @property \App\Model\Entity\FarmHerdsman[] $farm_herdsmans
+ */
+class Herdsman extends Entity
 {
 
     /**
@@ -66,6 +70,9 @@ use Cake\ORM\Entity;
         'createdby' => true,
         'updated' => true,
         'updatedby' => true,
-        'address' => true
+        'isapproved' => true,
+        'address' => true,
+        'image' => true,
+        'farm_herdsmans' => true
     ];
 }

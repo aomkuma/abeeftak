@@ -12,7 +12,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\CowBreedsTable|\Cake\ORM\Association\BelongsTo $CowBreeds
  * @property \App\Model\Table\BreedingRecordsTable|\Cake\ORM\Association\HasMany $BreedingRecords
  * @property \App\Model\Table\CowImagesTable|\Cake\ORM\Association\HasMany $CowImages
- * @property |\Cake\ORM\Association\HasMany $FarmCows
+ * @property \App\Model\Table\FarmCowsTable|\Cake\ORM\Association\HasMany $FarmCows
  * @property \App\Model\Table\GivebirthRecordsTable|\Cake\ORM\Association\HasMany $GivebirthRecords
  * @property \App\Model\Table\GrowthRecordsTable|\Cake\ORM\Association\HasMany $GrowthRecords
  * @property \App\Model\Table\MovementRecordsTable|\Cake\ORM\Association\HasMany $MovementRecords
@@ -164,6 +164,10 @@ class CowsTable extends Table
             ->scalar('updatedby')
             ->maxLength('updatedby', 100)
             ->allowEmpty('updatedby');
+
+        $validator
+            ->scalar('isapproved')
+            ->allowEmpty('isapproved');
 
         return $validator;
     }
