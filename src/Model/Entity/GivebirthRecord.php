@@ -4,20 +4,23 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * GivebirthRecord Entity
+ * Givebirthrecord Entity
  *
  * @property string $id
  * @property \Cake\I18n\FrozenDate $breeding_date
  * @property string $father_code
  * @property string $authorities
  * @property string $breeding_status
+ * @property string $breeding_type
  * @property \Cake\I18n\FrozenTime $created
  * @property string $createdby
  * @property \Cake\I18n\FrozenTime $updated
  * @property string $updatedby
  * @property string $cow_id
+ *
+ * @property \App\Model\Entity\Cow $cow
  */
-class GivebirthRecord extends Entity
+class Givebirthrecord extends Entity
 {
 
     /**
@@ -39,6 +42,7 @@ class GivebirthRecord extends Entity
         'createdby' => true,
         'updated' => true,
         'updatedby' => true,
-        'cow_id' => true
+        'cow_id' => true,
+        'cow' => true
     ];
 }

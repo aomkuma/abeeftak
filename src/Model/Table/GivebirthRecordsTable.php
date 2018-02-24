@@ -7,21 +7,21 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * GivebirthRecords Model
+ * Givebirthrecords Model
  *
- * @property |\Cake\ORM\Association\BelongsTo $Cows
+ * @property \App\Model\Table\CowsTable|\Cake\ORM\Association\BelongsTo $Cows
  *
- * @method \App\Model\Entity\GivebirthRecord get($primaryKey, $options = [])
- * @method \App\Model\Entity\GivebirthRecord newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\GivebirthRecord[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\GivebirthRecord|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\GivebirthRecord patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\GivebirthRecord[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\GivebirthRecord findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Givebirthrecord get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Givebirthrecord newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Givebirthrecord[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Givebirthrecord|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Givebirthrecord patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Givebirthrecord[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Givebirthrecord findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class GivebirthRecordsTable extends Table
+class GivebirthrecordsTable extends Table
 {
 
     /**
@@ -34,18 +34,11 @@ class GivebirthRecordsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('givebirth_records');
+        $this->setTable('givebirthrecords');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp', [
-            'events' => [
-                'Model.beforeSave' => [
-                    'created' => 'new',
-                    'updated' => 'always',
-                ]
-            ]
-        ]);
+        $this->addBehavior('Timestamp');
 
         $this->belongsTo('Cows', [
             'foreignKey' => 'cow_id',
@@ -72,11 +65,13 @@ class GivebirthRecordsTable extends Table
 
         $validator
             ->scalar('father_code')
+            ->maxLength('father_code', 20)
             ->requirePresence('father_code', 'create')
             ->notEmpty('father_code');
 
         $validator
             ->scalar('authorities')
+            ->maxLength('authorities', 100)
             ->requirePresence('authorities', 'create')
             ->notEmpty('authorities');
 
@@ -86,12 +81,19 @@ class GivebirthRecordsTable extends Table
             ->notEmpty('breeding_status');
 
         $validator
+            ->scalar('breeding_type')
+            ->requirePresence('breeding_type', 'create')
+            ->notEmpty('breeding_type');
+
+        $validator
             ->scalar('createdby')
+            ->maxLength('createdby', 100)
             ->requirePresence('createdby', 'create')
             ->notEmpty('createdby');
 
         $validator
             ->scalar('updatedby')
+            ->maxLength('updatedby', 100)
             ->allowEmpty('updatedby');
 
         return $validator;
