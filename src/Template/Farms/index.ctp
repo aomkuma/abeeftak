@@ -4,28 +4,29 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-10  col-lg-offset-1">
+    <div class="col-lg-10  col-lg-offset-1 box-border">
         <?= $this->Form->create('search', ['novalidate' => true, 'id' => 'frm', 'method' => 'get', 'class' => '']) ?>
 
-        <div class="col-md-4">
+        <div class="col-md-4" style="margin-top: 10px;">
             <?= $this->Form->control('name', ['class' => 'form-control', 'label' => false, 'id' => 'name', 'placeholder' => 'ชื่อฟาร์ม']) ?>
 
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" style="margin-top: 10px;">
             <?= $this->Form->select('level', $farm_levels, ['empty'=>'ระดับของฟาร์ม..','class' => 'form-control', 'id' => 'level']) ?>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" style="margin-top: 10px;">
             <?= $this->Form->select('type', $farm_types, ['empty'=>'ประเภทของฟาร์ม..','class' => 'form-control', 'id' => 'type']) ?>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2" style="margin-top: 10px;padding-bottom: 10px;">
             <button type="submit" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-search"></span> ค้นหา</button>
         </div>
         
         <?= $this->Form->end() ?>
     </div>
 </div>
+
 <div class="row">
-    <div class="col-md-12 bt-tool-group">
+    <div class="col-md-12 bt-tool-group margin-top-20">
         <?= $this->Html->link(BT_ADD, ['action' => 'add'], ['escape' => false]) ?>
     </div>
 
@@ -39,8 +40,8 @@
                     <th scope="col">ชื่อฟาร์ม</th>
                     <th scope="col">ระดับ</th>
                     <th scope="col">ประเภท</th>
-                    <th>ที่อยู่</th>
-                    <th scope="col">วันที่เพิ่ม</th>
+                    <th class="hidden-xs">ที่อยู่</th>
+                    <th scope="col" class="hidden-xs">วันที่เพิ่ม</th>
                     <th scope="col">ผู้เพิ่ม</th>
 
                 </tr>
@@ -57,7 +58,7 @@
                         <td><?= $this->Html->link(h($farm->name), ['action' => 'view', $farm->id], []) ?></td>
                         <td><?= h($farm->level) ?></td>
                         <td><?= h($farm->type) ?></td>
-                        <td>
+                        <td class="hidden-xs">
                             <?php
                             $address = '';
                             if (!is_null($farm->address->villagename)) {
@@ -72,7 +73,7 @@
                             ?>
                             <?= h($address) ?>
                         </td>
-                        <td><?= h($farm->created) ?></td>
+                        <td class="hidden-xs"><?= h($farm->created) ?></td>
                         <td><?= h($farm->createdby) ?></td>
 
                     </tr>
