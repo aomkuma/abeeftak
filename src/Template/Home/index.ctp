@@ -4,22 +4,62 @@
     </div>
     <!-- /.col-lg-12 -->
 </div>
-<!-- /.row -->
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-bar-chart-o fa-fw"></i> อนุมัติผู้เลี้ยงโค
+            </div>
+            <div class="panel-body">
+                
+                
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-bar-chart-o fa-fw"></i> อนุมัติโค
+            </div>
+            <div class="panel-body">
+                
+                
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-bar-chart-o fa-fw"></i> อนุมัติฟาร์ม
+            </div>
+            <div class="panel-body">
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-lg-4 col-md-6">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-4">
-                        <?=$this->Html->image('farmer.png',['class'=>'img-responsive'])?>
+                        <?= $this->Html->image('farmer.png', ['class' => 'img-responsive']) ?>
                     </div>
                     <div class="col-xs-8 text-right">
-                        <div class="huge"><?=h($herdsmanamt)?></div>
+                        <div class="huge"><?= h($herdsmanamt) ?></div>
                         <div class="font-th-prompt400">จำนวนผู้เลี้ยงโคทั้งหมด</div>
                     </div>
                 </div>
             </div>
-            <a href="<?=SITE_URL.'herdsmans'?>">
+            <a href="<?= SITE_URL . 'herdsmans' ?>">
                 <div class="panel-footer">
                     <span class="pull-left">ดูข้อมูล</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -33,15 +73,15 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-4">
-                        <?=$this->Html->image('barn.png',['class'=>'img-responsive'])?>
+                        <?= $this->Html->image('barn.png', ['class' => 'img-responsive']) ?>
                     </div>
                     <div class="col-xs-8 text-right">
-                        <div class="huge"><?=h($farmamt)?></div>
+                        <div class="huge"><?= h($farmamt) ?></div>
                         <div class="font-th-prompt400">จำนวนฟาร์มทั้งหมด</div>
                     </div>
                 </div>
             </div>
-            <a href="<?=SITE_URL.'farms'?>">
+            <a href="<?= SITE_URL . 'farms' ?>">
                 <div class="panel-footer">
                     <span class="pull-left">ดูข้อมูล</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -55,16 +95,16 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-4">
-                        
-                        <?=$this->Html->image('islamic-halal.png',['class'=>'img-responsive'])?>
+
+                        <?= $this->Html->image('islamic-halal.png', ['class' => 'img-responsive']) ?>
                     </div>
                     <div class="col-xs-8 text-right">
-                        <div class="huge"><?=h($cowamt)?></div>
+                        <div class="huge"><?= h($cowamt) ?></div>
                         <div class="font-th-prompt400">จำนวนโคทั้งหมด</div>
                     </div>
                 </div>
             </div>
-            <a href="<?=SITE_URL.'cows'?>">
+            <a href="<?= SITE_URL . 'cows' ?>">
                 <div class="panel-footer">
                     <span class="pull-left">ดูข้อมูล</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -134,19 +174,21 @@
             element: 'morris-donut-chart',
             data: [{
                     label: "เพศผู้",
-                    value: <?=$cowmamt?>
+                    value: <?= $cowmamt ?>
                 }, {
                     label: "เพศเมีย",
-                    value: <?=$cowfamt?>
+                    value: <?= $cowfamt ?>
                 }],
             resize: true
         });
-        var jsonData = '<?=$stat?>';
+        var jsonData = '<?= $stat ?>';
         jsonData = JSON.parse(jsonData);
-        
-        var arr = $.map(jsonData, function(el) { return el; });
-        
-        
+
+        var arr = $.map(jsonData, function (el) {
+            return el;
+        });
+
+
         Morris.Bar({
             element: 'morris-bar-chart',
             data: arr,
