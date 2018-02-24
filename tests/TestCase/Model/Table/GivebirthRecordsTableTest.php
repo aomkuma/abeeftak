@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\GivebirthRecordsTable;
+use App\Model\Table\GivebirthrecordsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\GivebirthRecordsTable Test Case
+ * App\Model\Table\GivebirthrecordsTable Test Case
  */
-class GivebirthRecordsTableTest extends TestCase
+class GivebirthrecordsTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\GivebirthRecordsTable
+     * @var \App\Model\Table\GivebirthrecordsTable
      */
-    public $GivebirthRecords;
+    public $Givebirthrecords;
 
     /**
      * Fixtures
@@ -24,7 +24,22 @@ class GivebirthRecordsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.givebirth_records'
+        'app.givebirthrecords',
+        'app.cows',
+        'app.cow_breeds',
+        'app.breeding_records',
+        'app.cow_images',
+        'app.images',
+        'app.farm_cows',
+        'app.farms',
+        'app.addresses',
+        'app.provinces',
+        'app.herdsmans',
+        'app.farm_herdsmans',
+        'app.givebirth_records',
+        'app.growth_records',
+        'app.movement_records',
+        'app.treatment_records'
     ];
 
     /**
@@ -35,8 +50,8 @@ class GivebirthRecordsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('GivebirthRecords') ? [] : ['className' => GivebirthRecordsTable::class];
-        $this->GivebirthRecords = TableRegistry::get('GivebirthRecords', $config);
+        $config = TableRegistry::exists('Givebirthrecords') ? [] : ['className' => GivebirthrecordsTable::class];
+        $this->Givebirthrecords = TableRegistry::get('Givebirthrecords', $config);
     }
 
     /**
@@ -46,27 +61,17 @@ class GivebirthRecordsTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->GivebirthRecords);
+        unset($this->Givebirthrecords);
 
         parent::tearDown();
     }
 
     /**
-     * Test initialize method
+     * Test initial setup
      *
      * @return void
      */
-    public function testInitialize()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test validationDefault method
-     *
-     * @return void
-     */
-    public function testValidationDefault()
+    public function testInitialization()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
