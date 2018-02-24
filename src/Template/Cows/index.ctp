@@ -38,6 +38,14 @@
                     </select>-->
                     <?= $this->Form->input('gender', array('options' => array(''=>'เพศ ..','M'=>'ผู้','F'=>'เมีย'), 'label'=> false, 'value'=>(empty($gender)?'':$gender), 'class'=>'form-control')); ?>
                 </div>
+                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                    <!--<select class="form-control" name="gender">
+                        <option value="">เพศ..</option>}
+                        <option value="M">ผู้</option>
+                        <option value="F">เมีย</option>
+                    </select>-->
+                    <?= $this->Form->input('isapproved', array('options' => array(''=>'สถานะการอนุมัติ ..','Y'=>'อนุมัติ','N'=>'รออนุมัติ'), 'label'=> false, 'value'=>(empty($isapproved)?'':$isapproved), 'class'=>'form-control')); ?>
+                </div>
                 <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                     <button type="submit" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-search"></span> ค้นหา</button>
                 </div>
@@ -60,6 +68,7 @@
                     <th scope="col" class="text-center"><?= $this->Paginator->sort('cow_breed_id','ชื่อ') ?></th>
                     <th scope="col" class="text-center"><?= $this->Paginator->sort('gender', 'เพศ') ?></th>
                     <th scope="col" class="text-center"><?= $this->Paginator->sort('birthday','วัน-เดือน-ปี เกิด') ?></th>
+                    <th scope="col" class="text-center"><?= $this->Paginator->sort('isapproved','สถานะการอนุมัติ') ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -75,7 +84,7 @@
                     <td><?= $cow->cow_breed->name ?></td>
                     <td><?= (h($cow->gender)=='M'?'ผู้':'เมีย') ?></td>
                     <td class="text-center"><?= h($cow->birthday) ?></td>
-                    
+                    <td class="text-center"><?= ($cow->isapproved=='N'?'รออนุมัติ':'อนุมัติ') ?></td>
                     
                 </tr>
                 <?php endforeach; ?>

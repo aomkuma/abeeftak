@@ -51,6 +51,9 @@ class CowsController extends AppController {
         if (!empty($this->request->query['gender'])) {
             $gender = $this->request->query['gender'];
         }
+        if (!empty($this->request->query['isapproved'])) {
+            $isapproved = $this->request->query['isapproved'];
+        }
 
         $arr_con = [];
         if (!empty($keyword)) {
@@ -58,6 +61,10 @@ class CowsController extends AppController {
         }
         if (!empty($gender)) {
             $arr_con[] = ['Cows.gender ' => $gender];
+        }
+
+        if(!empty($isapproved)){
+            $arr_con[] = ['Cows.isapproved ' => $isapproved];   
         }
 
         $data = $this->Cows->find('all'
@@ -71,6 +78,7 @@ class CowsController extends AppController {
 
         $this->set(compact('keyword'));
         $this->set(compact('gender'));
+        $this->set(compact('isapproved'));
         $this->set(compact('cows'));
         $this->set('_serialize', ['cows']);
     }
@@ -266,15 +274,31 @@ class CowsController extends AppController {
 
     private function genCode() {
         $this->autoRender = false;
-        $running = $this->Runnings->find('all')->where(['running_type' => 'COW']);
+        $chkdate = date('Y-01-01');
+        $running = $this->Runnings->find('all')->where(['running_type' => 'COW', 'runnubg_date' => $chkdate]);
 
         $running = $running->toArray();
-        $running = $running[0];
+        if(empty($running)){
+            $running = $this->Runnings->newEntity();
+            $running->running_code = 'TAK';
+            $running->running_no = 0;
+            $running->runnubg_date = $chkdate;
+            $running->running_type = 'COW';
+            if ($this->Runnings->save($running)) {
+                $result['DATA']['ID'] = $running->id;
+            } else {
+                debug($running->errors());
+                $result = 'fail to update';
+                return '';
+            }
+        }else{
+            $running = $running[0];
+            
+        }
         $year = substr((date('Y') + 543), 2);
         $running_no = $running->running_no + 1;
         $number = str_pad($running_no, 5, '0', STR_PAD_LEFT);
         $code = $running->running_code . $year . $number;
-
         $running->running_no = $running_no;
         $this->Runnings->save($running);
 
