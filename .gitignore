@@ -6,3 +6,9 @@
 *.DS_Store
 webroot/img/.DS_Store
 vendor/.DS_Store
+documents/.DS_Store
+documents/.DS_Store
+documents/.DS_Store
+logs/error.log
+vendor/.DS_Store
+webroot/img/.DS_Store
