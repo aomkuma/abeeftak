@@ -152,15 +152,19 @@ class FarmsController extends AppController {
                 $farm->hasmeadow = 'Y';
             }
             $province = $this->findProvinceByName($data['address']['province_id']);
-            $farm->address->province_id = $province->id;
-            $farm->createdby = $this->request->session()->read('Auth.User.firstname');
-            if ($this->Farms->save($farm)) {
-                $this->Flash->success(__('The farm has been saved.'));
+            if (!is_null($province)) {
+                $farm->address->province_id = $province->id;
+                $farm->createdby = $this->request->session()->read('Auth.User.firstname');
+                if ($this->Farms->save($farm)) {
+                    $this->Flash->success(__('The farm has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->log($farm->errors(), 'debug');
+                $this->Flash->error(__('The farm could not be saved. Please, try again.'));
+            }else{
+                $this->Flash->error(__('ไม่พบจังหวัดที่ท่านเลือก'));
             }
-            $this->log($farm->errors(), 'debug');
-            $this->Flash->error(__('The farm could not be saved. Please, try again.'));
         }
 
         $this->set('dung_destroy', $this->dung_destroy);
@@ -188,7 +192,7 @@ class FarmsController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $data = $this->request->getData();
             $farm = $this->Farms->patchEntity($farm, $data);
-
+            $this->log($data,'debug');
             $farm->hasstable = 'N';
             if ($data['hasstable'] == 1) {
                 $farm->hasstable = 'Y';
@@ -199,15 +203,21 @@ class FarmsController extends AppController {
                 $farm->hasmeadow = 'Y';
             }
             $province = $this->findProvinceByName($data['address']['province_id']);
-            $farm->address->province_id = $province->id;
-            $farm->updatedby = $this->request->session()->read('Auth.User.firstname');
+            if (!is_null($province)) {
+                $farm->address->province_id = $province->id;
+                $farm->updatedby = $this->request->session()->read('Auth.User.firstname');
 
-            if ($this->Farms->save($farm)) {
-                $this->Flash->success(__('The farm has been saved.'));
+                if ($this->Farms->save($farm)) {
+                    $this->Flash->success(__('The farm has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('The farm could not be saved. Please, try again.'));
+            }else{
+                $this->Flash->error(__('ไม่พบจังหวัดที่ท่านเลือก'));
             }
-            $this->Flash->error(__('The farm could not be saved. Please, try again.'));
+
+            
         }
         $province = $this->findProvinceById($farm->address->province_id);
         $farm->address->province_id = $province['province_name'];
@@ -231,19 +241,19 @@ class FarmsController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null) {
-       
+
         //start check permission
         $Permissions = $this->request->session()->read('rolePermissions');
         if (in_array('farms', $Permissions['controller'])) {
             $actionArr = $Permissions['actions']['farms'];
-            
+
             if (!in_array('delete', $actionArr)) {
                 return $this->redirect(['controller' => 'users', 'action' => 'displaypermission']);
             }
         }
         //end check
-      
-        
+
+
 
         $this->request->allowMethod(['post', 'delete']);
         $farm = $this->Farms->get($id);
