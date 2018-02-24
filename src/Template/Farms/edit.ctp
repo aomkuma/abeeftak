@@ -57,7 +57,7 @@
                     <div class="col-md-4">
                         <div class="checkbox">
                             <label>
-                                <?= $this->Form->checkbox('hasstable', ['required' => false, 'id' => 'hasstable','value'=>$farm->hasstable]) ?> มีโรงเรือนเลี้ยงโค
+                                <?= $this->Form->checkbox('hasstable', ['required' => false, 'id' => 'hasstable','checked'=>$farm->hasstable=='Y'?true:false]) ?> มีโรงเรือนเลี้ยงโค
                             </label>
                         </div>
                         <div class="col-md-12 box-border" id="hasstable_box" style="<?=$farm->hasstable=='N'?'display: none;':''?>" >
@@ -71,7 +71,7 @@
                     <div class="col-md-8">
                         <div class="checkbox">
                             <label>
-                                <?= $this->Form->checkbox('hasmeadow', ['required' => false, 'id' => 'hasmeadow','value'=>$farm->hasmeadow]) ?> มีแปลงหญ้า
+                                <?= $this->Form->checkbox('hasmeadow', ['required' => false, 'id' => 'hasmeadow','checked'=>$farm->hasmeadow=='Y'?true:false]) ?> มีแปลงหญ้า
                             </label>
                         </div>
                         <div class="col-md-12 box-border" id="hasmeadow_box" style="<?=$farm->hasmeadow=='N'?'display: none;':''?>" >
