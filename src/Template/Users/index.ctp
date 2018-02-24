@@ -7,17 +7,17 @@
     <?= $this->Form->create('Post', ['horizontal' => true, 'url' => '/users/searchuser']); ?>
     <div class="col-lg-8 col-md-8 col-sm-8 col-lg-offset-2 col-md-offset-2">
 
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 
             <?= $this->Html->link(BT_ADDUSER, ['action' => 'add'], ['escape' => false]) ?>
 
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 
             <?= $this->Html->link('<button type="button" class="btn btn-info btn-block"> ข้อมูลประเภทผู้ใช้งาน</button>', ['action' => 'index', 'controller' => 'roles'], ['escape' => false]) ?>
 
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
             <div class="input-group">
 
                 <?= $this->Form->control('txtSearch', ['class' => 'form-control', 'label' => false, 'placeholder' => 'กรุณากรอกชื่อ']) ?>

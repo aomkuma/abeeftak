@@ -5,7 +5,7 @@
 
 
 <div class="form-group row">
-    <div class="col-lg-6 col-md-6 col-sm-6 col-lg-offset-3 col-md-offset-3" style="box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3)" >
+    <div class="col-lg-6 col-md-6 col-sm-12 col-lg-offset-3 col-md-offset-3" style="box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3)" >
         <div class="row">
             <div class="col-md-12">
                 <h2 class="font-th-prompt400">แก้ไขข้อมูลสมาชิก</h2>
@@ -67,12 +67,12 @@
 
         </div>
         <div class="row">
-            <div class="col-md-6"style="text-align: right">
+            <div class="col-md-6"style="text-align: center">
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">บันทึกข้อมูล</button>
+                    <button type="submit" class="btn btn-default">บันทึกข้อมูล</button>
                 </div>
             </div>
-            <div class="col-md-6"style="text-align: left">
+            <div class="col-md-6"style="text-align: center">
                 <div class="form-group">
                     <?= $this->Html->link(BT_BACK, ['action' => 'index'], ['escape' => false]) ?>
                 </div>

@@ -22,6 +22,12 @@ class RolesController extends AppController {
         parent::beforeFilter($event);
         $this->Controllers = TableRegistry::get('Controllers');
         $this->RoleAccesses = TableRegistry::get('RoleAccesses');
+         $control = strtolower($this->request->params['controller']);
+        $action = strtolower($this->request->params['action']);
+        $this->loadComponent('Authen');
+       $ckPermission= $this->Authen->authen($action,$control);
+        debug($ckPermission);
+//      
     }
 
     /**
@@ -68,7 +74,7 @@ class RolesController extends AppController {
             $role->name = $this->request->getData('name');
             $role->isactive = $this->request->getData('isactive');
             $role->description = $this->request->getData('description');
-            $role->createdby = $getname['firstname'].' '.$getname['lastname'];
+            $role->createdby = $getname['firstname'] . ' ' . $getname['lastname'];
             $role->updatedby = '';
             $this->Roles->save($role);
 
@@ -130,12 +136,12 @@ class RolesController extends AppController {
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $role = $this->Roles->patchEntity($role, $this->request->getData());
-            $role['updatedby'] = $getname['firstname'].' '.$getname['lastname'];
+            $role['updatedby'] = $getname['firstname'] . ' ' . $getname['lastname'];
             $this->Roles->save($role);
-            
-            
+
+
             foreach ($roleAccess as $roleAcc):
-                
+
                 $this->RoleAccesses->delete($roleAcc);
             endforeach;
 //////////////////////////////////////////////////////
@@ -156,10 +162,10 @@ class RolesController extends AppController {
                     $this->RoleAccesses->save($roleAccess);
                 }
             endforeach;
-            
-            
-            
-            
+
+
+
+
             ////////////////////////////////
 
 

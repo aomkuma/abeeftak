@@ -87,54 +87,62 @@ class AppController extends Controller {
         parent::beforeFilter($event);
         //$this->Security->requireSecure();
         //$this->Auth->allow();
+      //  debug($this->request->session()->read('rolePermissions'));
         $this->authen();
+        
     }
 
     private function authen() {
         $control = strtolower($this->request->params['controller']);
         $action = strtolower($this->request->params['action']);
 
-        $controllerguestDenyguestDeny = [
-            'actions', 'addresses', 'breedingrecords', 'controllers', 'cowbreeds', 'roles',
-            'cowimages', 'farms', 'givebirthrecords', 'growthrecords', 'herdsmans', 'images', 'movements',
-            'pages', 'roleaccesses', 'roles', 'treatmentrecords', 'users', 'home'];
+//        $controllerguestDenyguestDeny = [
+//            'actions', 'addresses', 'breedingrecords', 'controllers', 'cowbreeds', 'roles',
+//            'cowimages', 'farms', 'givebirthrecords', 'growthrecords', 'herdsmans', 'images', 'movements',
+//            'pages', 'roleaccesses', 'roles', 'treatmentrecords', 'users', 'home'];
 
 
         if ((is_null($this->request->session()->read('Auth.User')))) {
-         
+           debug("5");
 //           
            if ($control == 'users' && in_array($action, ['login','logout'])) {
                 $this->Auth->allow();
             } else {
-                $this->Auth->deny();
+                 $this->log('is null else','debug');
+               // $this->Auth->deny();
+                $this->log('11 is null else','debug');
+                debug("11");
                 return $this->redirect(['controller' => 'users', 'action' => 'login']);
             }
-        } else {
-          
-            $status = '';
-            $Permissions = $this->request->session()->read('rolePermissions');
-
-            if (in_array($control, $Permissions['controller'])) {
-                
-                $actionArr = $Permissions['actions'][$control];
-
-                if($action=='displaypermission' || $action =='logout'){
-                    $this->Auth->allow();
-                }
-                else if (in_array($action, $actionArr)) {
-                
-                    $this->Auth->allow();
-                } else {
-                
-                    $this->Auth->deny();
-                    return $this->redirect(['controller' => 'users', 'action' => 'displaypermission']);
-                }
-            } else {
-             
-                $this->Auth->deny();
-                return $this->redirect(['controller' => 'users', 'action' => 'displaypermission']);
-            }
-        }
+        } 
+//        else {
+//          
+//            $status = '';
+//            $Permissions = $this->request->session()->read('rolePermissions');
+//
+//            if (in_array($control, $Permissions['controller'])) {
+//                
+//                $actionArr = $Permissions['actions'][$control];
+//
+//                if($action=='displaypermission' || $action =='logout'){
+//                    $this->Auth->allow();
+//                }
+//                else if (in_array($action, $actionArr)) {
+//                
+//                    $this->Auth->allow();
+//                } else {
+//                
+//                   // $this->Auth->deny();
+//                    return $this->redirect(['controller' => 'users', 'action' => 'displaypermission']);
+//                    die();
+//                }
+//            } else {
+//             
+//                //$this->Auth->deny();
+//               return $this->redirect(['controller' => 'users', 'action' => 'displaypermission']);
+//                die();
+//            }
+//        }
     }
 
 }
