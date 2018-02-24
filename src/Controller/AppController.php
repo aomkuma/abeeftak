@@ -103,46 +103,46 @@ class AppController extends Controller {
 
 
         if ((is_null($this->request->session()->read('Auth.User')))) {
-           debug("5");
+         //  debug("5");
 //           
            if ($control == 'users' && in_array($action, ['login','logout'])) {
                 $this->Auth->allow();
             } else {
                  $this->log('is null else','debug');
-               // $this->Auth->deny();
+                $this->Auth->deny();
                 $this->log('11 is null else','debug');
-                debug("11");
+             //   debug("11");
                 return $this->redirect(['controller' => 'users', 'action' => 'login']);
             }
         } 
-//        else {
-//          
-//            $status = '';
-//            $Permissions = $this->request->session()->read('rolePermissions');
-//
-//            if (in_array($control, $Permissions['controller'])) {
-//                
-//                $actionArr = $Permissions['actions'][$control];
-//
-//                if($action=='displaypermission' || $action =='logout'){
-//                    $this->Auth->allow();
-//                }
-//                else if (in_array($action, $actionArr)) {
-//                
-//                    $this->Auth->allow();
-//                } else {
-//                
-//                   // $this->Auth->deny();
-//                    return $this->redirect(['controller' => 'users', 'action' => 'displaypermission']);
-//                    die();
-//                }
-//            } else {
-//             
-//                //$this->Auth->deny();
-//               return $this->redirect(['controller' => 'users', 'action' => 'displaypermission']);
-//                die();
-//            }
-//        }
+        else {
+          
+            $status = '';
+            $Permissions = $this->request->session()->read('rolePermissions');
+
+            if (in_array($control, $Permissions['controller'])) {
+                
+                $actionArr = $Permissions['actions'][$control];
+
+                if($action=='displaypermission' || $action =='logout'){
+                    $this->Auth->allow();
+                }
+                else if (in_array($action, $actionArr)) {
+                
+                    $this->Auth->allow();
+                } else {
+                
+                    $this->Auth->deny();
+                    return $this->redirect(['controller' => 'users', 'action' => 'displaypermission']);
+                    die();
+                }
+            } else {
+             
+                $this->Auth->deny();
+               return $this->redirect(['controller' => 'users', 'action' => 'displaypermission']);
+                die();
+            }
+        }
     }
 
 }
