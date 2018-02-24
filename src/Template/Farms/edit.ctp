@@ -57,7 +57,7 @@
                     <div class="col-md-4">
                         <div class="checkbox">
                             <label>
-                                <?= $this->Form->checkbox('hasstable', ['required' => false, 'id' => 'hasstable','value'=>$farm->hasstable]) ?> มีโรงเรือนเลี้ยงโค
+                                <?= $this->Form->checkbox('hasstable', ['required' => false, 'id' => 'hasstable','checked'=>$farm->hasstable=='Y'?true:false]) ?> มีโรงเรือนเลี้ยงโค
                             </label>
                         </div>
                         <div class="col-md-12 box-border" id="hasstable_box" style="<?=$farm->hasstable=='N'?'display: none;':''?>" >
@@ -71,7 +71,7 @@
                     <div class="col-md-8">
                         <div class="checkbox">
                             <label>
-                                <?= $this->Form->checkbox('hasmeadow', ['required' => false, 'id' => 'hasmeadow','value'=>$farm->hasmeadow]) ?> มีแปลงหญ้า
+                                <?= $this->Form->checkbox('hasmeadow', ['required' => false, 'id' => 'hasmeadow','checked'=>$farm->hasmeadow=='Y'?true:false]) ?> มีแปลงหญ้า
                             </label>
                         </div>
                         <div class="col-md-12 box-border" id="hasmeadow_box" style="<?=$farm->hasmeadow=='N'?'display: none;':''?>" >
@@ -116,13 +116,13 @@
                                 <?= $this->Form->control('address.address_line', ['class' => 'form-control', 'label' => false, 'id' => 'address_line']) ?>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 col-xs-6">
                             <div class="form-group">
                                 <label for="">บ้านเลขที่ <i class="text-danger">*</i></label>
                                 <?= $this->Form->control('address.houseno', ['class' => 'form-control', 'label' => false]) ?>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 col-xs-6">
                             <div class="form-group">
                                 <label for="">หมู่ที่ <i class="text-danger">*</i></label>
                                 <?= $this->Form->control('address.villageno', ['class' => 'form-control', 'label' => false]) ?>
