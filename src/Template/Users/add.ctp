@@ -49,12 +49,12 @@
             </div>
         </div>
 
-        <div class="col-md-6"style="text-align: right">
+        <div class="col-md-6"style="text-align: center">
             <div class="form-group">
                 <button type="submit" class="btn btn-default">เพิ่มผู้ใช้</button>
             </div>
         </div>
-        <div class="col-md-6"style="text-align: left">
+        <div class="col-md-6"style="text-align: center">
             <div class="form-group">
                 <?= $this->Html->link(BT_BACK, ['action' => 'index'], ['escape' => false]) ?>
             </div>
