@@ -394,10 +394,41 @@ class ReportsController extends AppController {
             , 'order' => ['treatment_date ASC']
         ]);
         
-//        $breedAI = $this->Cows->find('all', [
-//            'conditions' => ['Cows.id' => $id],
-//            'contain' => ['GivebirthRecords']
-//        ]);
+        $query = $this->Cows->find()
+                ->select(['Cows.id','Cows.code'])
+                ->contain(['FarmCows'=>[
+                    'fields'=>['FarmCows.id','FarmCows.cow_id','FarmCows.farm_id','FarmCows.isactive','FarmCows.moved_in_date'],
+                    'sort'=>['FarmCows.isactive'=>'ASC','FarmCows.moved_in_date'=>'DESC'],
+                    'Farms'=>[
+                        'fields'=>['Farms.id','Farms.name'],
+                        'FarmHerdsmans'=>[
+                            'fields'=>['FarmHerdsmans.id','FarmHerdsmans.herdsman_id','FarmHerdsmans.farm_id']
+                            ,'Herdsmans'=>[
+                                'fields'=>['Herdsmans.title','Herdsmans.firstname','Herdsmans.lastname','Herdsmans.idcard']
+                            ]]
+                        ]
+                    ]
+                    ])
+                ->where(['Cows.id'=>$cowR[0]['id']]);
+        
+        $ownerhis = $query->toArray();
+        
+        $breedAI = $this->Cows->find('all', [
+            'conditions' => ['Cows.id' => $id, 'Givebirth_records.breeding_type' => 'AI'],
+            'contain' => ['Givebirth_records']
+        ]);
+        
+        $breedAItoarr = $breedAI->toArray();
+        
+        $breedAIson = $this->Cows->find('all', [
+            'conditions' => ['Cows.father_code' => $breedAI[0]['father_code']]
+        ]);
+        
+        $breedAIsonArr = $breedAIson->toArray();
+        
+        $jsondataowner = json_encode($ownerhis);
+        $jsondataAI = json_encode($breedAItoarr);
+        $jsondataAison = json_encode($breedAIsonArr);
 
         $moveR = $movementRecord->toArray();
         $jsondatamoveR = json_encode($moveR);
@@ -410,13 +441,11 @@ class ReportsController extends AppController {
         $cowMoth = $cowMother->toArray();
         $jsondataMoth = json_encode($cowMoth);
         
-//        $breedAItoarr = $breedAI->toArray();
+        
 //        $jsondatabreedAI = json_encode($breedAItoarr);
 
 //        pr($breedAItoarr);
-        $this->set(compact('jsondatacow', 'jsondataFath', 'jsondataMoth', 'jsondatamoveR', 'jsondataTreatR'
-//                ,'jsondatabreedAI'
-                ));
+        $this->set(compact('jsondatacow', 'jsondataFath', 'jsondataMoth', 'jsondatamoveR', 'jsondataTreatR','jsondataowner','jsondataAI','jsondataAison'));
     }
 
 }
