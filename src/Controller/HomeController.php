@@ -80,9 +80,9 @@ class HomeController extends AppController {
         $results = $connection->execute($sql)->fetchAll('assoc');
         //debug($results);
         foreach ($results as $item){
-            $data[$item['mm']]['amt'] = 1;
+            $data[$item['mm']]['amt'] = $item['amt'];
         }
-        
+        //debug($data);
         $data = json_encode($data);
         //debug($data);
         
