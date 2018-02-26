@@ -26,6 +26,8 @@ class ReportsController extends AppController {
     public $MovementRecords = null;
     public $CowBreeds = null;
     public $TreatmentRecords = null;
+    public $CowImages = null;
+    public $Images = null;
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
@@ -38,6 +40,8 @@ class ReportsController extends AppController {
         $this->GivebirthRecords = TableRegistry::get('GivebirthRecords');
         $this->MovementRecords = TableRegistry::get('MovementRecords');
         $this->TreatmentRecords = TableRegistry::get('TreatmentRecords');
+        $this->CowImages = TableRegistry::get('CowImages');
+        $this->Images = TableRegistry::get('Images');
     }
 
     /**
@@ -208,7 +212,7 @@ class ReportsController extends AppController {
                 . 'right join '
                 . 'addresses m '
                 . 'on m.district = s.district group by amphur'
-                
+
         ;
 
         $results7 = $connection->execute($query7)->fetchAll('assoc');
@@ -227,12 +231,12 @@ class ReportsController extends AppController {
                 . 'right join '
                 . 'addresses m '
                 . 'on m.district = s.district group by amphur'
-                
+
         ;
 
         $results8 = $connection->execute($query8)->fetchAll('assoc');
-       
-       
+
+
 //        
         $summaryjs1 = json_encode($results1);
         $summaryjs2 = json_encode($results2);
@@ -335,7 +339,7 @@ class ReportsController extends AppController {
         ]);
 
         $givebirthRecord = $this->GivebirthRecords->find('all', [
-            'conditions' => ['cow_id' => $cowR[0]['id']]
+            'conditions' => ['cow_id' => $cowR[0]['id'], 'breeding_status' => 'Y']
             , 'order' => ['breeding_date ASC']
         ]);
 
@@ -348,7 +352,7 @@ class ReportsController extends AppController {
             'conditions' => ['Cows.code' => $cowR[0]['mother_code']],
             'contain' => ['CowBreeds']
         ]);
-       
+
         $gbR = $givebirthRecord->toArray();
         $jsondatagbR = json_encode($gbR);
 
@@ -374,6 +378,25 @@ class ReportsController extends AppController {
         $cowR = $cow->toArray();
         $jsondatacow = json_encode($cowR);
 
+        $cowimg = $this->CowImages->find('all', [
+            'conditions' => ['Cow_id' => $cowR[0]['id']]
+            , 'order' => ['created DESC']
+        ]);
+
+        $cowimgR = $cowimg->toArray();
+
+        if (sizeof($cowimgR) != 0) {
+            $img = $this->Images->find('all', [
+                'conditions' => ['id' => $cowimgR[0]['image_id']]
+            ]);
+
+            $imgArr = $img->toArray();
+
+            $imgpath = $imgArr[0]['path'] . $imgArr[0]['name'];
+        } else {
+            $imgpath = 'upload/img/No-image-found-img.jpg';
+        }
+
         $cowFather = $this->Cows->find('all', [
             'conditions' => ['Cows.code' => $cowR[0]['father_code']],
             'contain' => ['CowBreeds']
@@ -393,42 +416,45 @@ class ReportsController extends AppController {
             'conditions' => ['cow_id' => $cowR[0]['id']]
             , 'order' => ['treatment_date ASC']
         ]);
-        
+
         $query = $this->Cows->find()
-                ->select(['Cows.id','Cows.code'])
-                ->contain(['FarmCows'=>[
-                    'fields'=>['FarmCows.id','FarmCows.cow_id','FarmCows.farm_id','FarmCows.isactive','FarmCows.moved_in_date'],
-                    'sort'=>['FarmCows.isactive'=>'ASC','FarmCows.moved_in_date'=>'DESC'],
-                    'Farms'=>[
-                        'fields'=>['Farms.id','Farms.name'],
-                        'FarmHerdsmans'=>[
-                            'fields'=>['FarmHerdsmans.id','FarmHerdsmans.herdsman_id','FarmHerdsmans.farm_id']
-                            ,'Herdsmans'=>[
-                                'fields'=>['Herdsmans.title','Herdsmans.firstname','Herdsmans.lastname','Herdsmans.idcard']
-                            ]]
+                ->select(['Cows.id', 'Cows.code'])
+                ->contain(['FarmCows' => [
+                        'fields' => ['FarmCows.id', 'FarmCows.cow_id', 'FarmCows.farm_id', 'FarmCows.isactive', 'FarmCows.moved_in_date'],
+                        'sort' => ['FarmCows.isactive' => 'ASC', 'FarmCows.moved_in_date' => 'DESC'],
+                        'Farms' => [
+                            'fields' => ['Farms.id', 'Farms.name'],
+                            'FarmHerdsmans' => [
+                                'fields' => ['FarmHerdsmans.id', 'FarmHerdsmans.herdsman_id', 'FarmHerdsmans.farm_id']
+                                , 'Herdsmans' => [
+                                    'fields' => ['Herdsmans.title', 'Herdsmans.firstname', 'Herdsmans.lastname', 'Herdsmans.idcard']
+                                ]]
                         ]
                     ]
-                    ])
-                ->where(['Cows.id'=>$cowR[0]['id']]);
-        
+                ])
+                ->where(['Cows.id' => $cowR[0]['id']]);
+
         $ownerhis = $query->toArray();
-        
-        $breedAI = $this->Cows->find('all', [
-            'conditions' => ['Cows.id' => $id, 'Givebirth_records.breeding_type' => 'AI'],
-            'contain' => ['Givebirth_records']
-        ]);
-        
-        $breedAItoarr = $breedAI->toArray();
-        
-        $breedAIson = $this->Cows->find('all', [
-            'conditions' => ['Cows.father_code' => $breedAI[0]['father_code']]
-        ]);
-        
-        $breedAIsonArr = $breedAIson->toArray();
-        
         $jsondataowner = json_encode($ownerhis);
+        $breedAItoarr = [];
+        if ($cowR[0]['gender'] == 'F') {
+            $breedAI = $this->GivebirthRecords->find('all', [
+                'conditions' => ['GivebirthRecords.cow_id' => $cowR[0]['id'], 'GivebirthRecords.breeding_type' => 'AI']
+                , 'order' => ['GivebirthRecords.breeding_date ASC'],
+                'contain' => ['Cows']
+            ]);
+
+            $breedAItoarr = $breedAI->toArray();
+//        $breedAIson = $this->Cows->find('all', [
+//            'conditions' => ['Cows.father_code' => $breedAItoarr[0]['father_code']]
+//        ]);
+////        
+//        $breedAIsonArr = $breedAIson->toArray();
+//        pr($breedAIsonArr);
+//        $jsondataAison = json_encode($breedAIsonArr);
+        }
+
         $jsondataAI = json_encode($breedAItoarr);
-        $jsondataAison = json_encode($breedAIsonArr);
 
         $moveR = $movementRecord->toArray();
         $jsondatamoveR = json_encode($moveR);
@@ -440,12 +466,11 @@ class ReportsController extends AppController {
         $jsondataFath = json_encode($cowFath);
         $cowMoth = $cowMother->toArray();
         $jsondataMoth = json_encode($cowMoth);
-        
-        
-//        $jsondatabreedAI = json_encode($breedAItoarr);
 
+
+//        $jsondatabreedAI = json_encode($breedAItoarr);
 //        pr($breedAItoarr);
-        $this->set(compact('jsondatacow', 'jsondataFath', 'jsondataMoth', 'jsondatamoveR', 'jsondataTreatR','jsondataowner','jsondataAI','jsondataAison'));
+        $this->set(compact('jsondatacow', 'jsondataFath', 'jsondataMoth', 'jsondatamoveR', 'jsondataTreatR', 'jsondataowner', 'jsondataAI', 'imgpath'));
     }
 
 }

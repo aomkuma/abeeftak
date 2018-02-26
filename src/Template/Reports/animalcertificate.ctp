@@ -5,15 +5,20 @@
     var jsondataMoth = <?=$jsondataMoth?>;
     var jsondatamoveR = <?=$jsondatamoveR?>;
      var jsondataTreatR = <?=$jsondataTreatR?>;
+     var jsondataowner = <?=$jsondataowner?>;
+     var jsondataAI = <?=$jsondataAI?>;
     setTimeout(function () {
-    exportPDF(jsondatacow,jsondataFath,jsondataMoth,jsondatamoveR,jsondataTreatR);
+    exportPDF(jsondatacow,jsondataFath,jsondataMoth,jsondatamoveR,jsondataTreatR, jsondataowner, jsondataAI);
+    return false;
     }, 500);
-    console.log(jsondatacow,jsondataFath,jsondataMoth,jsondatamoveR,jsondataTreatR);
+    console.log(jsondatacow,jsondataFath,jsondataMoth,jsondatamoveR,jsondataTreatR, jsondataowner, jsondataAI);
+    
     setTimeout(function () {
-
+        
         //window.close();
     }, 2000);
     $("#imageid").hide();
+    
 </script>
 
 <div class="container">
@@ -29,8 +34,7 @@
                                 <div class="form-group" style="text-align: center">
                                     <?= $this->Html->link(BT_BACK, ['controller'=>'cows','action' => 'index'], ['escape' => false]) ?>
                                 </div>
-                            
-                            <?=$this->Html->image('bg1.jpg',['id'=>'imageid','style'=>'display:none;'])?>
+                            <?= $this->Html->image('/' . $imgpath, ['id' => 'imageid', 'style' => 'display:none;']) ?>
 
                     </div>
                 </div>

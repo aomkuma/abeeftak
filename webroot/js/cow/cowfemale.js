@@ -109,7 +109,7 @@ function exportPDF(datacow, datagrowth, datagrowthW, datagbR, datafath, datamoth
     var row_index3 = 0;
     for (var i = 0; i < 10; i++) {
         var dataRow3 = [];
-        if (i < datagbR.length) {
+        if (row_index3 < datagbR.length) {
 
             if (datagbR[row_index3]['breeding_date'] !== null) {
                 var sprdate = datagbR[row_index3]['breeding_date'].split('T');
