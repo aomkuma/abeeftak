@@ -35,7 +35,7 @@
                 lastarr = lastarr - 1;
 
                 if (spg[lastarr] !== 'jpg' && spg[lastarr] !== 'JPG' && spg[lastarr] !== 'png' && spg[lastarr] !== 'PNG' && spg[lastarr] !== 'jpeg' && spg[lastarr] !== 'JPEG') {
-                    alert("กรุณาใส่ประเภทไฟล์ให้ถูกต้อง");
+                    alert("กรุณาใส่ประเภทไฟล์ .jpg .png หรือ .jpeg เท่านั้น");
                     $('#image').val = '';
                     $('#image').focus();
 
@@ -212,8 +212,8 @@
                     <div class="col-md-12">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">ที่อยู่ <i class="text-danger">*</i></label>
-                                <?= $this->Form->control('address_line', ['class' => 'form-control', 'label' => false, 'id' => 'address_line', 'required' => true]) ?>
+                                <label for="">ที่อยู่ </label>
+                                <?= $this->Form->control('address_line', ['class' => 'form-control', 'label' => false, 'id' => 'address_line']) ?>
                             </div>
                         </div>
                         <div class="col-md-2">

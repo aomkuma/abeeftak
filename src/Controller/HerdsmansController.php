@@ -77,21 +77,18 @@ class HerdsmansController extends AppController {
             } else {
 
                 if ($searchfrom == 1) {
-                    
+
                     $search1 = '%' . $this->request->getData('search') . '%';
                     array_push($whereherdsman, ['Herdsmans.code LIKE' => $search1]);
-                    
                 } else if ($searchfrom == 2) {
 
                     $name = '%' . $sprsearch[0] . '%';
                     $lastname = '%' . $sprsearch[1] . '%';
                     array_push($whereherdsman, ['Herdsmans.firstname LIKE' => $name, 'Herdsmans.lastname LIKE' => $lastname]);
-                    
                 } else if ($searchfrom == 3) {
-                    
+
                     $search1 = '%' . $this->request->getData('search') . '%';
                     array_push($whereherdsman, ['Herdsmans.idcard LIKE' => $search1]);
-                    
                 } else {
 
                     $fromdate = $this->request->getData('fromdate');
@@ -139,7 +136,9 @@ class HerdsmansController extends AppController {
     public function add() {
 
         $herdsman = $this->Herdsmans->newEntity();
+        pr('test 1 ' . $herdsman->image_id);
         if ($this->request->is('post')) {
+            pr('test 2 ' . $herdsman->image_id);
             $getname = $this->request->session()->read('Auth.User');
             $address = $this->Addresses->newEntity();
 //            $this->Herdsmans->find('all', array('order' => 'Herdsmans.code ASC'))
@@ -166,38 +165,52 @@ class HerdsmansController extends AppController {
             if ($this->Addresses->save($address)) {
 
                 $filenameimg = $this->request->data['image']['name'];
-//                $extimg = substr(strtolower(strrchr($filenameimg, '.')), 1);
 
-                $uploadpath = 'upload/img/herdsmans';
+                $uploadpath = 'upload/img/herdsman/';
 
                 $image = $this->Images->newEntity();
                 $image->name = $filenameimg;
-                $image->path = $uploadpath . $filenameimg;
+                $image->path = $uploadpath;
                 $image->type = 'herdsman';
+                $image->createdby = $getname['firstname'] . ' ' . $getname['lastname'];
 
                 $uploadfileimg = $uploadpath . $filenameimg;
 
                 if ($this->Images->save($image)) {
-
                     move_uploaded_file($this->request->data['image']['tmp_name'], $uploadfileimg);
 
-                    $herdsman = $this->Herdsmans->patchEntity($herdsman, $this->request->getData());
+//                    $herdsman = $this->Herdsmans->patchEntity($herdsman, $this->request->getData());
+
                     $herdsman->code = $this->genCode(); //'00001';
+                    $herdsman->aac_code = $this->request->getData('aac_code');
+                    $herdsman->amc_code = $this->request->getData('amc_code');
                     $herdsman->grade = $this->request->getData('grade');
+                    $herdsman->title = $this->request->getData('title');
+                    $herdsman->firstname = $this->request->getData('firstname');
+                    $herdsman->lastname = $this->request->getData('lastname');
+                    $herdsman->idcard = $this->request->getData('idcard');
+                    $herdsman->birthday = $this->request->getData('birthday');
+                    $herdsman->account_number1 = $this->request->getData('account_number1');
+                    $herdsman->account_number2 = $this->request->getData('account_number2');
+                    $herdsman->registerdate = $this->request->getData('registerdate');
+                    $herdsman->mobile = $this->request->getData('mobile');
                     if ($this->request->getData('email') == '') {
                         $herdsman->email = null;
+                    } else {
+                        $herdsman->email = $this->request->getData('email');
                     }
                     $herdsman->address_id = $address->id;
-                    $herdsman->image_id = $image->id;
+
                     $herdsman->createdby = $getname['firstname'] . ' ' . $getname['lastname'];
                     $herdsman->updatedby = $getname['firstname'] . ' ' . $getname['lastname'];
                     $herdsman->isactive = 'Y';
+                    $herdsman->image_id = $image->id;
                     if ($this->Herdsmans->save($herdsman)) {
+
                         $this->Flash->success(__('The herdsman has been saved.'));
 
                         return $this->redirect(['action' => 'index']);
                     }
-                    $this->Images->delete($image);
                     $this->Addresses->delete($address);
                     $this->Flash->error(__('The herdsman could not be saved. Please, try again.'));
                 }
@@ -236,7 +249,7 @@ class HerdsmansController extends AppController {
 
             if ($province->id == null) {
                 $this->Flash->error(__('The herdsman could not be saved. Please, try again.'));
-                return $this->redirect(['action' => 'add']);
+                return $this->redirect(['action' => 'edit']);
             }
 
             $address = $this->Addresses->get($herdsman->address_id);
@@ -254,37 +267,48 @@ class HerdsmansController extends AppController {
             $this->Addresses->save($address);
 
             ///// image /////
-
-            $image = $this->Images->get($herdsman->image_id);
-
             $filenameimg = $this->request->data['image']['name'];
             if ($filenameimg != '') {
+                $image = $this->Images->get($herdsman->image_id);
 
-                $delfile = $image->path;
+                $delfile = $image->path . $image->name;
                 $file = new File(WWW_ROOT . $delfile, false, 0777);
                 $file->delete();
 
-                $uploadpath = 'upload/img/';
+                $uploadpath = 'upload/img/herdsman/';
 
                 $image->name = $filenameimg;
-                $image->path = $uploadpath . $filenameimg;
+                $image->path = $uploadpath;
 
                 $uploadfileimg = $uploadpath . $filenameimg;
-
                 $this->Images->save($image);
+
                 move_uploaded_file($this->request->data['image']['tmp_name'], $uploadfileimg);
             }
 
             ///// herdsmans /////
-
-            $herdsman = $this->Herdsmans->patchEntity($herdsman, $this->request->getData());
+//            $herdsman = $this->Herdsmans->patchEntity($herdsman, $this->request->getData());
+            $herdsman->aac_code = $this->request->getData('aac_code');
+            $herdsman->amc_code = $this->request->getData('amc_code');
+            $herdsman->grade = $this->request->getData('grade');
+            $herdsman->title = $this->request->getData('title');
+            $herdsman->firstname = $this->request->getData('firstname');
+            $herdsman->lastname = $this->request->getData('lastname');
+            $herdsman->idcard = $this->request->getData('idcard');
+            $herdsman->birthday = $this->request->getData('birthday');
+            $herdsman->account_number1 = $this->request->getData('account_number1');
+            $herdsman->account_number2 = $this->request->getData('account_number2');
+            $herdsman->registerdate = $this->request->getData('registerdate');
+            $herdsman->mobile = $this->request->getData('mobile');
             $herdsman->updatedby = $getname['firstname'] . ' ' . $getname['lastname'];
-            
+
             if ($this->request->getData('email') == '') {
                 $herdsman->email = null;
+            } else {
+                $herdsman->email = $this->request->getData('email');
             }
-            
             if ($this->Herdsmans->save($herdsman)) {
+             
                 $this->Flash->success(__('The herdsman has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -298,7 +322,7 @@ class HerdsmansController extends AppController {
         $address->province_id = $province['province_name'];
 
         $image = $this->Images->get($herdsman->image_id);
-        $imgpath = $image->path;
+        $imgpath = $image->path . $image->name;
         $grade = ['1' => 'General', '2' => 'Standard', '3' => 'Gold', '4' => 'Premium', '5' => 'Platinum'];
         $title = ['นาย' => 'นาย', 'นาง' => 'นาง', 'นางสาว' => 'นางสาว'];
         $this->set(compact('herdsman', 'address', 'grade', 'title', 'imgpath'));
@@ -318,7 +342,7 @@ class HerdsmansController extends AppController {
         $address = $this->Addresses->get($herdsman->address_id);
         $image = $this->Images->get($herdsman->image_id);
 
-        $delfile = $image->path;
+        $delfile = $image->path . $image->name;
         $file = new File(WWW_ROOT . $delfile, false, 0777);
         $file->delete();
 

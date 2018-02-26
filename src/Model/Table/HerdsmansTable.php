@@ -81,7 +81,7 @@ class HerdsmansTable extends Table
 
         $validator
             ->scalar('aac_code')
-            ->maxLength('aac_code', 7)
+            ->maxLength('aac_code', 6)
             ->allowEmpty('aac_code');
 
         $validator
@@ -183,7 +183,6 @@ class HerdsmansTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['address_id'], 'Addresses'));
         $rules->add($rules->existsIn(['image_id'], 'Images'));
 
