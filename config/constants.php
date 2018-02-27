@@ -19,3 +19,4 @@ define('PAGE_LIMIT', 20);
 
 define('SITE_URL', $_SERVER['REQUEST_SCHEME'].'://127.0.0.1/Git/abeeftak/');
 
+define('USERPERMISSION','/users/displaypermission');

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -10,16 +11,22 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\GivebirthRecord[] paginate($object = null, array $settings = [])
  */
-class GivebirthRecordsController extends AppController
-{
+class GivebirthRecordsController extends AppController {
+
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
+    }
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
+    public function index() {
         $givebirthRecords = $this->paginate($this->GivebirthRecords);
 
         $this->set(compact('givebirthRecords'));
@@ -33,8 +40,7 @@ class GivebirthRecordsController extends AppController
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $givebirthRecord = $this->GivebirthRecords->get($id, [
             'contain' => []
         ]);
@@ -48,8 +54,7 @@ class GivebirthRecordsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $givebirthRecord = $this->GivebirthRecords->newEntity();
         if ($this->request->is('post')) {
             $givebirthRecord = $this->GivebirthRecords->patchEntity($givebirthRecord, $this->request->getData());
@@ -71,8 +76,7 @@ class GivebirthRecordsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $givebirthRecord = $this->GivebirthRecords->get($id, [
             'contain' => []
         ]);
@@ -96,8 +100,7 @@ class GivebirthRecordsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $givebirthRecord = $this->GivebirthRecords->get($id);
         if ($this->GivebirthRecords->delete($givebirthRecord)) {
@@ -108,4 +111,5 @@ class GivebirthRecordsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

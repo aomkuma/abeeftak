@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -10,16 +11,22 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\Running[] paginate($object = null, array $settings = [])
  */
-class RunningsController extends AppController
-{
+class RunningsController extends AppController {
+
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
+    }
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
+    public function index() {
         $runnings = $this->paginate($this->Runnings);
 
         $this->set(compact('runnings'));
@@ -33,8 +40,7 @@ class RunningsController extends AppController
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $running = $this->Runnings->get($id, [
             'contain' => []
         ]);
@@ -48,8 +54,7 @@ class RunningsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $running = $this->Runnings->newEntity();
         if ($this->request->is('post')) {
             $running = $this->Runnings->patchEntity($running, $this->request->getData());
@@ -71,8 +76,7 @@ class RunningsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $running = $this->Runnings->get($id, [
             'contain' => []
         ]);
@@ -96,8 +100,7 @@ class RunningsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $running = $this->Runnings->get($id);
         if ($this->Runnings->delete($running)) {
@@ -108,4 +111,5 @@ class RunningsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

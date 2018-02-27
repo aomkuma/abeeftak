@@ -20,6 +20,9 @@ class ActionsController extends AppController {
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
         $this->controll = TableRegistry::get('controllers');
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
     }
 
     /**
@@ -32,7 +35,6 @@ class ActionsController extends AppController {
 //        $controll = $this->controll->find('all');
 //        $con = $controll->toArray();
 //        $action = ['add', 'edit', 'index', 'view'];
-
 //
 //        for ($i = 0; $i < sizeof($con); $i++) {
 //            for ($j = 0; $j < sizeof($action); $j++) {
@@ -46,7 +48,6 @@ class ActionsController extends AppController {
 //                 $this->Actions->save($ac);
 //            }
 //        }
-
         //////////////////////
 
         $this->paginate = [

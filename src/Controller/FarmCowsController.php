@@ -20,7 +20,11 @@ class FarmCowsController extends AppController {
      public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
         $this->FarmCows = TableRegistry::get('FarmCows');
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
     }
+    
     /**
      * Index method
      *

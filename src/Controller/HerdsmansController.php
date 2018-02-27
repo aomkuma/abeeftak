@@ -31,13 +31,12 @@ class HerdsmansController extends AppController {
         $this->Images = TableRegistry::get('Images');
         $this->Provinces = TableRegistry::get('Provinces');
         $this->Runnings = TableRegistry::get('Runnings');
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
     }
 
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|void
-     */
+   
     public function index() {
         $this->paginate = [
             'contain' => ['Addresses']
@@ -308,7 +307,7 @@ class HerdsmansController extends AppController {
                 $herdsman->email = $this->request->getData('email');
             }
             if ($this->Herdsmans->save($herdsman)) {
-             
+
                 $this->Flash->success(__('The herdsman has been saved.'));
 
                 return $this->redirect(['action' => 'index']);

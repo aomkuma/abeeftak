@@ -13,6 +13,14 @@ use App\Controller\AppController;
  */
 class GrassesController extends AppController {
 
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
+    }
+
     /**
      * Index method
      *

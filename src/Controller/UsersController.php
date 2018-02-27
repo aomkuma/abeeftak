@@ -28,6 +28,15 @@ class UsersController extends AppController {
         $this->Roles = TableRegistry::get('Roles');
         $this->Actions = TableRegistry::get('Actions');
         $this->Controllers = TableRegistry::get('Controllers');
+
+       
+        $action = strtolower($this->request->params['action']);
+
+        if($action!='login'&&$action!='logout') {
+            if (!$this->Authen->authen()) {
+                return $this->redirect(USERPERMISSION);
+            }
+        }
     }
 
     /**
@@ -102,7 +111,7 @@ class UsersController extends AppController {
             } else {
                 $getname = $this->request->session()->read('Auth.User');
                 $user = $this->Users->patchEntity($user, $this->request->getData());
-                $user['createdby'] = $getname['firstname'].' '.$getname['lastname'];
+                $user['createdby'] = $getname['firstname'] . ' ' . $getname['lastname'];
 
                 if ($this->Users->save($user)) {
                     $this->Flash->success(__('บันทึกข้อมูลเรียบร้อย'));
@@ -130,9 +139,9 @@ class UsersController extends AppController {
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-             $getname = $this->request->session()->read('Auth.User');
+            $getname = $this->request->session()->read('Auth.User');
             $user = $this->Users->patchEntity($user, $this->request->getData());
-             $user['updatedby'] = $getname['firstname'].' '.$getname['lastname'];
+            $user['updatedby'] = $getname['firstname'] . ' ' . $getname['lastname'];
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('บันทึกข้อมูลเรียบร้อย'));
 
@@ -140,26 +149,26 @@ class UsersController extends AppController {
             }
             $this->Flash->error(__('ไม่สามารถบันทึกข้อมูลได้ กรุณาติดต่อผู้ดูแลระบบ'));
         }
-        
+
         //start check permission
         $Permissions = $this->request->session()->read('rolePermissions');
         $isadmin = false;
         if (in_array('users', $Permissions['controller'])) {
             $actionArr = $Permissions['actions']['users'];
-            
+
             if (in_array('add', $actionArr)) {
                 $isadmin = true;
             }
         }
         //end check
-        
-        
+
+
         $roles = $this->Users->Roles->find('list', ['limit' => 200]);
         $this->set(compact('user', 'roles'));
         $this->set('_serialize', ['user']);
         $title = ['นาย' => 'นาย', 'นาง' => 'นาง', 'นางสาว' => 'นางสาว'];
         $this->set('title', $title);
-        $this->set('isadmin',$isadmin);
+        $this->set('isadmin', $isadmin);
     }
 
     /**
@@ -170,12 +179,12 @@ class UsersController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null) {
-         $this->request->allowMethod(['post', 'delete']);
+        $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
-             $this->Flash->success(__('ลบข้อมูลเรียบร้อย'));
+            $this->Flash->success(__('ลบข้อมูลเรียบร้อย'));
         } else {
-             $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
@@ -187,12 +196,12 @@ class UsersController extends AppController {
         if ((!is_null($this->request->session()->read('Auth.User')))) {
             return $this->redirect(['controller' => 'users', 'action' => 'index']);
         }
-        
-        
-        if($_SERVER['REQUEST_SCHEME'] =='http'){
+
+
+        if ($_SERVER['REQUEST_SCHEME'] == 'http') {
             return $this->redirect('https://' . env('SERVER_NAME') . $this->request->here);
         }
-        
+
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {
@@ -208,8 +217,8 @@ class UsersController extends AppController {
                 $rolePermissions = $query->toArray();
 
                 $rolePermissions = $this->makePromissionArr($rolePermissions);
-                $this->log($user['firstname'],'debug');
-                $this->log($rolePermissions,'debug');
+                $this->log($user['firstname'], 'debug');
+                $this->log($rolePermissions, 'debug');
                 //debug($rolePermissions);
                 $this->request->session()->write('rolePermissions', $rolePermissions);
                 $this->Flash->success(__('Login สำเร็จ'));
@@ -257,7 +266,7 @@ class UsersController extends AppController {
     public function logout() {
         $this->request->session()->destroy();
         //return $this->redirect($this->Auth->logout());
-        return $this->redirect(['controller'=>'users','action'=>'login']);
+        return $this->redirect(['controller' => 'users', 'action' => 'login']);
     }
 
     public function searchuser() {
@@ -311,9 +320,8 @@ class UsersController extends AppController {
         $summaryjs = json_encode($summary);
         $this->set(compact('summaryjs', 'detailjs'));
     }
-    
-    public function displaypermission(){
-        
+
+    public function displaypermission() {
         
     }
 

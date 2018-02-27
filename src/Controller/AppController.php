@@ -44,11 +44,11 @@ class AppController extends Controller {
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
         //$this->loadComponent('Security', ['blackHoleCallback' => 'forceSSL']);
-
+        $this->loadComponent('Authen');
         $this->loadComponent('Auth', [
             'loginAction' => [
-                'controller' => 'home',
-                'action' => 'index'
+                'controller' => 'users',
+                'action' => 'login'
             ],
             'logoutRedirect' => [
                 'controller' => 'users',
@@ -61,11 +61,13 @@ class AppController extends Controller {
             ]
         ]);
     }
-/*
-    public function forceSSL() {
-        return $this->redirect('https://' . env('SERVER_NAME') . $this->request->here);
-    }
-*/
+
+    /*
+      public function forceSSL() {
+      return $this->redirect('https://' . env('SERVER_NAME') . $this->request->here);
+      }
+     */
+
     /**
      * Before render callback.
      *
@@ -73,9 +75,7 @@ class AppController extends Controller {
      * @return \Cake\Http\Response|null|void
      */
     public function beforeRender(Event $event) {
-        // Note: These defaults are just to get started quickly with development
-        // and should not be used in production.
-        // You should instead set "_serialize" in each action as required.
+ 
         if (!array_key_exists('_serialize', $this->viewVars) &&
                 in_array($this->response->getType(), ['application/json', 'application/xml'])
         ) {
@@ -85,62 +85,23 @@ class AppController extends Controller {
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        //$this->Security->requireSecure();
-        //$this->Auth->allow();
-      //  debug($this->request->session()->read('rolePermissions'));
+
+     
         $this->authen();
-        
     }
 
     private function authen() {
         $control = strtolower($this->request->params['controller']);
         $action = strtolower($this->request->params['action']);
 
-//        $controllerguestDenyguestDeny = [
-//            'actions', 'addresses', 'breedingrecords', 'controllers', 'cowbreeds', 'roles',
-//            'cowimages', 'farms', 'givebirthrecords', 'growthrecords', 'herdsmans', 'images', 'movements',
-//            'pages', 'roleaccesses', 'roles', 'treatmentrecords', 'users', 'home'];
 
 
         if ((is_null($this->request->session()->read('Auth.User')))) {
-         //  debug("5");
-//           
-           if ($control == 'users' && in_array($action, ['login','logout'])) {
-                $this->Auth->allow();
-            } else {
-                 $this->log('is null else','debug');
-                $this->Auth->deny();
-                $this->log('11 is null else','debug');
-             //   debug("11");
+     
+            $this->Auth->allow();
+            //
+            if ($control == 'users' && !in_array($action, ['login', 'logout'])) {
                 return $this->redirect(['controller' => 'users', 'action' => 'login']);
-            }
-        } 
-        else {
-          
-            $status = '';
-            $Permissions = $this->request->session()->read('rolePermissions');
-
-            if (in_array($control, $Permissions['controller'])) {
-                
-                $actionArr = $Permissions['actions'][$control];
-
-                if($action=='displaypermission' || $action =='logout'){
-                    $this->Auth->allow();
-                }
-                else if (in_array($action, $actionArr)) {
-                
-                    $this->Auth->allow();
-                } else {
-                
-                    $this->Auth->deny();
-                    return $this->redirect(['controller' => 'users', 'action' => 'displaypermission']);
-                    die();
-                }
-            } else {
-             
-                $this->Auth->deny();
-               return $this->redirect(['controller' => 'users', 'action' => 'displaypermission']);
-                die();
             }
         }
     }

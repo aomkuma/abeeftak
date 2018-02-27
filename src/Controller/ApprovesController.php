@@ -11,29 +11,37 @@ use App\Controller\AppController;
  * @method \App\Model\Entity\Approve[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class ApprovesController extends AppController {
-    
-    
-    public function cowlist(){
+
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
+    }
+
+    public function cowlist() {
         
     }
-    
-    public function farmlist(){
+
+    public function farmlist() {
         
     }
-    
-    public function herdsmanlist(){
+
+    public function herdsmanlist() {
         
     }
-    
-    public function cow(){
+
+    public function cow() {
         
     }
-    
-    public function farm(){
+
+    public function farm() {
         
     }
-    
-    public function herdsman(){
+
+    public function herdsman() {
         
     }
+
 }

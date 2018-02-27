@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -10,16 +11,22 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\GrowthRecord[] paginate($object = null, array $settings = [])
  */
-class GrowthRecordsController extends AppController
-{
+class GrowthRecordsController extends AppController {
+
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
+    }
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
+    public function index() {
         $growthRecords = $this->paginate($this->GrowthRecords);
 
         $this->set(compact('growthRecords'));
@@ -33,8 +40,7 @@ class GrowthRecordsController extends AppController
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $growthRecord = $this->GrowthRecords->get($id, [
             'contain' => []
         ]);
@@ -48,8 +54,7 @@ class GrowthRecordsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $growthRecord = $this->GrowthRecords->newEntity();
         if ($this->request->is('post')) {
             $growthRecord = $this->GrowthRecords->patchEntity($growthRecord, $this->request->getData());
@@ -71,8 +76,7 @@ class GrowthRecordsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $growthRecord = $this->GrowthRecords->get($id, [
             'contain' => []
         ]);
@@ -96,8 +100,7 @@ class GrowthRecordsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $growthRecord = $this->GrowthRecords->get($id);
         if ($this->GrowthRecords->delete($growthRecord)) {
@@ -108,4 +111,5 @@ class GrowthRecordsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

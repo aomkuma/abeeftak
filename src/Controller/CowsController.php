@@ -36,7 +36,11 @@ class CowsController extends AppController {
         $this->MovementRecords = TableRegistry::get('MovementRecords');
         $this->TreatmentRecords = TableRegistry::get('TreatmentRecords');
         $this->Runnings = TableRegistry::get('Runnings');
+          if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
     }
+   
 
     /**
      * Index method

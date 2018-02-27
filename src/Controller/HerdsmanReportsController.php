@@ -15,6 +15,13 @@ class HerdsmanReportsController extends AppController {
 
     public $Herdsmans = null;
 
+     public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
+    }
     /**
      * Index method
      *

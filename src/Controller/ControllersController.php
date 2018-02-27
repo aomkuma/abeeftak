@@ -13,6 +13,14 @@ use App\Controller\AppController;
  */
 class ControllersController extends AppController {
 
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
+    }
+
     /**
      * Index method
      *
@@ -20,11 +28,10 @@ class ControllersController extends AppController {
      */
     public function index() {
         $controllers = $this->paginate($this->Controllers);
-        
-        
+
+
         $this->set(compact('controllers'));
         $this->set('_serialize', ['controllers']);
-        
     }
 
     /**
@@ -60,7 +67,7 @@ class ControllersController extends AppController {
 
         $controller = $this->Controllers->newEntity();
         if ($this->request->is('post')) {
-             $controller = $this->Controllers->patchEntity($controller, $this->request->getData());
+            $controller = $this->Controllers->patchEntity($controller, $this->request->getData());
 
 //            for ($i = 0; $i < sizeof($namecon); $i++) {
 //                $controller = $this->Controllers->newEntity();

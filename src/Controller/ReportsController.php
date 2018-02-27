@@ -42,13 +42,12 @@ class ReportsController extends AppController {
         $this->TreatmentRecords = TableRegistry::get('TreatmentRecords');
         $this->CowImages = TableRegistry::get('CowImages');
         $this->Images = TableRegistry::get('Images');
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
     }
 
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|void
-     */
+   
     public function index() {
         
     }
