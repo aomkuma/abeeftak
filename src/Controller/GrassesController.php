@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\Event\Event;
 /**
  * Grasses Controller
  *
@@ -12,6 +12,14 @@ use App\Controller\AppController;
  * @method \App\Model\Entity\Grass[] paginate($object = null, array $settings = [])
  */
 class GrassesController extends AppController {
+
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
+    }
 
     /**
      * Index method

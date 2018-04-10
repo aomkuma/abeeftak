@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use Cake\Datasource\ConnectionManager;
+use Cake\Event\Event;
 /**
  * Home Controller
  *
@@ -14,8 +15,18 @@ use Cake\Datasource\ConnectionManager;
 class HomeController extends AppController {
 
     
+<<<<<<< HEAD
     
     
+=======
+   public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+        
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
+    }
+>>>>>>> fa172018987ba0880ae057d64b42d2b75a7931f0
     /**
      * Index method
      *

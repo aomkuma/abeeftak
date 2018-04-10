@@ -34,7 +34,7 @@ class GivebirthrecordsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('givebirthrecords');
+        $this->setTable('givebirth_records');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 

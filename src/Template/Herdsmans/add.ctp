@@ -8,6 +8,8 @@
             var grade = $('#grade').val();
             var title = $('#title').val();
             var image = $('#image').val();
+            var imagefile = document.getElementById("image").files[0];
+
 
             if (mobile === '') {
                 $('#mobile').val = '-';
@@ -40,14 +42,18 @@
 //            } else {
 
             if (spg[lastarr] !== 'jpg' && spg[lastarr] !== 'JPG' && spg[lastarr] !== 'png' && spg[lastarr] !== 'PNG' && spg[lastarr] !== 'jpeg' && spg[lastarr] !== 'JPEG') {
-                alert("กรุณาใส่ประเภทไฟล์ให้ถูกต้อง");
+                alert("กรุณาใส่ประเภทไฟล์ .jpg .png หรือ .jpeg เท่านั้น");
                 $('#image').val = '';
                 $('#image').focus();
 
                 return false;
             }
 
-//            }
+            if (imagefile.size > 5242880) // 5 mb for bytes.
+            {
+                alert("กรุณาเลือกรูปภาพ ขนาดไม่เกิน 5MB");
+                return false;
+            }
 
 
         });
@@ -69,7 +75,7 @@
         });
 
     });
-    
+
     $(document).ready(function () {
         Validation.initValidation();
 
@@ -130,7 +136,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        
+
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
@@ -176,7 +182,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
@@ -208,7 +214,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="">รูป <i class="text-danger">*</i></label>
-                            <?= $this->Form->file('image', ['class' => 'form-control', 'label' => false, 'id' => 'image']) ?>
+                            <?= $this->Form->file('image', ['class' => 'form-control', 'label' => false, 'id' => 'image', 'required' => true]) ?>
                         </div>
                     </div>
                 </div>
@@ -226,55 +232,55 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <h3 class="page-header font-th-prompt400">ที่อยู่</h3>
-                
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="">ที่อยู่ <i class="text-danger">*</i></label>
-                                <?= $this->Form->control('address_line', ['class' => 'form-control', 'label' => false, 'id' => 'address_line',  'required' => true]) ?>
+                                <label for="">ที่อยู่ </label>
+                                <?= $this->Form->control('address_line', ['class' => 'form-control', 'label' => false, 'id' => 'address_line']) ?>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="">บ้านเลขที่ <i class="text-danger">*</i></label>
-                                <?= $this->Form->control('houseno', ['class' => 'form-control', 'label' => false,  'required' => true]) ?>
+                                <?= $this->Form->control('houseno', ['class' => 'form-control', 'label' => false, 'required' => true]) ?>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for="">หมู่ที่ <i class="text-danger">*</i></label>
-                                <?= $this->Form->control('villageno', ['class' => 'form-control', 'label' => false,  'required' => true]) ?>
+                                <?= $this->Form->control('villageno', ['class' => 'form-control', 'label' => false, 'required' => true]) ?>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">หมู่บ้าน <i class="text-danger">*</i></label>
-                                <?= $this->Form->control('villagename', ['class' => 'form-control', 'label' => false,  'required' => true]) ?>
+                                <?= $this->Form->control('villagename', ['class' => 'form-control', 'label' => false, 'required' => true]) ?>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">ตำบล <i class="text-danger">*</i></label>
-                                <?= $this->Form->control('subdistrict', ['class' => 'form-control', 'label' => false, 'id' => 'district',  'required' => true]) ?>
+                                <?= $this->Form->control('subdistrict', ['class' => 'form-control', 'label' => false, 'id' => 'district', 'required' => true]) ?>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">อำเภอ <i class="text-danger">*</i></label>
-                                <?= $this->Form->control('district', ['class' => 'form-control', 'label' => false, 'id' => 'amphoe',  'required' => true]) ?>
+                                <?= $this->Form->control('district', ['class' => 'form-control', 'label' => false, 'id' => 'amphoe', 'required' => true]) ?>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label for="">จังหวัด <i class="text-danger">*</i></label>
-                            <?= $this->Form->control('province_id', ['type' => 'text', 'class' => 'form-control', 'label' => false, 'id' => 'province',  'required' => true]) ?>
+                            <?= $this->Form->control('province_id', ['type' => 'text', 'class' => 'form-control', 'label' => false, 'id' => 'province', 'required' => true]) ?>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">รหัสไปรษณีย์ <i class="text-danger">*</i></label>
-                                <?= $this->Form->control('postalcode', ['class' => 'form-control', 'label' => false, 'id' => 'zipcode',  'required' => true]) ?>
+                                <?= $this->Form->control('postalcode', ['class' => 'form-control', 'label' => false, 'id' => 'zipcode', 'required' => true]) ?>
                             </div>
                         </div>
                     </div>

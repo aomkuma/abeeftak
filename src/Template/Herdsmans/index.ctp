@@ -95,6 +95,7 @@
                     <th class="text-center"><?= $this->Paginator->sort('ชื่อ-นามสกุล') ?></th>
                     <th class="text-center"><?= $this->Paginator->sort('เลขประจำตัวประชาชน') ?></th>
                     <th class="text-center"><?= $this->Paginator->sort('วันที่ขึ้นทะเบียน') ?></th>
+                    <th scope="col" class="text-center"><?= $this->Paginator->sort('isapproved','สถานะการอนุมัติ') ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -103,9 +104,10 @@
                         <td class="text-center"><?= $this->Html->link(BT_EDIT, ['action' => 'edit', $herdsman->id], ['escape' => false, 'label' => false]) ?></td>
                         <td class="text-center"><?= $this->Html->link(BT_DELETE, ['action' => 'delete', $herdsman->id], ['confirm' => __('ท่านต้องการลบข้อมูลสมาชืก ใช่ หรือ ไม่ '), 'escape' => false, 'label' => false]) ?></td>
                         <td class="text-center"><?= h($herdsman->code) ?></td>
-                        <td class="text-center"><?= h($herdsman->title) ?> &nbsp;<?= h($herdsman->firstname) ?> &nbsp;&nbsp; <?= h($herdsman->lastname) ?></td>
+                        <td class="text-left"><?= h($herdsman->title) ?> &nbsp;<?= h($herdsman->firstname) ?> &nbsp;&nbsp; <?= h($herdsman->lastname) ?></td>
                         <td class="text-center"><?= h($herdsman->idcard) ?></td>
                         <td class="text-center"><?php echo date("d-m-Y", strtotime($herdsman->registerdate)); ?>&nbsp;</td>
+                        <td class="text-center"><?= ($herdsman->isapproved=='N'?'รออนุมัติ':'อนุมัติ') ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

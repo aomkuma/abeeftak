@@ -20,13 +20,12 @@ class RoleAccessesController extends AppController {
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
         $this->Controllers = TableRegistry::get('Controllers');
+         if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
     }
 
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|void
-     */
+   
     public function index() {
         $this->paginate = [
             'contain' => ['Roles', 'Actions']

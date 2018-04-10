@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\Event\Event;
 /**
  * Addresses Controller
  *
@@ -10,16 +11,22 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\Address[] paginate($object = null, array $settings = [])
  */
-class AddressesController extends AppController
-{
+class AddressesController extends AppController {
+
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
+    }
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
+    public function index() {
         $this->paginate = [
             'contain' => ['Provinces']
         ];
@@ -36,8 +43,7 @@ class AddressesController extends AppController
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $address = $this->Addresses->get($id, [
             'contain' => ['Provinces', 'Farms', 'Herdsmans']
         ]);
@@ -51,8 +57,7 @@ class AddressesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $address = $this->Addresses->newEntity();
         if ($this->request->is('post')) {
             $address = $this->Addresses->patchEntity($address, $this->request->getData());
@@ -75,8 +80,7 @@ class AddressesController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $address = $this->Addresses->get($id, [
             'contain' => []
         ]);
@@ -101,8 +105,7 @@ class AddressesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $address = $this->Addresses->get($id);
         if ($this->Addresses->delete($address)) {
@@ -113,4 +116,5 @@ class AddressesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

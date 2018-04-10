@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\Event\Event;
 /**
  * Images Controller
  *
@@ -13,6 +13,13 @@ use App\Controller\AppController;
 class ImagesController extends AppController
 {
 
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+        
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
+    }
     /**
      * Index method
      *

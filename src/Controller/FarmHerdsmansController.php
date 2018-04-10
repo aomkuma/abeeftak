@@ -23,13 +23,11 @@ class FarmHerdsmansController extends AppController {
         parent::beforeFilter($event);
         $this->FarmHerdsmans = TableRegistry::get('FarmHerdsmans');
         $this->Herdsmans = TableRegistry::get('Herdsmans');
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
     }
 
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|void
-     */
     public function index($farm_id = null) {
         $this->viewBuilder()->layout('clean_layout');
 

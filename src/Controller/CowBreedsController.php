@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\Event\Event;
 /**
  * CowBreeds Controller
  *
@@ -10,16 +11,22 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\CowBreed[] paginate($object = null, array $settings = [])
  */
-class CowBreedsController extends AppController
-{
+class CowBreedsController extends AppController {
+
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
+    }
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
+    public function index() {
         $cowBreeds = $this->paginate($this->CowBreeds);
 
         $this->set(compact('cowBreeds'));
@@ -33,8 +40,7 @@ class CowBreedsController extends AppController
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $cowBreed = $this->CowBreeds->get($id, [
             'contain' => ['Cows']
         ]);
@@ -48,8 +54,7 @@ class CowBreedsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $cowBreed = $this->CowBreeds->newEntity();
         if ($this->request->is('post')) {
             $cowBreed = $this->CowBreeds->patchEntity($cowBreed, $this->request->getData());
@@ -71,8 +76,7 @@ class CowBreedsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $cowBreed = $this->CowBreeds->get($id, [
             'contain' => []
         ]);
@@ -96,8 +100,7 @@ class CowBreedsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $cowBreed = $this->CowBreeds->get($id);
         if ($this->CowBreeds->delete($cowBreed)) {
@@ -108,4 +111,5 @@ class CowBreedsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

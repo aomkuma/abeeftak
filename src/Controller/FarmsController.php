@@ -43,13 +43,12 @@ class FarmsController extends AppController {
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
         $this->FarmCows = TableRegistry::get('FarmCows');
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
     }
 
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|void
-     */
+    
     public function index() {
 
         $name = $this->request->query('name');
@@ -162,7 +161,7 @@ class FarmsController extends AppController {
                 }
                 $this->log($farm->errors(), 'debug');
                 $this->Flash->error(__('The farm could not be saved. Please, try again.'));
-            }else{
+            } else {
                 $this->Flash->error(__('ไม่พบจังหวัดที่ท่านเลือก'));
             }
         }
@@ -192,7 +191,7 @@ class FarmsController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $data = $this->request->getData();
             $farm = $this->Farms->patchEntity($farm, $data);
-            $this->log($data,'debug');
+            $this->log($data, 'debug');
             $farm->hasstable = 'N';
             if ($data['hasstable'] == 1) {
                 $farm->hasstable = 'Y';
@@ -213,11 +212,9 @@ class FarmsController extends AppController {
                     return $this->redirect(['action' => 'index']);
                 }
                 $this->Flash->error(__('The farm could not be saved. Please, try again.'));
-            }else{
+            } else {
                 $this->Flash->error(__('ไม่พบจังหวัดที่ท่านเลือก'));
             }
-
-            
         }
         $province = $this->findProvinceById($farm->address->province_id);
         $farm->address->province_id = $province['province_name'];
