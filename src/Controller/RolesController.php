@@ -22,19 +22,19 @@ class RolesController extends AppController {
         parent::beforeFilter($event);
         $this->Controllers = TableRegistry::get('Controllers');
         $this->RoleAccesses = TableRegistry::get('RoleAccesses');
-<<<<<<< HEAD
+
          $control = strtolower($this->request->params['controller']);
         $action = strtolower($this->request->params['action']);
         //$this->loadComponent('Authen');
        //$ckPermission= $this->Authen->authen($action,$control);
         ///debug($ckPermission);
 //      
-=======
+
         if (!$this->Authen->authen()) {
             return $this->redirect(USERPERMISSION);
         }
 //        
->>>>>>> fa172018987ba0880ae057d64b42d2b75a7931f0
+
     }
 
     

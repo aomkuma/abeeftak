@@ -15,10 +15,7 @@ use Cake\Event\Event;
 class HomeController extends AppController {
 
     
-<<<<<<< HEAD
-    
-    
-=======
+
    public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
         
@@ -26,7 +23,7 @@ class HomeController extends AppController {
             return $this->redirect(USERPERMISSION);
         }
     }
->>>>>>> fa172018987ba0880ae057d64b42d2b75a7931f0
+
     /**
      * Index method
      *

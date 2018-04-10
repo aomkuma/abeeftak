@@ -14811,3 +14811,24 @@ Stack Trace:
 #13 {main}
 
 
+2018-04-10 08:16:24 Error: Fatal Error (4): syntax error, unexpected '<<' (T_SL), expecting function (T_FUNCTION) in [/Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/src/Controller/HomeController.php, line 18]
+Request URL: /home
+Referer URL: https://127.0.0.1/Git/abeeftak/users/add
+Client IP: 127.0.0.1
+Trace:
+Cake\Error\BaseErrorHandler::handleFatalError() - CORE/src/Error/BaseErrorHandler.php, line 223
+Cake\Error\BaseErrorHandler::Cake\Error\{closure}() - CORE/src/Error/BaseErrorHandler.php, line 105
+[main] - [internal], line ??
+
+
+
+2018-04-10 08:16:24 Error: [Cake\Error\FatalErrorException] syntax error, unexpected '<<' (T_SL), expecting function (T_FUNCTION) in /Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/src/Controller/HomeController.php on line 18
+Request URL: /home
+Referer URL: https://127.0.0.1/Git/abeeftak/users/add
+Client IP: 127.0.0.1
+Stack Trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/Git/abeeftak/vendor/cakephp/cakephp/src/Error/BaseErrorHandler.php(105): Cake\Error\BaseErrorHandler->handleFatalError(4, 'syntax error, u...', '/Applications/X...', 18)
+#1 [internal function]: Cake\Error\BaseErrorHandler->Cake\Error\{closure}()
+#2 {main}
+
+

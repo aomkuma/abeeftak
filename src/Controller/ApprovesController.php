@@ -4,11 +4,10 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
-<<<<<<< HEAD
+
 use Cake\ORM\TableRegistry;
 
-=======
->>>>>>> fa172018987ba0880ae057d64b42d2b75a7931f0
+
 /**
  * Approves Controller
  *
@@ -17,17 +16,24 @@ use Cake\ORM\TableRegistry;
  */
 class ApprovesController extends AppController {
 
-<<<<<<< HEAD
+
     public $Herdsmans = null;
     public $Cows = null;
     public $Farms = null;
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
+
+        if (!$this->Authen->authen()) {
+            return $this->redirect(USERPERMISSION);
+        }
+        
         $this->Cows = TableRegistry::get('Cows');
         $this->Farms = TableRegistry::get('Farms');
         $this->Herdsmans = TableRegistry::get('Herdsmans');
     }
+    
+
 
     public function cowlist() {
         $this->viewBuilder()->layout('clean_layout');
@@ -72,38 +78,6 @@ class ApprovesController extends AppController {
         return $this->redirect(['action'=>'herdsmanlist']);
     }
 
-=======
-    public function beforeFilter(Event $event) {
-        parent::beforeFilter($event);
 
-        if (!$this->Authen->authen()) {
-            return $this->redirect(USERPERMISSION);
-        }
-    }
 
-    public function cowlist() {
-        
-    }
-
-    public function farmlist() {
-        
-    }
-
-    public function herdsmanlist() {
-        
-    }
-
-    public function cow() {
-        
-    }
-
-    public function farm() {
-        
-    }
-
-    public function herdsman() {
-        
-    }
-
->>>>>>> fa172018987ba0880ae057d64b42d2b75a7931f0
 }
