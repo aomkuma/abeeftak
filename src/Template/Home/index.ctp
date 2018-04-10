@@ -11,35 +11,35 @@
                 <i class="fa fa-bar-chart-o fa-fw"></i> อนุมัติผู้เลี้ยงโค
             </div>
             <div class="panel-body">
-                
-                
-                
+                <iframe id="cow_list" src="<?= SITE_URL . 'approves/herdsmanlist/' ?>" frameborder="0" scrolling="no" onload="resizeIframe(this)" width="100%"></iframe>
+
+
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-bar-chart-o fa-fw"></i> อนุมัติโค
             </div>
             <div class="panel-body">
-                
-                
-                
+
+
+
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-bar-chart-o fa-fw"></i> อนุมัติฟาร์ม
             </div>
             <div class="panel-body">
-                
-                
-                
+
+
+
             </div>
         </div>
     </div>
@@ -169,6 +169,10 @@
 <?= $this->Html->script('/startbootstrap/vendor/raphael/raphael.min.js') ?>
 <?= $this->Html->script('/startbootstrap/vendor/morrisjs/morris.min.js') ?>
 <script>
+    function resizeIframe(obj) {
+        obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+    }
+
     $(function () {
         Morris.Donut({
             element: 'morris-donut-chart',

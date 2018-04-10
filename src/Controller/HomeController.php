@@ -13,6 +13,9 @@ use Cake\Datasource\ConnectionManager;
  */
 class HomeController extends AppController {
 
+    
+    
+    
     /**
      * Index method
      *
@@ -20,6 +23,7 @@ class HomeController extends AppController {
      */
     public function index() {
         $CowsModel = TableRegistry::get('Cows');
+        
         //F
         $query = $CowsModel->find('all')
                 ->where(['Cows.gender'=>'F']);

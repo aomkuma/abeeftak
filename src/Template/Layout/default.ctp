@@ -97,7 +97,7 @@
         <?= $this->Html->script('angular-scripts/node_modules/pdfmake/build/vfs_fonts.js') ?>
         <?= $this->Html->script('angular-scripts/node_modules/pdfmake/build/build/vfs_fonts.js') ?>
         
-        <?= $this->Html->css('bootstrap-3.3.7-dist/css/bootstrap-theme.css', ['rel' => 'stylesheet']) ?>
+        <?= ''//$this->Html->css('bootstrap-3.3.7-dist/css/bootstrap-theme.css', ['rel' => 'stylesheet']) ?>
         <?= $this->Html->css('css-datepicker/bootstrap-datepicker.css', ['rel' => 'stylesheet']) ?>
         <?= $this->Html->script('bootstrap-datepicker-custom/dist/js/bootstrap-datepicker-custom.js') ?>
         <?= $this->Html->script('bootstrap-datepicker-custom/dist/locales/bootstrap-datepicker.th.min.js') ?>

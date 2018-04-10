@@ -29,7 +29,8 @@
                 <td><?= h($count) ?></td>
                 <td><?= h($item->cow->code) ?></td>
                 <td><?= h($item->createdby) ?></td>
-                <td class="text-right"><?= $this->Form->postLink('<span class="label label-warning">ย้ายออก</span>', ['action' => 'movecow', $item->id, $item->farm_id], ['confirm' => __('คุณต้องการย้าย "{0}" ออกจากฟาร์ม?', $item->cow->code), 'escape' => false]) ?>
+                <td class="text-right">
+            <?= $this->Form->postLink('<span class="label label-warning">ย้ายออก</span>', ['action' => 'movecow', $item->id, $item->farm_id], ['confirm' => __('คุณต้องการย้าย "{0}" ออกจากฟาร์ม?', $item->cow->code), 'escape' => false]) ?>
                     <?= $this->Form->postLink('<span class="label label-danger">ลบ</span>', ['action' => 'delete', $item->id, $item->farm_id], ['confirm' => __('คุณต้องการลบ "{0}" ออกจากฟาร์ม?', $item->cow->code), 'escape' => false]) ?></td>
             </tr>
 
