@@ -41,6 +41,8 @@ class HerdsmansFixture extends TestFixture
         'updated' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'updatedby' => ['type' => 'string', 'length' => 100, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'isapproved' => ['type' => 'string', 'length' => null, 'null' => true, 'default' => 'N', 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'request_note' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'approvedby' => ['type' => 'string', 'length' => 100, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
@@ -58,7 +60,7 @@ class HerdsmansFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => '9ce664e6-a693-4634-b460-e39ed4776a89',
+            'id' => '3bd1c2dc-8068-4fb7-a23b-365d8099099f',
             'code' => 'Lor',
             'aac_code' => 'Lorem',
             'amc_code' => 'Lore',
@@ -67,21 +69,23 @@ class HerdsmansFixture extends TestFixture
             'firstname' => 'Lorem ipsum dolor sit amet',
             'lastname' => 'Lorem ipsum dolor sit amet',
             'idcard' => 'Lorem ipsum',
-            'birthday' => '2018-02-24',
+            'birthday' => '2018-04-10',
             'account_number1' => 'Lorem ipsu',
             'account_number2' => 'Lorem ipsu',
-            'registerdate' => '2018-02-24',
+            'registerdate' => '2018-04-10',
             'isactive' => 'Lorem ipsum dolor sit amet',
-            'address_id' => 'c1c0d900-f750-4ff2-8203-0831e8d5c409',
-            'image_id' => '1c036deb-fdd0-4269-bb2a-5658d7f28458',
+            'address_id' => '541c7215-b6eb-4b04-8c0a-d7f1c88a046f',
+            'image_id' => 'fd2bea89-15eb-405e-aecd-552b772eabcf',
             'mobile' => 'Lorem ipsum dolor sit amet',
             'email' => 'Lorem ipsum dolor sit amet',
             'description' => 'Lorem ipsum dolor sit amet',
-            'created' => '2018-02-24 08:29:06',
+            'created' => '2018-04-10 10:14:37',
             'createdby' => 'Lorem ipsum dolor sit amet',
-            'updated' => '2018-02-24 08:29:06',
+            'updated' => '2018-04-10 10:14:37',
             'updatedby' => 'Lorem ipsum dolor sit amet',
-            'isapproved' => 'Lorem ipsum dolor sit amet'
+            'isapproved' => 'Lorem ipsum dolor sit amet',
+            'request_note' => 'Lorem ipsum dolor sit amet',
+            'approvedby' => 'Lorem ipsum dolor sit amet'
         ],
     ];
 }

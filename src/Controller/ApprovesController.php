@@ -33,51 +33,55 @@ class ApprovesController extends AppController {
         $this->Herdsmans = TableRegistry::get('Herdsmans');
     }
     
-
-
-    public function cowlist() {
+    public function index(){
         $this->viewBuilder()->layout('clean_layout');
-        //Find cow to approve
+        $transactions = [];
+        
+        $herdsmanTransactions = $this->herdsmanTransaction();
+        $cowTransactions = $this->cowTransaction();
+        $farmTransaction = $this->farmTransaction();
+        
+        $transactions = array_merge($transactions,$herdsmanTransactions);
+        $transactions = array_merge($transactions,$cowTransactions);
+        $transactions = array_merge($transactions,$farmTransaction);
+        
+        $this->set(compact('herdsmanTransactions','cowTransactions','farmTransaction','transactions'));
+    }
+    
+    
+    private function cowTransaction(){
         $query = $this->Cows->find()
+                ->select(['id','request_note','updated'])
                 ->where(['Cows.isapproved' => 'N'])
-                ->order(['Cows.created' => 'ASC']);
+                ->order(['Cows.updated' => 'ASC']);
         $cows = $query->toArray();
-
-        $this->set('cows', $cows);
+        
+        
+        return $cows;
     }
 
-    public function farmlist() {
-        $this->viewBuilder()->layout('clean_layout');
-        //Find farm to approve
+
+    private function farmTransaction() {
+
         $query = $this->Farms->find()
+                ->select(['id','request_note','updated'])
                 ->where(['Farms.isapproved' => 'N'])
                 ->order(['Farms.created' => 'ASC']);
         $farms = $query->toArray();
-        $this->set('farms', $farms);
+        return $farms;
     }
 
-    public function herdsmanlist() {
-        $this->viewBuilder()->layout('clean_layout');
-        //Find herdsman to approve
+    private function herdsmanTransaction() {
         $query = $this->Herdsmans->find()
+                ->select(['id','request_note','updated'])
                 ->where(['Herdsmans.isapproved' => 'N'])
                 ->order(['Herdsmans.created' => 'ASC']);
         $herdsmans = $query->toArray();
-        $this->set('herdsmans', $herdsmans);
-    }
-
-    public function cow() {
         
+        return $herdsmans;
     }
 
-    public function farm() {
-        
-    }
-
-    public function herdsman() {
-        return $this->redirect(['action'=>'herdsmanlist']);
-    }
-
+    
 
 
 }

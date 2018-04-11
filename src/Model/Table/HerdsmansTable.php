@@ -40,14 +40,7 @@ class HerdsmansTable extends Table
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp', [
-            'events' => [
-                'Model.beforeSave' => [
-                    'created' => 'new',
-                    'updated' => 'always',
-                ]
-            ]
-        ]);
+        $this->addBehavior('Timestamp');
 
         $this->belongsTo('Addresses', [
             'foreignKey' => 'address_id'
@@ -81,7 +74,7 @@ class HerdsmansTable extends Table
 
         $validator
             ->scalar('aac_code')
-            ->maxLength('aac_code', 6)
+            ->maxLength('aac_code', 7)
             ->allowEmpty('aac_code');
 
         $validator
@@ -171,6 +164,16 @@ class HerdsmansTable extends Table
             ->scalar('isapproved')
             ->allowEmpty('isapproved');
 
+        $validator
+            ->scalar('request_note')
+            ->maxLength('request_note', 255)
+            ->allowEmpty('request_note');
+
+        $validator
+            ->scalar('approvedby')
+            ->maxLength('approvedby', 100)
+            ->allowEmpty('approvedby');
+
         return $validator;
     }
 
@@ -183,6 +186,7 @@ class HerdsmansTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['address_id'], 'Addresses'));
         $rules->add($rules->existsIn(['image_id'], 'Images'));
 

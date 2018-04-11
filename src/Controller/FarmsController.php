@@ -48,7 +48,6 @@ class FarmsController extends AppController {
         }
     }
 
-    
     public function index() {
 
         $name = $this->request->query('name');
@@ -154,6 +153,8 @@ class FarmsController extends AppController {
             if (!is_null($province)) {
                 $farm->address->province_id = $province->id;
                 $farm->createdby = $this->request->session()->read('Auth.User.firstname');
+                $farm->isapproved = 'N';
+                $farm->request_note = 'ต้องการเพิ่มฟาร์มใหม่ชื่อ ' . $farm->name  . ' โดย ' . $farm->createdby;
                 if ($this->Farms->save($farm)) {
                     $this->Flash->success(__('The farm has been saved.'));
 
@@ -205,7 +206,8 @@ class FarmsController extends AppController {
             if (!is_null($province)) {
                 $farm->address->province_id = $province->id;
                 $farm->updatedby = $this->request->session()->read('Auth.User.firstname');
-
+                $farm->isapproved = 'N';
+                $farm->request_note = 'มีการแก้ไขฟาร์มชื่อ ' . $farm->name  . ' โดย ' . $farm->createdby;
                 if ($this->Farms->save($farm)) {
                     $this->Flash->success(__('The farm has been saved.'));
 
@@ -320,6 +322,27 @@ class FarmsController extends AppController {
         //$this->log($data->first(),'debug');
         //$this->log($name,'debug');
         return $data;
+    }
+    
+    public function approve($id = null){
+        if(is_null($id) || $id ==''){
+            return null;
+        }
+        
+        $q = $this->Farms->find()
+                ->where(['id'=>$id,'isapproved'=>'N']);
+        $farm = $q->first();
+        
+        if(!is_null($farm) || $farm != ''){
+            $getname = $this->request->session()->read('Auth.User');
+            $farm->isapproved = 'Y';
+            $farm->approvedby = $getname['firstname'] . ' ' . $getname['lastname'];
+            $this->Farms->save($farm);
+            $this->Flash->success('อนุมัติแล้ว');
+        }
+        
+        return $this->redirect(['controller'=>'approves','action'=>'index']);
+        
     }
 
 }

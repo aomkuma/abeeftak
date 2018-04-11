@@ -30,6 +30,8 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $updated
  * @property string $updatedby
  * @property string $isapproved
+ * @property string $request_note
+ * @property string $approvedby
  *
  * @property \App\Model\Entity\Address $address
  * @property \App\Model\Entity\Image $image
@@ -71,6 +73,8 @@ class Herdsman extends Entity
         'updated' => true,
         'updatedby' => true,
         'isapproved' => true,
+        'request_note' => true,
+        'approvedby' => true,
         'address' => true,
         'image' => true,
         'farm_herdsmans' => true

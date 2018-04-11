@@ -36,11 +36,10 @@ class CowsController extends AppController {
         $this->MovementRecords = TableRegistry::get('MovementRecords');
         $this->TreatmentRecords = TableRegistry::get('TreatmentRecords');
         $this->Runnings = TableRegistry::get('Runnings');
-          if (!$this->Authen->authen()) {
+        if (!$this->Authen->authen()) {
             return $this->redirect(USERPERMISSION);
         }
     }
-   
 
     /**
      * Index method
@@ -67,8 +66,8 @@ class CowsController extends AppController {
             $arr_con[] = ['Cows.gender ' => $gender];
         }
 
-        if(!empty($isapproved)){
-            $arr_con[] = ['Cows.isapproved ' => $isapproved];   
+        if (!empty($isapproved)) {
+            $arr_con[] = ['Cows.isapproved ' => $isapproved];
         }
 
         $data = $this->Cows->find('all'
@@ -112,6 +111,10 @@ class CowsController extends AppController {
         $cow = $this->Cows->newEntity();
         if ($this->request->is('post')) {
             $cow = $this->Cows->patchEntity($cow, $this->request->getData());
+            $cow->isapproved = 'N';
+            $getname = $this->request->session()->read('Auth.User');
+            $cow->createdby = $getname['firstname'] . ' ' . $getname['lastname'];
+            $cow->request_note = 'ต้องการเพิ่มโคใหม่รหัส ' . $cow->code . ' โดย ' . $cow->createdby;
             if ($this->Cows->save($cow)) {
                 $this->Flash->success(__('The cow has been saved.'));
 
@@ -242,6 +245,11 @@ class CowsController extends AppController {
         $cow->artificial_father_breed = $Cow['artificial_father_breed'];
         $cow->origins = $Cow['origins'];
         $cow->import_date = $this->convertDate($Cow['import_date']);
+        $cow->isapproved = 'N';
+        $getname = $this->request->session()->read('Auth.User');
+        $cow->createdby = $getname['firstname'] . ' ' . $getname['lastname'];
+        $cow->updatedby = $getname['firstname'] . ' ' . $getname['lastname'];
+        $cow->request_note = 'ต้องการแก้ไขโครหัส ' . $cow->code . ' โดย ' . $cow->updatedby;
 
         if ($this->Cows->save($cow)) {
             $result['DATA']['ID'] = $cow->id;
@@ -259,15 +267,15 @@ class CowsController extends AppController {
         return $this->response;
     }
 
-    private function convertDate($d){
+    private function convertDate($d) {
         $newDate = null;
-        if(!empty($d)){
+        if (!empty($d)) {
             $datetime = explode(' ', $d);
             $arr = explode('/', $datetime[0]);
             $date = str_pad($arr[0], 2, '0', STR_PAD_LEFT);
             $month = str_pad($arr[1], 2, '0', STR_PAD_LEFT);
             $year = intval($arr[2]) - 543;
-            if(count($datetime) == 2){
+            if (count($datetime) == 2) {
                 $time = ' ' . $datetime[1];
             }
             $dateStr = $year . '-' . $month . '-' . $date . $time;
@@ -282,7 +290,7 @@ class CowsController extends AppController {
         $running = $this->Runnings->find('all')->where(['running_type' => 'COW', 'runnubg_date' => $chkdate]);
 
         $running = $running->toArray();
-        if(empty($running)){
+        if (empty($running)) {
             $running = $this->Runnings->newEntity();
             $running->running_code = 'TAK';
             $running->running_no = 0;
@@ -295,9 +303,8 @@ class CowsController extends AppController {
                 $result = 'fail to update';
                 return '';
             }
-        }else{
+        } else {
             $running = $running[0];
-            
         }
         $year = substr((date('Y') + 543), 2);
         $running_no = $running->running_no + 1;
@@ -384,7 +391,7 @@ class CowsController extends AppController {
 
         if ($this->GrowthRecords->save($Fertilize)) {
             // load list
-            $list = $this->GrowthRecords->find('all')->where(['cow_id' => $cow_id, 'type'=>'F']);
+            $list = $this->GrowthRecords->find('all')->where(['cow_id' => $cow_id, 'type' => 'F']);
             $result['DATA']['ACTION'] = $action_type;
             $result['DATA']['ID'] = $Fertilize->id;
             $result['DATA']['obj'] = $list;
@@ -662,10 +669,10 @@ class CowsController extends AppController {
         $keyword = $obj['keyword'];
         $masterType = $obj['masterType'];
 
-        if($masterType == 'FATHERCODE'){
-            $data = $this->Cows->find('all')->where(['code LIKE' => '%'.$keyword.'%', 'gender'=>'M']);
-        }else if($masterType == 'MOTHERCODE'){
-            $data = $this->Cows->find('all')->where(['code LIKE' => '%'.$keyword.'%', 'gender'=>'F']);
+        if ($masterType == 'FATHERCODE') {
+            $data = $this->Cows->find('all')->where(['code LIKE' => '%' . $keyword . '%', 'gender' => 'M']);
+        } else if ($masterType == 'MOTHERCODE') {
+            $data = $this->Cows->find('all')->where(['code LIKE' => '%' . $keyword . '%', 'gender' => 'F']);
         }
         $data = $data->toArray();
         $this->response->body(json_encode($data));
@@ -739,30 +746,48 @@ class CowsController extends AppController {
           order by fc.isactive desc,fc.moveddate desc
          * 
          */
-        
+
         $query = $this->Cows->find()
-                ->select(['Cows.id','Cows.code'])
-                ->contain(['FarmCows'=>[
-                    'fields'=>['FarmCows.id','FarmCows.cow_id','FarmCows.farm_id','FarmCows.isactive','FarmCows.moved_in_date','FarmCows.moved_out_date'],
-                    'sort'=>['FarmCows.isactive'=>'ASC','FarmCows.moved_in_date'=>'DESC'],
-                    'Farms'=>[
-                        'fields'=>['Farms.id','Farms.name'],
-                        'FarmHerdsmans'=>[
-                            'fields'=>['FarmHerdsmans.id','FarmHerdsmans.herdsman_id','FarmHerdsmans.farm_id']
-                            ,'Herdsmans'=>[
-                                'fields'=>['Herdsmans.firstname','Herdsmans.lastname']
-                            ]]
+                ->select(['Cows.id', 'Cows.code'])
+                ->contain(['FarmCows' => [
+                        'fields' => ['FarmCows.id', 'FarmCows.cow_id', 'FarmCows.farm_id', 'FarmCows.isactive', 'FarmCows.moved_in_date', 'FarmCows.moved_out_date'],
+                        'sort' => ['FarmCows.isactive' => 'ASC', 'FarmCows.moved_in_date' => 'DESC'],
+                        'Farms' => [
+                            'fields' => ['Farms.id', 'Farms.name'],
+                            'FarmHerdsmans' => [
+                                'fields' => ['FarmHerdsmans.id', 'FarmHerdsmans.herdsman_id', 'FarmHerdsmans.farm_id']
+                                , 'Herdsmans' => [
+                                    'fields' => ['Herdsmans.firstname', 'Herdsmans.lastname']
+                                ]]
                         ]
                     ]
-                    ])
-                ->where(['Cows.id'=>$cow_id]);
-        
+                ])
+                ->where(['Cows.id' => $cow_id]);
+
         $ownerhis = $query->toArray();
         // $json = json_encode($ownerhis);
         //debug($json);
         return $ownerhis;
     }
 
+    public function approve($id = null) {
+        if (is_null($id) || $id == '') {
+            return null;
+        }
 
+        $q = $this->Cows->find()
+                ->where(['id' => $id, 'isapproved' => 'N']);
+        $cow = $q->first();
+
+        if (!is_null($cow) || $cow != '') {
+            $getname = $this->request->session()->read('Auth.User');
+            $cow->isapproved = 'Y';
+            $cow->approvedby = $getname['firstname'] . ' ' . $getname['lastname'];
+            $this->Cows->save($cow);
+            $this->Flash->success('อนุมัติแล้ว');
+        }
+
+        return $this->redirect(['controller' => 'approves', 'action' => 'index']);
+    }
 
 }

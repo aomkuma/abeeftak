@@ -5,39 +5,13 @@
     <!-- /.col-lg-12 -->
 </div>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-bar-chart-o fa-fw"></i> อนุมัติผู้เลี้ยงโค
+                <i class="fa fa-bar-chart-o fa-fw"></i> รายการรออนุมัติ
             </div>
             <div class="panel-body">
-                <iframe id="cow_list" src="<?= SITE_URL . 'approves/herdsmanlist/' ?>" frameborder="0" scrolling="no" onload="resizeIframe(this)" width="100%"></iframe>
-
-
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <i class="fa fa-bar-chart-o fa-fw"></i> อนุมัติโค
-            </div>
-            <div class="panel-body">
-
-
-
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <i class="fa fa-bar-chart-o fa-fw"></i> อนุมัติฟาร์ม
-            </div>
-            <div class="panel-body">
-
+                <iframe id="cow_list" src="<?= SITE_URL . 'approves/index/' ?>" frameborder="0" scrolling="no" onload="resizeIframe(this)" width="100%"></iframe>
 
 
             </div>

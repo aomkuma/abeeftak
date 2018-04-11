@@ -43,7 +43,7 @@
                     <th class="hidden-xs">ที่อยู่</th>
                     <th scope="col" class="hidden-xs">วันที่เพิ่ม</th>
                     <th scope="col">ผู้เพิ่ม</th>
-
+                    <th class="text-center">สถานะการอนุมัติ</th>
                 </tr>
             </thead>
             <tbody>
@@ -75,7 +75,7 @@
                         </td>
                         <td class="hidden-xs"><?= h($farm->created) ?></td>
                         <td><?= h($farm->createdby) ?></td>
-
+                        <td class="text-center"><?= ($farm->isapproved=='N'?'รออนุมัติ':'อนุมัติ') ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

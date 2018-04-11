@@ -40,6 +40,8 @@ class FarmsFixture extends TestFixture
         'updated' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'updatedby' => ['type' => 'string', 'length' => 100, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'isapproved' => ['type' => 'string', 'length' => null, 'null' => true, 'default' => 'N', 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'approvedby' => ['type' => 'string', 'length' => 100, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'request_note' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
@@ -57,13 +59,13 @@ class FarmsFixture extends TestFixture
      */
     public $records = [
         [
-            'id' => '556f69cb-fb6d-4997-b915-a9009999f904',
+            'id' => 'ee0b2ebf-cfb2-4278-a95e-fdd65fb7878a',
             'name' => 'Lorem ipsum dolor sit amet',
             'level' => 'Lorem ipsum dolor sit amet',
             'type' => 'Lorem ipsum dolor sit amet',
-            'address_id' => 'ec5bbe50-18e4-4320-9d8d-1dda957474f5',
+            'address_id' => 'bc91bbfd-6963-4fb9-8a9d-7326b440b394',
             'description' => 'Lorem ipsum dolor sit amet',
-            'location_image' => 'a6e1f14b-a69c-428d-b5d3-2dda5f06da1a',
+            'location_image' => '3d5f4cca-eaa3-4de9-9ca3-5fd84b4b6774',
             'latitude' => 1.5,
             'longitude' => 1.5,
             'hasstable' => 'Lorem ipsum dolor sit amet',
@@ -75,11 +77,13 @@ class FarmsFixture extends TestFixture
             'grass_species' => 'Lorem ipsum dolor sit amet',
             'water_body' => 'Lorem ipsum dolor sit amet',
             'dung_destroy' => 'Lorem ipsum dolor sit amet',
-            'created' => '2018-02-24 08:28:59',
+            'created' => '2018-04-10 12:20:41',
             'createdby' => 'Lorem ipsum dolor sit amet',
-            'updated' => '2018-02-24 08:28:59',
+            'updated' => '2018-04-10 12:20:41',
             'updatedby' => 'Lorem ipsum dolor sit amet',
-            'isapproved' => 'Lorem ipsum dolor sit amet'
+            'isapproved' => 'Lorem ipsum dolor sit amet',
+            'approvedby' => 'Lorem ipsum dolor sit amet',
+            'request_note' => 'Lorem ipsum dolor sit amet'
         ],
     ];
 }

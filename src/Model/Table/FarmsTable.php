@@ -40,14 +40,7 @@ class FarmsTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp', [
-            'events' => [
-                'Model.beforeSave' => [
-                    'created' => 'new',
-                    'updated' => 'always',
-                ]
-            ]
-        ]);
+        $this->addBehavior('Timestamp');
 
         $this->belongsTo('Addresses', [
             'foreignKey' => 'address_id'
@@ -161,6 +154,16 @@ class FarmsTable extends Table
         $validator
             ->scalar('isapproved')
             ->allowEmpty('isapproved');
+
+        $validator
+            ->scalar('approvedby')
+            ->maxLength('approvedby', 100)
+            ->allowEmpty('approvedby');
+
+        $validator
+            ->scalar('request_note')
+            ->maxLength('request_note', 255)
+            ->allowEmpty('request_note');
 
         return $validator;
     }

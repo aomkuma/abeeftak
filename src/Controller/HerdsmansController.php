@@ -204,6 +204,8 @@ class HerdsmansController extends AppController {
                     $herdsman->updatedby = $getname['firstname'] . ' ' . $getname['lastname'];
                     $herdsman->isactive = 'Y';
                     $herdsman->image_id = $image->id;
+                    $herdsman->isapproved = 'N';
+                    $herdsman->request_note = 'ต้องการเพิ่มผู้เลี้ยงโคใหม่ชื่อ '.$herdsman->firstname.' '.$herdsman->lastname.' โดย '.$herdsman->createdby;
                     if ($this->Herdsmans->save($herdsman)) {
 
                         $this->Flash->success(__('The herdsman has been saved.'));
@@ -262,6 +264,7 @@ class HerdsmansController extends AppController {
             $address->postalcode = $this->request->getData('postalcode');
             $address->address_line = $this->request->getData('address_line');
             $address->updatedby = $getname['firstname'] . ' ' . $getname['lastname'];
+            
 
             $this->Addresses->save($address);
 
@@ -300,6 +303,8 @@ class HerdsmansController extends AppController {
             $herdsman->registerdate = $this->request->getData('registerdate');
             $herdsman->mobile = $this->request->getData('mobile');
             $herdsman->updatedby = $getname['firstname'] . ' ' . $getname['lastname'];
+            $herdsman->isapproved = 'N';
+            $herdsman->request_note = 'มีการแก้ไขผู้เลี้ยงโคชื่อ '.$herdsman->firstname.' '.$herdsman->lastname.' แก้ไขโดย '.$herdsman->updatedby;
 
             if ($this->request->getData('email') == '') {
                 $herdsman->email = null;
@@ -308,11 +313,11 @@ class HerdsmansController extends AppController {
             }
             if ($this->Herdsmans->save($herdsman)) {
 
-                $this->Flash->success(__('The herdsman has been saved.'));
+                $this->Flash->success(__('ผู้เลี้ยงโคได้รับการแก้ไขแล้ว กรุณารอการอนุมัติจากผู้อนุมัติ'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The herdsman could not be saved. Please, try again.'));
+            $this->Flash->error(__('ไม่สามารถแก้ไขได้ กรุณาตรจสอบข้อมูลหรือติดต่อผู้ดูแลระบบ'));
         }
 
         $address = $this->Addresses->get($herdsman->address_id);
@@ -413,6 +418,27 @@ class HerdsmansController extends AppController {
 
 
         return $code;
+    }
+    
+    public function approve($id = null){
+        if(is_null($id) || $id ==''){
+            return null;
+        }
+        
+        $q = $this->Herdsmans->find()
+                ->where(['id'=>$id,'isapproved'=>'N']);
+        $herdsman = $q->first();
+        
+        if(!is_null($herdsman) || $herdsman != ''){
+            $getname = $this->request->session()->read('Auth.User');
+            $herdsman->isapproved = 'Y';
+            $herdsman->approvedby = $getname['firstname'] . ' ' . $getname['lastname'];
+            $this->Herdsmans->save($herdsman);
+            $this->Flash->success('อนุมัติแล้ว');
+        }
+        
+        return $this->redirect(['controller'=>'approves','action'=>'index']);
+        
     }
 
 }
